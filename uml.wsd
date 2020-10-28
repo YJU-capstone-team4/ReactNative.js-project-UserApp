@@ -1,0 +1,26 @@
+@startuml
+
+title YJU-capstone-team4
+footer Page %page% of %lastpage%
+
+actor 사용자 as User
+actor 관리자 as Admin
+
+control App
+control Web
+control 노드서버 as Node
+control 크롤링서버 as Lamda
+
+== 메인페이지 로딩 ==
+User --> App : [Req] 현재 위치정보 조회
+    alt GPS 모듈이 꺼져있을 경우
+        App -> App : 서울특별시 위치정보 반환
+    end
+App --> User : [Res] 현재 위치정보 반환
+
+User -> App : 메인페이지 요청
+App -> Node : [Req] 현재 위치정보
+    Node -> Node : [Query-Select] Top3 유튜버, 동선 조회
+Node -> App : [Res] 유튜버, 동선 데이터 반환
+App -> User : 메인 페이지 렌더링
+@enduml
