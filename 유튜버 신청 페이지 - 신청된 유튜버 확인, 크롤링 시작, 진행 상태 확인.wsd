@@ -1,0 +1,15 @@
+@startuml
+
+title YJU-capstone-team4
+footer Page %page% of %lastpage%
+
+actor 사용자 as User
+control App
+control Web
+control 노드서버 as Node
+control 크롤링서버 as Lamda
+actor 관리자 as Admin
+
+== 지도 페이지 - 원하는 유튜버가 없을 때 ==
+
+@enduml

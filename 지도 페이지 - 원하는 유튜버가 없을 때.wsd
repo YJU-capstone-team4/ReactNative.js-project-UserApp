@@ -1,0 +1,34 @@
+@startuml
+
+title YJU-capstone-team4
+footer Page %page% of %lastpage%
+
+actor 사용자 as User
+control App
+control Web
+control 노드서버 as Node
+control 크롤링서버 as Lamda
+actor 관리자 as Admin
+
+== 유튜버 신청 페이지 - 신청된 유튜버 확인, 크롤링 시작, 진행 상태 확인 ==
+User -> App : 유튜버 검색 요청
+activate App
+App --> App : [ Youtube-API ]\n유튜버 채널 검색
+deactivate App
+activate User
+App -> Node : [ Req ] 유튜버 channel id
+alt 유튜버가 존재 할 경우
+    Node --> Node : [ Query-Select ] 해당 유튜버가 다녀간\n가게 조회
+else 유튜버가 존재하지 않을 경우
+    Node -> App : [ Res ] 상태코드 :: 해당 유튜버의 데이터가 없다
+    App -> User : 해당 유튜버에 대한\n데이터 요청을 할 것인가?
+    activate User #FFBBBB
+    loop 요청을 선택할 경우
+        User -> App : 유튜버 데이터 신청
+    end
+end
+deactivate User
+Node -> Web : [ Res ] 지역별 가게의\n총 개수 반환
+Web --> User : 지역별 갯수를 버블형태로\n화면에 렌더링 후 반환
+
+@enduml
