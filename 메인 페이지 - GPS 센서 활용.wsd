@@ -11,16 +11,22 @@ collections Web
 control 노드서버 as Node #99FF99
 control 크롤링서버 as Lamda
 
-== 메인 페이지 - GPS 센서 활용 ==
-User -> App : [Req] 현재 위치정보 조회
+== 메인 페이지 접속 - GPS 센서 활용 ==
+User -> App : 메인 페이지 접속
+alt 현재 위치정보를 가지고 있을 경우
+    App --> App : 로컬스토리지의 데이터 반환
+else 현재 위치정보를 가지고 있지 않을 경우
     alt GPS 모듈이 꺼져있을 경우
         App --> App : 서울특별시 위치정보 반환
+    else GPS 모듈이 켜져있을 경우
+    App --> App : 현재 위치정보 조회
     end
-App -> User : [Res] 현재 위치정보 반환
+end
+' App -> User : [Res] 현재 위치정보 반환
 
-User -> App : 메인페이지 요청
+' User -> App : 메인페이지 요청
 App -> Node : [Req] 현재 위치정보
-    Node --> Node : [Query-Select] Top3 유튜버, 동선 조회
+Node --> Node : [Query-Select] Top3 유튜버, 동선 조회
 Node -> App : [Res] 유튜버, 동선 데이터 반환
 App -> User : 메인 페이지 렌더링
 @enduml

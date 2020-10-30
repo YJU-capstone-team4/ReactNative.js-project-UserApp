@@ -1,0 +1,45 @@
+@startuml
+
+title YJU-capstone-team4
+footer Page %page% of %lastpage%
+
+actor 사용자 as User
+actor 관리자 as Admin
+
+collections App
+collections Web
+control 노드서버 as Node #99FF99
+control 크롤링서버 as Lamda
+
+== 유튜버 조회 페이지 - 신청된 유튜버 확인 ==
+Admin ->  Web : 유튜버 신청 관리 페이지 접속
+activate Admin #FFBBBB
+Web -> Node : [Req] 신청 된 리스트 조회 요청
+Node --> Node : [ Query-Select ]\n신청 된 유튜버 조회
+alt 신청 된 유튜버가 존재하지 않을 경우
+    Node -> Web : [Res] statusCode ::신청 된 유튜버가 없습니다.
+    Web -> Admin : 상태코드 모달창으로 화면 렌더링
+end
+Node -> Web : [Res] 신청 된 유튜버 리스트 반환
+Web -> Admin : 유튜버 리스트 화면 렌더링
+deactivate Admin
+== 유튜버 조회 페이지 - 크롤링 승인 ==
+Admin -> Web : 유튜버 크롤링 승인 버튼 클릭
+Web -> Node : [Req] 유튜버 크롤링 요청
+Node -> Lamda : [Req] 크롤링 요청
+Node -> Web : [Res] 유튜버 크롤링 요청 승인
+Web -> Admin : 유튜버 조회 페이지 리렌더링\n(승인 결과 반영)
+Lamda --> Lamda : 크롤링 시작
+Lamda --> Node : [Res] 크롤링 결과 반영
+Node --> Node : [ Query-Create ]\n크롤링 된 유튜버 저장
+== 데이터 수집 페이지 - 진행 상태 조회 ==
+Admin -> Web : 데이터 수집 페이지 접속
+Web -> Node : [Req] 현재 진행중인 데이터 수집 상태 요청
+Node --> Node : [ Query-Select ]\n진행 중 상태 조회
+alt 진행중인 유튜버가 존재하지 않을 경우
+    Node -> Web : [Res] statusCode ::진행중인 유튜버가 없습니다.
+    Web -> Admin : 상태코드 모달창으로 화면 렌더링
+end
+Node -> Web : [Res] 진행 중 유튜버 데이터 반영
+Web -> Admin : 진행중 / 에러 / 완료 별 화면 렌더링
+@enduml
