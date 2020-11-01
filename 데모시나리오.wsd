@@ -330,48 +330,47 @@ Node --> Node : [ Query-Select ] \n크롤링 상태 조회
 Node -> Web : [Res] 상태별 크롤링 결과 반영
 Web -> Admin : 진행중 / 에러 / 완료 별 화면 렌더링
 
-== 데이터 2차 검수 페이지 - 더보기 정보 조회==
+== [관리자] 데이터 2차 검수 페이지 - 더보기 정보 조회==
 Admin -> Web : 에러 리스트에서 유튜버 클릭
-Web -> Node : [Req] 에러 발생한 영상 정보 요청
+Web -> Node : <font color=red>[Req]</font> 에러 발생한 영상 정보 요청
 Node --> Node : [ Query-Select ]\n영상 정보 조회
-Node -> Web : [Res] 형태소 분석된 더보기 정보 반환
+Node -> Web : <font color=blue>[Res]</font> 형태소 분석된 더보기 정보 반환
 Web-> Admin : 주소 분리 및 검색 화면 렌더링
 
-== 데이터 2차 검수 페이지 - 주소 조합 ==
+== [관리자] 데이터 2차 검수 페이지 - 주소 조합 ==
 Admin -> Web : 형태소 별로 분리된 데이터 클릭
+activate Admin
 Web --> Web : 클릭한 데이터 화면에 출력
 Web -> Admin : 주소 분리 및 검색 화면 리렌더링\n(선택한 데이터 반영)
 
-== 데이터 2차 검수 페이지 - 주소 검색 ==
+== [관리자] 데이터 2차 검수 페이지 - 주소 검색 ==
+alt 검색 버튼 클릭 했을 경우
 Admin -> Web : 조합된 주소 데이터 검색 버튼 클릭
-Web -> Node : [Req] 주소에 대한 검색 결과, 좌표값 요청
-Node -> Lamda : [Req] 크롤링 요청
+Web -> Node : <font color=red>[Req]</font> 주소에 대한 검색 결과, 좌표값 요청
+Node -> Lamda : <font color=red>[Req]</font> 크롤링 요청
 Lamda --> Lamda : 크롤링 시작
-Lamda -> Node : [Res] 크롤링 결과 반환
-Node --> Node : [ Query-Select ] \n크롤링 된 주소정보 조회
-Node -> Web : [Res] 구글, 네이버, 다음 검색 결과, 좌표값 반환
+Lamda -> Node : <font color=blue>[Res]</font> 크롤링 결과 반환
+Node -> Web : <font color=blue>[Res]</font> 구글, 네이버, 다음 검색 결과, 좌표값 반환
 Web -> Admin : 주소 검색 화면 렌더링
-
-alt 삭제 버튼 클릭 시
-    Admin -> Web : 삭제 버튼 클릭
-    Web -> Node : [Req] 해당 영상 정보 삭제 요청
-    Node --> Node : [ Query-Delete ] \n영상 정보 삭제
-    Node -> Web : [Res] 삭제 결과 응답
-    Web -> Admin : 주소 분리 및 검색 화면 리렌더링
-end
-
-== 데이터 2차 검수 페이지 - 주소 저장 ==
-Admin -> Web : 검색된 주소 선택 후 저장버튼 클릭
-Web -> Node : [Req] 주소 정보 저장 요청
-Node --> Node : [ Query-Create ]\n주소 정보 저장
-Node -> Web : [Res] 주소 정보 저장 응답
-Web -> Admin : 주소 검색 화면 리렌더링
-
-alt 재검색 버튼 클릭 시
+    alt 저장 버튼 클릭 했을 경우
+    Admin -> Web : 검색된 주소 선택 후 저장버튼 클릭
+    Web -> Node : <font color=red>[Req]</font> 주소 정보 저장 요청
+    Node --> Node : [ Query-Create ]\n주소 정보 저장
+    Node -> Web : <font color=blue>[Res]</font> 주소 정보 저장 응답
+    Web -> Admin : 주소 검색 화면 리렌더링
+    else 재검색 버튼 클릭 했을 경우
     Admin -> Web : 재검색 버튼 클릭
     Web --> Web : 주소 분리 및 검색 Component 이동
     Web -> Admin : 주소 분리 및 검색 화면 렌더링
+    end
+else 삭제 버튼 클릭 했을 경우
+Admin -> Web : 삭제 버튼 클릭
+Web -> Node : <font color=red>[Req]</font> 해당 영상 정보 삭제 요청
+Node --> Node : [ Query-Delete ] \n영상 정보 삭제
+Node -> Web : <font color=blue>[Res]</font> 삭제 결과 응답
+Web -> Admin : 주소 분리 및 검색 화면 리렌더링
 end
+deactivate Admin
 
 ==유튜버 상세 페이지==
 User -> App : default page(1위 유튜버)
