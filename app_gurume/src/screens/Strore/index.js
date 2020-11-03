@@ -4,7 +4,7 @@ import { View, Text } from 'react-native'
 export default () => {
   return (
     <View>
-      <Text>안녕하세요! 맵 페이지 입니다.</Text>
+      <Text>안녕하세요! 상점 페이지 입니다.</Text>
     </View>
   )
 }
