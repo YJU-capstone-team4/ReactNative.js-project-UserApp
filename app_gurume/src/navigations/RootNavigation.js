@@ -4,7 +4,7 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-// RootScreen Contents
+// BottomNav Contents
 import BottomNavigation from './BottomNavigation'
 
 const Stack = createStackNavigator()

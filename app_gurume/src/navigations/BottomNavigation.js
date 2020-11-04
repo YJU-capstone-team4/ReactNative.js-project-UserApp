@@ -14,7 +14,7 @@ export default function BottomNavigation() {
   return (
     <Tab.Navigator
       initialRouteName="Main"
-      // labeled={false}
+      // labeled
       activeColor="black"
       inactiveColor="pink"
       barStyle={{ backgroundColor: '#FFFFFF' }}
@@ -23,16 +23,40 @@ export default function BottomNavigation() {
         name="Main"
         component={MainScreen}
         options={{
-          tabBarLabel: 'Main',
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="home" color={color} size={26} />,
+          tabBarLabel: '메인',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="home-map-marker" color={color} size={26} />
+          ),
         }}
       />
       <Tab.Screen
         name="Map"
         component={MapScreen}
         options={{
-          tabBarLabel: 'Map',
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="map" color={color} size={26} />,
+          tabBarLabel: '지도',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="map-legend" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Flow"
+        component={MapScreen}
+        options={{
+          tabBarLabel: '동선',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="map-marker-path" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="통계"
+        component={MapScreen}
+        options={{
+          tabBarLabel: '통계',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="chart-areaspline" color={color} size={26} />
+          ),
         }}
       />
       <Tab.Screen
@@ -40,9 +64,9 @@ export default function BottomNavigation() {
         component={YoutuberScreen}
         options={{
           tabBarBadge: 10,
-          tabBarLabel: 'Youtuber',
+          tabBarLabel: '유튜버',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="plus-box" color={color} size={26} />
+            <MaterialCommunityIcons name="cloud-search" color={color} size={26} />
           ),
         }}
       />
