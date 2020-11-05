@@ -4,8 +4,10 @@ import React from 'react'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
+// import screens
 import MainScreen from '../screens/Main'
 import MapScreen from '../screens/Map'
+import FlowScreen from '../screens/Flow'
 import YoutuberScreen from '../screens/Youtuber'
 
 const Tab = createMaterialBottomTabNavigator()
@@ -41,7 +43,7 @@ export default function BottomNavigation() {
       />
       <Tab.Screen
         name="Flow"
-        component={MapScreen}
+        component={FlowScreen}
         options={{
           tabBarLabel: '동선',
           tabBarIcon: ({ color }) => (
