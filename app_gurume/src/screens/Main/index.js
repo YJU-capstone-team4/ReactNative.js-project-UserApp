@@ -1,20 +1,32 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { Text, StyleSheet, View } from 'react-native'
+
+// import components
+import SearchInput from '../../components/SearchInput'
+import YoutuberList from '../../components/List/YoutuberList'
+import FlowList from '../../components/Flow/FlowList'
+
+// import screens
+import MainHeader from './MainHeader'
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
+    // display: 'flex',
     flex: 1,
     marginTop: 30,
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    opacity: 0.6,
   },
 })
 
 export default () => {
   return (
     <View style={styles.container}>
-      <Text>안녕하세요! 메인 페이지 입니다.</Text>
+      <MainHeader />
+      <SearchInput />
+      <Text style={{ padding: 10 }}>대구광역시를 방문한 유튜버</Text>
+      <YoutuberList />
+      <Text style={{ padding: 10 }}>대구광역시 Top5 인기 동선</Text>
+      <FlowList />
     </View>
   )
 }
