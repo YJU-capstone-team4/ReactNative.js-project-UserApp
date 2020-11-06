@@ -2,8 +2,8 @@ import React from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
 // import components
-import SearchInput from '../../../components/SearchInput'
-import FlowList from '../../../components/Flow/FlowList'
+import SearchInput from '@/components/SearchInput'
+import FlowList from '@/components/Flow/FlowList'
 
 // import screens
 import FlowHashTags from './FlowHashTags'
@@ -13,16 +13,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     marginTop: 30,
     opacity: 0.6,
-  },
-  boxShadow: {
-    backgroundColor: 'black',
-    height: 550,
-    margin: 10,
-    padding: 10,
-    borderRadius: 10,
-    shadowColor: 'black',
-    shadowOpacity: 1,
-    shadowRadius: 10,
   },
 })
 
@@ -35,7 +25,8 @@ export default function index() {
       <Text>해시태그 조합으로 원하는 결과를 한눈에!</Text>
       <FlowHashTags />
       <Text>검색 결과</Text>
-      <View style={styles.boxShadow}>
+      <View style={{ backgroundColor: '#3DFF92', padding: 10 }}>
+        <Text>FlowList 순회 ...</Text>
         <FlowList />
       </View>
     </ScrollView>

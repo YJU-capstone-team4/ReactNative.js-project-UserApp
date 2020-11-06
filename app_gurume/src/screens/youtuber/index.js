@@ -2,10 +2,10 @@ import React from 'react'
 import { Text, StyleSheet, ScrollView } from 'react-native'
 
 // import components
-import SearchInput from '../../components/SearchInput'
-import ThumbsUp from '../../components/ThumbsUp'
-import HashTagList from '../../components/HashTagList'
-import MovieList from '../../components/List/MovieList'
+import SearchInput from '@/components/SearchInput'
+import ThumbsUp from '@/components/ThumbsUp'
+import HashTagList from '@/components/HashTagList'
+import MovieList from '@/components/List/MovieList'
 
 // import screens
 import YoutuberProfile from './YoutuberProfile'

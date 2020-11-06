@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-import HashTagList from '../../components/HashTagList'
+import HashTagList from '@/components/HashTagList'
 
 export default function youtuberMovieInfo() {
   return (

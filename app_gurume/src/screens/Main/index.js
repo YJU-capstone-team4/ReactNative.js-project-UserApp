@@ -2,9 +2,9 @@ import React from 'react'
 import { Text, StyleSheet, View } from 'react-native'
 
 // import components
-import SearchInput from '../../components/SearchInput'
-import YoutuberList from '../../components/List/YoutuberList'
-import FlowList from '../../components/Flow/FlowList'
+import SearchInput from '@/components/SearchInput'
+import YoutuberList from '@/components/List/YoutuberList'
+import FlowList from '@/components/Flow/FlowList'
 
 // import screens
 import MainHeader from './MainHeader'
