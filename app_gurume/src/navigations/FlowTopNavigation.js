@@ -2,8 +2,8 @@ import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 
 // import screens
-import FlowSearch from '@/screens/Flow/FlowSearch'
-import FlowMe from '@/screens/Flow/FlowMe'
+import FlowSearch from '@screens/Flow/FlowSearch'
+import FlowMe from '@screens/Flow/FlowMe'
 import FlowShare from '@screens/Flow/FlowShare'
 
 const Tab = createMaterialTopTabNavigator()

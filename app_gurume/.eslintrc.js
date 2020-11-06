@@ -15,6 +15,7 @@ module.exports = {
         extensions: ['.js', '.jsx'],
       },
     ],
+    'import/extensions': ['off'],
     'prettier/prettier': [
       'error',
       {

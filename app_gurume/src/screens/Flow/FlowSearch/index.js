@@ -2,8 +2,8 @@ import React from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
 // import components
-import SearchInput from '@/components/SearchInput'
-import FlowList from '@/components/Flow/FlowList'
+import SearchInput from '@components/SearchInput'
+import FlowList from '@components/Flow/FlowList'
 
 // import screens
 import FlowHashTags from './FlowHashTags'

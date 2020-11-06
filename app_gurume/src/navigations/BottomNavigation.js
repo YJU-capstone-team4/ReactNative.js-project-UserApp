@@ -5,10 +5,10 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 // import screens
-import MainScreen from '../screens/Main'
-import MapScreen from '../screens/Map'
-import FlowScreen from '../screens/Flow'
-import YoutuberScreen from '../screens/Youtuber'
+import MainScreen from '@screens/Main'
+import MapScreen from '@screens/Map'
+import FlowScreen from '@screens/Flow'
+import YoutuberScreen from '@screens/Youtuber'
 
 const Tab = createMaterialBottomTabNavigator()
 

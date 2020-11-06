@@ -2,9 +2,9 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 
 // import components
-import SearchInput from '@/components/SearchInput'
-import GoogleMap from '@/components/GoogleMap'
-import Fab from '@/components/Fab'
+import SearchInput from '@components/SearchInput'
+import GoogleMap from '@components/GoogleMap'
+import Fab from '@components/Fab'
 
 // import screens
 import SelectedYoutubers from './SelectedYoutubers'

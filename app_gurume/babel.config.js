@@ -4,10 +4,18 @@ module.exports = function (api) {
     presets: ['babel-preset-expo'],
     plugins: [
       [
-        'babel-plugin-root-import',
+        'module-resolver',
         {
-          rootPathPrefix: '@',
-          rootPathSuffix: 'src',
+          root: ['./src'],
+          extensions: ['.js', '.ios.js', '.android.js'],
+          alias: {
+            '~': './src',
+            '@screens': './src/screens',
+            '@components': './src/components',
+            '@icons': './src/assets/icons',
+            '@styles': './src/styles',
+            '@queries': './src/queries',
+          },
         },
       ],
     ],

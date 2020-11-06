@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 
 // import navigation
-import FlowTopNavigation from '../../navigations/FlowTopNavigation'
+import FlowTopNavigation from '~/navigations/FlowTopNavigation'
 
 const styles = StyleSheet.create({
   container: {
