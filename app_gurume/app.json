@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "src/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.yju_capstone_team4.app_gurume"
     },
     "web": {
       "favicon": "src/assets/favicon.png"

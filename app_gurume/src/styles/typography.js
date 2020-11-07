@@ -1,8 +1,10 @@
 import { scaleFont } from './mixins'
 
 // FONT FAMILY
-export const FONT_FAMILY_REGULAR = 'OpenSans-Regular'
-export const FONT_FAMILY_BOLD = 'OpenSans-Bold'
+export const FONT_FAMILY_BOLD = 'NanumSquare_acBold'
+export const FONT_FAMILY_EXTRA_BOLD = 'NanumSquare_acExtraBold'
+export const FONT_FAMILY_LIGHT = 'NanumSquare_acLight'
+export const FONT_FAMILY_REGULAR = 'NanumSquare_acRegular'
 
 // FONT WEIGHT
 export const FONT_WEIGHT_REGULAR = '400'

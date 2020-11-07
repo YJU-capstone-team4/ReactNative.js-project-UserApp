@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react'
+/* eslint-disable global-require */
+import React from 'react'
+import { useFonts } from '@use-expo/font'
+import { AppLoading } from 'expo'
 
 // Navigation Component
 import RootNavigationContainer from './src/navigations/RootNavigation'
 
 export default function App() {
-  const [loaded, setLoaded] = useState(true)
+  // loading fonts
+  const [isLoaded] = useFonts({
+    NanumSquare_acBold: require('~/assets/fonts/NanumSquare_acBold.ttf'),
+    NanumSquare_acExtraBold: require('~/assets/fonts/NanumSquare_acExtraBold.ttf'),
+    NanumSquare_acLight: require('~/assets/fonts/NanumSquare_acLight.ttf'),
+    NanumSquare_acRegular: require('~/assets/fonts/NanumSquare_acRegular.ttf'),
+  })
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoaded(false)
-    }, 2000)
-  }, [])
-
-  return <>{loaded ? null : <RootNavigationContainer />}</>
+  return <>{!isLoaded ? <AppLoading /> : <RootNavigationContainer />}</>
 }

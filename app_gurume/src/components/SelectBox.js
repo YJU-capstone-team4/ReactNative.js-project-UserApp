@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import Icon from 'react-native-vector-icons/Feather'
+
+// import styles
+import { Colors, Typography } from '@styles'
 
 export default function SelectBox() {
   const [itemValue, setItemValue] = useState('usa')
 
   return (
-    <View style={{ marginHorizontal: 20, marginVertical: 10 }}>
+    <View style={{ marginVertical: 10 }}>
       <DropDownPicker
         items={[
           {
@@ -26,14 +29,23 @@ export default function SelectBox() {
             value: 'france',
             icon: () => <Icon name="flag" size={18} color="#900" />,
           },
+          {
+            label: '전주 맛집 코스',
+            value: 'junju',
+            icon: () => <Icon name="flag" size={18} color="#900" />,
+          },
         ]}
         defaultValue={itemValue}
-        containerStyle={{ height: 40 }}
-        style={{ backgroundColor: '#fafafa' }}
+        containerStyle={{ height: 50 }}
+        zIndex={5000}
+        max={5}
+        style={{ backgroundColor: Colors.WHITE, borderColor: Colors.GRAY_LIGHT }}
         itemStyle={{
           justifyContent: 'flex-start',
+          paddingVertical: 15,
         }}
-        dropDownStyle={{ backgroundColor: '#fafafa' }}
+        labelStyle={{ fontFamily: Typography.FONT_FAMILY_REGULAR }}
+        dropDownStyle={{ backgroundColor: Colors.WHITE }}
         onChangeItem={(item) => setItemValue(item.value)}
       />
     </View>

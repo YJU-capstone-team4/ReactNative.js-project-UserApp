@@ -6,22 +6,27 @@ import FlowSearch from '@screens/Flow/FlowSearch'
 import FlowMe from '@screens/Flow/FlowMe'
 import FlowShare from '@screens/Flow/FlowShare'
 
+// import styles
+import { Colors, Typography } from '@styles'
+
 const Tab = createMaterialTopTabNavigator()
 
 export default function FlowTopNavigation() {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        activeTintColor: '#FFFFFF',
-        inactiveTintColor: 'black',
+        activeTintColor: Colors.SUCCESS,
+        inactiveTintColor: Colors.BLACK,
         style: {
-          backgroundColor: '#65CBFF',
+          borderColor: Colors.SUCCESS,
+          borderWidth: 0.9,
           marginHorizontal: 50,
-          borderRadius: 30,
+          borderRadius: 18,
+          // backgroundColor: 'black',
         },
         labelStyle: {
           textAlign: 'center',
-          fontWeight: 'bold',
+          fontFamily: Typography.FONT_FAMILY_BOLD,
         },
         indicatorStyle: {
           borderBottomColor: 'transparent',
