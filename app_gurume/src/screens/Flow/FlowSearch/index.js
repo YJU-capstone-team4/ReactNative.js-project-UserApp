@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     marginTop: 30,
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
     // opacity: 0.6,
   },
 })
@@ -26,7 +26,7 @@ export default function index() {
       <Text>해시태그 조합으로 원하는 결과를 한눈에!</Text>
       <FlowHashTags />
       <Text>검색 결과</Text>
-      <View style={{ backgroundColor: '#3DFF92', padding: 10 }}>
+      <View style={{ backgroundColor: '#3DFF92', paddingVertical: 10 }}>
         <Text>FlowList 순회 ...</Text>
         <FlowList />
       </View>

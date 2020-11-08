@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     marginTop: 30,
-    opacity: 0.6,
+    opacity: 0.8,
   },
 })
 

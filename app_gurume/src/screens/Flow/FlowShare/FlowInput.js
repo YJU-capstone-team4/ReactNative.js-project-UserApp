@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 
 // import styles
 import { Colors, Typography } from '@styles'
@@ -8,9 +8,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-  },
-  flowInputContainer: {
-    // marginHorizontal: 20,
+    flexWrap: 'wrap',
   },
   inputContainer: {
     borderColor: Colors.GRAY_LIGHT,
@@ -80,6 +78,23 @@ export default function FlowInput() {
   const [title, setTitle] = useState('데이트 하기 좋은 코스')
   const [hashTag, setHashTag] = useState('')
   const [file, setFile] = useState('파일 선택')
+  const [hashTags, setHashTags] = useState(tags)
+
+  const handleInputHashTag = () => {
+    if (hashTag === '') {
+      Alert.alert('해시태그를 입력해주세요!!!')
+    } else {
+      setHashTags([
+        ...hashTags,
+        {
+          color: '#ff99cc',
+          name: hashTag,
+        },
+      ])
+
+      setHashTag('')
+    }
+  }
 
   return (
     <View style={styles.flowInputContainer}>
@@ -97,7 +112,7 @@ export default function FlowInput() {
           onChangeText={(text) => setHashTag(text)}
           value={hashTag}
         />
-        <TouchableOpacity style={styles.buttonContainer}>
+        <TouchableOpacity onPress={() => handleInputHashTag()} style={styles.buttonContainer}>
           <Text style={styles.buttonText}>추가</Text>
         </TouchableOpacity>
       </View>
@@ -118,8 +133,8 @@ export default function FlowInput() {
       </View>
       <Text style={styles.inputText}># 해시태그</Text>
       <View style={styles.container}>
-        {tags.map((tag) => (
-          <View style={[styles.tagContainer, { backgroundColor: tag.color }]}>
+        {hashTags.map((tag, index) => (
+          <View key={index.id} style={[styles.tagContainer, { backgroundColor: tag.color }]}>
             <Text style={styles.buttonText}>{tag.name}</Text>
           </View>
         ))}

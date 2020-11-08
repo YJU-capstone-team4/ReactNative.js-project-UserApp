@@ -8,6 +8,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MainScreen from '@screens/Main'
 import MapScreen from '@screens/Map'
 import FlowScreen from '@screens/Flow'
+import StatisticScreen from '@screens/Statistic'
 import YoutuberScreen from '@screens/Youtuber'
 
 const Tab = createMaterialBottomTabNavigator()
@@ -53,7 +54,7 @@ export default function BottomNavigation() {
       />
       <Tab.Screen
         name="통계"
-        component={MapScreen}
+        component={StatisticScreen}
         options={{
           tabBarLabel: '통계',
           tabBarIcon: ({ color }) => (

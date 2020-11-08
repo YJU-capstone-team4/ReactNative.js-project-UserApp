@@ -5,7 +5,7 @@ export default function FlowList() {
   return (
     <View
       style={{
-        backgroundColor: '#FFA6C5',
+        backgroundColor: '#FFB900',
         height: 300,
         flex: 1,
         justifyContent: 'center',

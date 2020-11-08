@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     marginTop: 30,
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
     // opacity: 0.6,
   },
 })
