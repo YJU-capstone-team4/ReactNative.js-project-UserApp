@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     // display: 'flex',
     flex: 1,
     marginTop: 30,
-    opacity: 0.6,
+    // opacity: 0.6,
   },
 })
 
