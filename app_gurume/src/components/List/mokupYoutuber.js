@@ -1,5 +1,8 @@
 import firstThumbnail from '@images/thumbnail_1.jpg'
 import secondThumbnail from '@images/thumbnail_2.jpg'
+// import firstMovieThumbnail from '@images/movie_thumbnail_1.png'
+// import secondMovieThumbnail from '@images/movie_thumbnail_2.png'
+// import thirdMovieThumbnail from '@images/movie_thumbnail_3.png'
 
 export default [
   {

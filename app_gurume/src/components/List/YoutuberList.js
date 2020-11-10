@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, FlatList, Image } from 'react-native'
 
 // import screens
-import mokupData from './mokup'
+import mokupYoutuber from './mokupYoutuber'
 
 const renderYoutuber = (data) => {
   return (
@@ -18,7 +18,7 @@ const renderYoutuber = (data) => {
     >
       <Image style={{ borderRadius: 230, width: 170, height: 170 }} source={data.ytbProfile} />
       <Text style={{ margin: 5 }}>체널명 : {data.ytbChannel}</Text>
-      <Text style={{ margin: 5 }}>방문맛집수 : {data.ytbProfile}</Text>
+      <Text style={{ margin: 5, color: 'gray' }}>방문맛집수 : {data.ytbProfile}</Text>
       {/* <Text style={{ margin: 5 }}>{data.ytbLinkAddress}</Text> */}
     </View>
   )
@@ -42,7 +42,7 @@ export default function YoutuberList() {
       <Text>유튜버 Top 5 랭킹 정보가 들어갈 공간입니다.</Text>
       <Text>YoutuberList</Text>
       <FlatList
-        data={mokupData}
+        data={mokupYoutuber}
         keyExtractor={(item) => item.ytbLinkAddress}
         horizontal
         showsHorizontalScrollIndicator={false}

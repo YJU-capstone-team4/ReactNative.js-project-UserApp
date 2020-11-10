@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     marginTop: 30,
-    marginHorizontal: 20,
+    marginHorizontal: 10,
   },
   buttonContainer: {
     elevation: 3,
