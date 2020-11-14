@@ -3,6 +3,10 @@ import React from 'react'
 import { useFonts } from '@use-expo/font'
 import { AppLoading } from 'expo'
 
+// Apollo
+import { ApolloProvider } from '@apollo/react-hooks'
+import apolloClient from '~/queries/apolloClient'
+
 // Navigation Component
 import RootNavigationContainer from './src/navigations/RootNavigation'
 
@@ -15,5 +19,15 @@ export default function App() {
     NanumSquare_acRegular: require('~/assets/fonts/NanumSquare_acRegular.ttf'),
   })
 
-  return <>{!isLoaded ? <AppLoading /> : <RootNavigationContainer />}</>
+  return (
+    <>
+      {!isLoaded ? (
+        <AppLoading />
+      ) : (
+        <ApolloProvider client={apolloClient}>
+          <RootNavigationContainer />
+        </ApolloProvider>
+      )}
+    </>
+  )
 }
