@@ -4,20 +4,10 @@ import { View, Text, FlatList, Image } from 'react-native'
 // apollo
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
+import { Queries } from '~/graphql'
 
 // import screens
 // import mokupYoutuber from './mokupYoutuber'
-
-const GET_YOUTUBERS = gql`
-  query {
-    ytbChannel {
-      ytbChannel
-      ytbProfile
-      ytbLinkAddress
-      ytbSubscribe
-    }
-  }
-`
 
 const renderYoutuber = (data) => {
   return (
@@ -47,7 +37,11 @@ const renderYoutuber = (data) => {
 }
 
 export default function YoutuberList() {
-  const { loading, error, data } = useQuery(GET_YOUTUBERS)
+  const { loading, error, data } = useQuery(
+    gql`
+      ${Queries.GET_YOUTUBERS}
+    `
+  )
 
   if (loading) return <Text>로딩중입니다!!</Text>
   if (error) return <Text>에러가 났습니다!!</Text>

@@ -5,7 +5,7 @@ import { AppLoading } from 'expo'
 
 // Apollo
 import { ApolloProvider } from '@apollo/react-hooks'
-import apolloClient from '~/queries/apolloClient'
+import { apolloClient } from '~/graphql'
 
 // Navigation Component
 import RootNavigationContainer from './src/navigations/RootNavigation'
