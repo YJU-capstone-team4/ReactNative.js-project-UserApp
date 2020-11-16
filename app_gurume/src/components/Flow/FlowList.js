@@ -1,7 +1,22 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Button } from 'react-native'
+
+// apollo
+import { useMutation } from '@apollo/react-hooks'
+import { Queries } from '~/graphql'
+
+const channel = '안녕'
 
 export default function FlowList() {
+  const [addYoutuber, { loading, error, data }] = useMutation(Queries.ADD_YOUTUBER)
+
+  if (error) {
+    return (
+      <View>
+        <Text>에러났음!{JSON.stringify(error)}</Text>
+      </View>
+    )
+  }
   return (
     <View
       style={{
@@ -15,6 +30,21 @@ export default function FlowList() {
     >
       <Text>동선 Top 5 랭킹 정보가 들어갈 공간입니다.</Text>
       <Text>FlowList</Text>
+      <Button
+        title="유튜버 추가"
+        onPress={() =>
+          addYoutuber({
+            variables: {
+              ytbChannel: { channel },
+              ytbProfile: '개인 설명',
+              ytbLinkAddress: '유튜버 주소',
+              ytbSubscribe: 11123123,
+              ytbHits: 12123123,
+            },
+          })
+        }
+        disabled={loading}
+      />
     </View>
   )
 }
