@@ -17,21 +17,6 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginHorizontal: 10,
   },
-  buttonContainer: {
-    elevation: 3,
-    width: 200,
-    margin: 5,
-    paddingVertical: 20,
-    borderRadius: 10,
-    backgroundColor: Colors.DEEP_BLUE,
-    alignSelf: 'center',
-  },
-  buttonText: {
-    color: Colors.WHITE,
-    alignSelf: 'center',
-    textTransform: 'uppercase',
-    fontFamily: Typography.FONT_FAMILY_BOLD,
-  },
 })
 
 export default function index() {
@@ -42,9 +27,11 @@ export default function index() {
       <SelectBox />
       <FlowMap />
       <FlowInput />
-      <TouchableOpacity style={[styles.buttonContainer, { marginTop: 20, marginBottom: 10 }]}>
+      {/* <TouchableOpacity
+        style={[styles.buttonContainer, { marginTop: 20, marginBottom: 10, width: 200 }]}
+      >
         <Text style={styles.buttonText}>공유하기</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </ScrollView>
   )
 }
