@@ -3,7 +3,6 @@ import { View, Text, FlatList, Image } from 'react-native'
 
 // apollo
 import { useQuery } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
 import { Queries } from '~/graphql'
 
 // import screens
@@ -30,18 +29,14 @@ const renderYoutuber = (data) => {
       />
       <Text style={{ margin: 5 }}>체널명 : {data.ytbChannel}</Text>
       <Text style={{ margin: 5, color: 'gray' }}>구독자수 : {data.ytbSubscribe}</Text>
-      <Text style={{ margin: 5, color: 'gray' }}>방문맛집수 : {data.ytbProfile}</Text>
+      <Text style={{ margin: 5, color: 'gray' }}>방문맛집수 : {data.ytbHits}</Text>
       {/* <Text style={{ margin: 5 }}>{data.ytbLinkAddress}</Text> */}
     </View>
   )
 }
 
 export default function YoutuberList() {
-  const { loading, error, data } = useQuery(
-    gql`
-      ${Queries.GET_YOUTUBERS}
-    `
-  )
+  const { loading, error, data } = useQuery(Queries.GET_YOUTUBERS)
 
   if (loading) return <Text>로딩중입니다!!</Text>
   if (error) return <Text>에러가 났습니다!!</Text>
