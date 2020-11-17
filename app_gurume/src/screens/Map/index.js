@@ -13,14 +13,15 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flex: 1,
-    marginTop: 30,
-    opacity: 0.7,
+    // marginTop: 30,
+    // opacity: 0.7,
   },
 })
 
 export default () => {
   return (
     <View style={styles.container}>
+      {/* <View style={{ zIndex: 1000000, height: 25, backgroundColor: 'black', opacity: 0.5 }} /> */}
       <SearchInput />
       <SelectedYoutubers />
       <GoogleMap />
