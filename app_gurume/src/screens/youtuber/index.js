@@ -5,7 +5,7 @@ import { Text, StyleSheet, ScrollView } from 'react-native'
 import SearchInput from '@components/SearchInput'
 import ThumbsUp from '@components/ThumbsUp'
 import HashTagList from '@components/HashTagList'
-import MovieList from '@components/List/MovieList'
+import VideoList from '@components/List/VideoList'
 
 // import screens
 import YoutuberProfile from './YoutuberProfile'
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     marginTop: 30,
-    opacity: 0.8,
+    // opacity: 0.8,
   },
 })
 
@@ -29,7 +29,7 @@ export default () => {
       <YoutuberRank />
       <HashTagList />
       <Text style={{ padding: 10 }}>조회수 Top 5 영상</Text>
-      <MovieList />
+      <VideoList />
       <Text style={{ padding: 10 }}>해시태그로 보는 지역별 영상</Text>
       <YoutuberMovieInfo />
     </ScrollView>
