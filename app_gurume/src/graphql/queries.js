@@ -12,13 +12,7 @@ export const GET_YOUTUBERS = gql`
   }
 `
 export const ADD_YOUTUBER = gql`
-  mutation createChannel(
-    $ytbChannel: String
-    $ytbLinkAddress: String
-    $ytbProfile: String
-    $ytbSubscribe: Int
-    $ytbHits: Int
-  ) {
+  mutation {
     channelInput(
       ytbChannel: $ytbChannel
       ytbLinkAddress: $ytbLinkAddress

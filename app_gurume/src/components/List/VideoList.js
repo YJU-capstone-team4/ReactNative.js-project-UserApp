@@ -26,7 +26,7 @@ const renderVideo = (data) => {
       <Text
         style={{
           fontFamily: Typography.FONT_FAMILY_BOLD,
-          paddingTop: 6,
+          paddingTop: 2,
           paddingLeft: 15,
           color: Colors.GRAY_DARK,
         }}

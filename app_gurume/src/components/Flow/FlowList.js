@@ -5,10 +5,8 @@ import { View, Text, Button } from 'react-native'
 import { useMutation } from '@apollo/react-hooks'
 import { Queries } from '~/graphql'
 
-const channel = '안녕'
-
 export default function FlowList() {
-  const [addYoutuber, { loading, error, data }] = useMutation(Queries.ADD_YOUTUBER)
+  const [addYoutuber, { loading, error }] = useMutation(Queries.ADD_YOUTUBER)
 
   if (error) {
     return (
@@ -35,7 +33,7 @@ export default function FlowList() {
         onPress={() =>
           addYoutuber({
             variables: {
-              ytbChannel: { channel },
+              ytbChannel: '안녕하세요',
               ytbProfile: '개인 설명',
               ytbLinkAddress: '유튜버 주소',
               ytbSubscribe: 11123123,
