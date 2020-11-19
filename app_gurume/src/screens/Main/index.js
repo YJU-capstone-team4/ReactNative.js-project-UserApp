@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, StyleSheet, ScrollView } from 'react-native'
+import { getStatusBarHeight } from "react-native-status-bar-height"; 
 
 // import components
 import SearchInput from '@components/SearchInput'
@@ -13,7 +14,7 @@ const styles = StyleSheet.create({
   container: {
     // display: 'flex',
     flex: 1,
-    marginTop: 30,
+    marginTop: getStatusBarHeight(),
     // opacity: 0.6,
   },
 })

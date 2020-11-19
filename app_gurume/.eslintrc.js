@@ -25,6 +25,7 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
+    'react/prop-types': ['enabled', { ignore: 'ignore', customValidators: 'customValidator' }],pll
   },
   plugins: ['prettier'],
 }

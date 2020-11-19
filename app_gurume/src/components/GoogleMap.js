@@ -1,19 +1,27 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { StyleSheet } from 'react-native'
+import MapView from 'react-native-maps'
+
+const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+})
 
 export default function GoogleMap() {
   return (
-    <View
-      style={{
-        backgroundColor: '#9D71BD',
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 10,
+    <MapView
+      style={styles.container}
+      initialRegion={{
+        latitude: 37.413294,
+        longitude: 127.269311,
+        longitudeDelta: 0.1,
+        latitudeDelta: 0.1
       }}
-    >
-      <Text>GoogleMap 정보가 들어갈 공간입니다.</Text>
-      <Text>GoogleMap</Text>
-    </View>
+    />
   )
 }

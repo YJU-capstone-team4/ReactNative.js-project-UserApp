@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, ScrollView } from 'react-native'
+import { getStatusBarHeight } from "react-native-status-bar-height"; 
 
 // import components
 import SelectBox from '@components/SelectBox'
@@ -12,7 +13,7 @@ import Flow from './Flow'
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    marginTop: 30,
+    marginTop: getStatusBarHeight(),
     paddingHorizontal: 10,
   },
 })
