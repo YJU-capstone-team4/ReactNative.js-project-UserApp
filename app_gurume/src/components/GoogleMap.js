@@ -19,8 +19,8 @@ export default function GoogleMap() {
       initialRegion={{
         latitude: 37.413294,
         longitude: 127.269311,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
+        longitudeDelta: 0.1,
+        latitudeDelta: 0.1
       }}
     />
   )

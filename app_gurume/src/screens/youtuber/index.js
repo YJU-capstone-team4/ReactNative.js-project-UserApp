@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, StyleSheet, ScrollView } from 'react-native'
+import { getStatusBarHeight } from "react-native-status-bar-height"; 
 
 // import components
 import SearchInput from '@components/SearchInput'
@@ -15,7 +16,7 @@ import YoutuberMovieInfo from './YoutuberMovieInfo'
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    marginTop: 30,
+    marginTop: getStatusBarHeight(),
     // opacity: 0.8,
   },
 })

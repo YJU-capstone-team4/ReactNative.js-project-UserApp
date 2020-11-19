@@ -59,15 +59,15 @@ export default function SearchInput(props) {
       }}
     >
       <View style={styles.inputContainer}>
-        <MaterialCommunityIcons
+        {props.directionTop ? <MaterialCommunityIcons
           style={styles.hambugerContainer}
           name="format-list-bulleted"
           color="black"
           size={30}
-        />
+        /> : null}
         <TextInput
           style={{
-            paddingLeft: 27,
+            paddingLeft: props.directionTop ? 27 : 0,
             fontFamily: Typography.FONT_FAMILY_REGULAR,
             fontSize: Typography.FONT_SIZE_16,
           }}

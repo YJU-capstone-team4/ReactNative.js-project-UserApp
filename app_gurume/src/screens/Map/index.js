@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
+import { getStatusBarHeight } from "react-native-status-bar-height"; 
 
 // import components
 import SearchInput from '@components/SearchInput'
@@ -23,10 +24,10 @@ const styles = StyleSheet.create({
   topOpacityContainer: {
     position: 'absolute',
     top: 0,
-    height: 25,
+    height: getStatusBarHeight(),
     width: '100%',
     backgroundColor: Colors.GRAY_9,
-    opacity: 0.5,
+    opacity: 0.3,
   },
 })
 
