@@ -14,8 +14,8 @@ import FlowInput from './FlowInput'
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    marginTop: 30,
-    marginHorizontal: 10,
+    marginTop: 10,
+    paddingHorizontal: 10,
   },
 })
 

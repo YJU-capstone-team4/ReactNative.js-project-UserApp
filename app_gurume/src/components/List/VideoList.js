@@ -11,11 +11,20 @@ const renderVideo = (data) => {
   return (
     <View
       style={{
-        margin: 5,
+        marginHorizontal: 5,
+        marginTop:20,
         borderRadius: 10,
         backgroundColor: 'white',
       }}
     >
+      <Image style={{
+        position:'absolute',
+        zIndex:10,
+        top:-20,
+        left:-11,
+        width:50,
+        height:50,
+      }} source={data.medal}/>
       <Image
         style={{ width: 200, height: 150, borderTopRightRadius: 10, borderTopLeftRadius: 10 }}
         source={data.ytbThumbnail}
@@ -26,7 +35,7 @@ const renderVideo = (data) => {
       <Text
         style={{
           fontFamily: Typography.FONT_FAMILY_BOLD,
-          paddingTop: 2,
+          paddingTop: 5,
           paddingLeft: 15,
           color: Colors.GRAY_DARK,
         }}
@@ -42,13 +51,13 @@ export default function VideoList() {
     <View
       style={{
         backgroundColor: '#FFA6C5',
-        height: 265,
+        height: 275,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 10,
-        borderBottomEndRadius: 10,
-        borderBottomStartRadius: 10,
-        borderTopRightRadius: 10,
+        // marginBottom: 10,
+        // borderBottomEndRadius: 10,
+        // borderBottomStartRadius: 10,
+        // borderTopRightRadius: 10,
         paddingVertical: 10,
       }}
     >
