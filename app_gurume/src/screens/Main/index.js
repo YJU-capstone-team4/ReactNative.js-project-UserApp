@@ -1,6 +1,6 @@
-import React from 'react'
-import { Text, StyleSheet, ScrollView } from 'react-native'
-import { getStatusBarHeight } from "react-native-status-bar-height"; 
+import React, { useState, useEffect } from 'react'
+import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native'
+import { getStatusBarHeight } from "react-native-status-bar-height";
 
 // import components
 import SearchInput from '@components/SearchInput'
@@ -20,8 +20,33 @@ const styles = StyleSheet.create({
 })
 
 export default () => {
+  const [address, setAddress] = useState('')
+  useEffect(() => {
+    fetch('https://dapi.kakao.com/v2/local/geo/coord2address.json?x=128.458&y=36.15&input_coord=WGS84', {
+      method: 'GET',
+      headers: new Headers({
+        'Authorization': '',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Host': 'dapi.kakao.com'
+      }), 
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        setAddress(json)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [])
+
   return (
     <ScrollView style={styles.container}>
+      <View>
+        <Text>
+          {JSON.stringify(address)}
+        </Text>
+      </View>
       <MainHeader />
       <SearchInput />
       <Text style={{ padding: 10 }}>대구광역시를 방문한 유튜버</Text>

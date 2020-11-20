@@ -19,7 +19,7 @@ export default function BottomNavigation() {
       initialRouteName="Main"
       // labeled
       activeColor="black"
-      inactiveColor="pink"
+      inactiveColor="#3ec3d5"
       barStyle={{ backgroundColor: '#FFFFFF' }}
     >
       <Tab.Screen
@@ -66,7 +66,6 @@ export default function BottomNavigation() {
         name="Youtuber"
         component={YoutuberScreen}
         options={{
-          tabBarBadge: 10,
           tabBarLabel: '유튜버',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="cloud-search" color={color} size={26} />

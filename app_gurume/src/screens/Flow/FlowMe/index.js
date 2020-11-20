@@ -11,9 +11,8 @@ import FlowMap from '@components/Flow/FlowMap'
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    marginTop: 30,
+    marginTop: 10,
     paddingHorizontal: 10,
-    // opacity: 0.6,
   },
 })
 
