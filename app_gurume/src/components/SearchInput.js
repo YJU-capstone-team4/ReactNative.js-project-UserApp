@@ -60,6 +60,7 @@ export default function SearchInput(props) {
     >
       <View style={styles.inputContainer}>
         {props.directionTop ? <MaterialCommunityIcons
+          onPress={() => props.navigation.openDrawer()}
           style={styles.hambugerContainer}
           name="format-list-bulleted"
           color="black"

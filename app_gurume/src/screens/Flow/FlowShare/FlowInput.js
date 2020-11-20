@@ -285,7 +285,7 @@ export default function FlowInput() {
                   <Text style={[styles.buttonText, { marginTop: 15 }]}>...</Text>
                 ) : null
               ) : (
-                <View key={index.id} style={[styles.tagContainer, { backgroundColor: tag.color }]}>
+                <View key={index} style={[styles.tagContainer, { backgroundColor: tag.color }]}>
                   <Text style={styles.buttonText}>{tag.name}</Text>
                 </View>
               )
