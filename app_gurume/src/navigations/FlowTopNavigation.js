@@ -22,6 +22,7 @@ export default function FlowTopNavigation() {
           borderWidth: 0.9,
           marginHorizontal: 50,
           borderRadius: 18,
+          marginTop: 10,
           // backgroundColor: 'black',
         },
         labelStyle: {

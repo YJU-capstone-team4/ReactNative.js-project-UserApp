@@ -1,8 +1,15 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Platform, StyleSheet, View, StatusBar } from 'react-native'
 import { getStatusBarHeight } from "react-native-status-bar-height";
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Colors } from '@styles'
+
+StatusBar.setBarStyle("light-content");
+if (Platform.OS === "android") {
+  StatusBar.setBackgroundColor("rgba(0,0,0,0.3)");
+  StatusBar.setTranslucent(true);
+}
+
 
 // import components
 import SearchInput from '@components/SearchInput'
@@ -24,9 +31,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     height: getStatusBarHeight(),
-    width: '100%',
     backgroundColor: Colors.GRAY_9,
-    opacity: 0.3,
+    opacity: 0.4,
   },
 })
 
@@ -34,7 +40,9 @@ const MapScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <GoogleMap />
-      <View style={styles.topOpacityContainer} />
+      <View style={styles.topOpacityContainer}>
+        <StatusBar barStyle="light-content" />
+      </View>
       <SearchInput directionTop navigation={navigation} />
       <SelectedYoutubers />
       <Fab />
