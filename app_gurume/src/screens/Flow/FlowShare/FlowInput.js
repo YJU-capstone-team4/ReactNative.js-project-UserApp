@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
   inputText: {
     fontFamily: Typography.FONT_FAMILY_BOLD,
     marginVertical: 5,
+    marginLeft: 5
   },
   buttonContainer: {
     elevation: 3,
@@ -58,6 +59,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     alignItems: 'center',
+    paddingHorizontal:10
   },
   thumbnailBackground: {
     position: 'absolute',
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const tags = [
+const dummyTags = [
   {
     color: '#ff99cc',
     name: '대구광역시',
@@ -104,11 +106,11 @@ export default function FlowInput() {
   // -->>
   const [title, setTitle] = useState('데이트 하기 좋은 코스')
   const [hashTag, setHashTag] = useState('')
-  const [hashTags, setHashTags] = useState(tags)
+  const [hashTags, setHashTags] = useState(dummyTags)
 
   // 카메라 모듈 권한 확인 :: IIFE
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       const cameraStatus = await Camera.requestPermissionsAsync()
       setHasCameraPermission(cameraStatus.status === 'granted')
 
@@ -165,7 +167,7 @@ export default function FlowInput() {
       Alert.alert('지역 해시태그는 삭제 불가능합니다.')
     } else {
       Alert.alert(`삭제될 해시태그의 인덱스번호는? ${index}`)
-      setTitle(`${title} ${index}`)
+      // setTitle(`${title} ${index}`)
       hashTags.splice(index, 1)
       // setHashTags([hashTags.pop(index, 1)])
     }
@@ -264,34 +266,37 @@ export default function FlowInput() {
         <Text style={styles.buttonText}>공유하기</Text>
       </TouchableOpacity>
       {image && (
-        <View style={{ marginVertical: 10 }}>
-          <Image source={{ uri: image }} style={{ flex: 1, height: 200, borderRadius: 10 }} />
-          {/* 불투명 Black 배경 */}
-          <View style={styles.thumbnailBackground} />
-          {/* 썸네일 제목 */}
-          <View style={styles.thumbnailTitle}>
-            <Text style={[styles.buttonText, { color: 'white', fontSize: 40 }]}>{title}</Text>
+        <>
+          <Text style={styles.inputText}># 썸네일 미리보기</Text>
+          <View style={{ marginVertical: 5 }}>
+            <Image source={{ uri: image }} style={{ flex: 1, height: 200, borderRadius: 10 }} />
+            {/* 불투명 Black 배경 */}
+            <View style={styles.thumbnailBackground} />
+            {/* 썸네일 제목 */}
+            <View style={styles.thumbnailTitle}>
+              <Text numberOfLines={1} style={[styles.buttonText, { color: 'white', fontSize: 40}]}>{title}</Text>
+            </View>
+            {/* 썸네일 관련 태그 */}
+            <View
+              style={[
+                styles.container,
+                { margin: 10, position: 'absolute', bottom: 10, flexWrap: 'nowrap' },
+              ]}
+            >
+              {hashTags.map((tag, index) =>
+                index > 5 ? (
+                  hashTags.length - 1 === index ? (
+                    <Text style={[styles.buttonText, { marginTop: 15 }]}>...</Text>
+                  ) : null
+                ) : (
+                    <View key={index} style={[styles.tagContainer, { backgroundColor: tag.color }]}>
+                      <Text style={styles.buttonText}>{tag.name}</Text>
+                    </View>
+                  )
+              )}
+            </View>
           </View>
-          {/* 썸네일 관련 태그 */}
-          <View
-            style={[
-              styles.container,
-              { margin: 10, position: 'absolute', bottom: 10, flexWrap: 'nowrap' },
-            ]}
-          >
-            {hashTags.map((tag, index) =>
-              index > 5 ? (
-                hashTags.length - 1 === index ? (
-                  <Text style={[styles.buttonText, { marginTop: 15 }]}>...</Text>
-                ) : null
-              ) : (
-                <View key={index} style={[styles.tagContainer, { backgroundColor: tag.color }]}>
-                  <Text style={styles.buttonText}>{tag.name}</Text>
-                </View>
-              )
-            )}
-          </View>
-        </View>
+        </>
       )}
     </View>
   )

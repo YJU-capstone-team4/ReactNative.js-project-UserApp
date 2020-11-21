@@ -18,11 +18,12 @@ const styles = StyleSheet.create({
     // opacity: 0.6,
   },
 })
-
 export default () => {
   const [address, setAddress] = useState('')
+  const lat = 33.364805
+  const lng = 126.542671
   useEffect(() => {
-    fetch('https://dapi.kakao.com/v2/local/geo/coord2address.json?x=128.458&y=36.15&input_coord=WGS84', {
+    fetch(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`, {
       method: 'GET',
       headers: new Headers({
         'Authorization': '',

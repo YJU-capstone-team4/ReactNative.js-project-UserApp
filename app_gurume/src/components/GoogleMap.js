@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import MapView from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
 
 const styles = StyleSheet.create({
   container: {
@@ -17,10 +17,10 @@ export default function GoogleMap() {
     <MapView
       style={styles.container}
       initialRegion={{
-        latitude: 37.413294,
-        longitude: 127.269311,
-        longitudeDelta: 0.1,
-        latitudeDelta: 0.1
+        latitude: 35.86990,
+        longitude: 128.59554,
+        longitudeDelta: 0.009,
+        latitudeDelta: 0.009
       }}
     />
   )

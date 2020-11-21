@@ -18,8 +18,8 @@ export default function BottomNavigation() {
     <Tab.Navigator
       initialRouteName="Main"
       // labeled
-      activeColor="black"
-      inactiveColor="#3ec3d5"
+      activeColor="#1aa3d5"
+      inactiveColor="#000000"
       barStyle={{ backgroundColor: '#FFFFFF' }}
     >
       <Tab.Screen
