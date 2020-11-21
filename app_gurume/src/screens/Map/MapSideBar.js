@@ -67,13 +67,13 @@ const dummyRoute = [
 ]
 
 // navigation.goBack()
-const folderItem = (data) => (
-    <TouchableOpacity>
+const folderItem = dummyRoute.map((data, index) =>
+    <TouchableOpacity key={index}>
         <View style={styles.container, styles.folderItemContainer}>
             <MaterialCommunityIcons name={data.icon} color="black" size={18} />
             <Text style={styles.textContainer}>{data.routeName}</Text>
         </View>
-    </TouchableOpacity>
+    </TouchableOpacity >
 )
 
 export default function MapSideBar(props) {
@@ -92,9 +92,7 @@ export default function MapSideBar(props) {
                     </View>
                 </View>
                 <View style={styles.folderContainer}>
-                    {
-                        dummyRoute.map((data) => folderItem(data))
-                    }
+                    {folderItem}
                 </View>
             </View>
         </DrawerContentScrollView>

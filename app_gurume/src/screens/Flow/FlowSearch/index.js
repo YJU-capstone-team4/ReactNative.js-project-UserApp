@@ -12,13 +12,13 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     marginTop: 10,
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
   },
 })
 
 export default function index() {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <Text>동선 - 검색</Text>
       <Text>FlowSearch - Index.js</Text>
       <SearchInput />

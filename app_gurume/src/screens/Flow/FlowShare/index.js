@@ -15,13 +15,13 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     marginTop: 10,
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
   },
 })
 
 export default function index() {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <Text>동선 - 공유</Text>
       <Text>FlowShare</Text>
       <SelectBox />
