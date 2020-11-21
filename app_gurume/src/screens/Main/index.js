@@ -26,7 +26,7 @@ export default () => {
     fetch(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}&input_coord=WGS84`, {
       method: 'GET',
       headers: new Headers({
-        'Authorization': '',
+        'Authorization': 'KakaoAK 6ecd5dd745925aa0fdb0dc4a91e29af3',
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Host': 'dapi.kakao.com'

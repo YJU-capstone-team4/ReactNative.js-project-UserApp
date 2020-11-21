@@ -1,16 +1,15 @@
-import React from 'react'
-import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Alert } from 'react-native'
 
 // import styles
 import { Colors, Typography } from '@styles'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import mokupYoutuber from '@components/List/mokupYoutuber'
-
 const styles = StyleSheet.create({
   inputContainer: {
     elevation: 20,
-    borderRadius: 6,
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
     borderWidth: 1,
     borderColor: Colors.GRAY_LIGHT,
     backgroundColor: Colors.WHITE,
@@ -23,7 +22,8 @@ const styles = StyleSheet.create({
   },
 })
 
-const renderYoutuber = (item) => {
+const renderYoutuber = (item, handelRemoveYoutuber) => {
+  console.log(item)
   return (
     <View
       style={{
@@ -33,12 +33,13 @@ const renderYoutuber = (item) => {
         alignItems: 'center',
       }}
     >
-      <MaterialCommunityIcons
-        style={{ top: 9, left: 25, zIndex: 100 }}
-        name="close-circle"
-        color="black"
-        size={19}
-      />
+      <TouchableOpacity onPress={() => handelRemoveYoutuber(item.ytbChannel)} style={{ top: 9, left: 25, zIndex: 100 }}>
+        <MaterialCommunityIcons
+          name="close-circle"
+          color="black"
+          size={19}
+        />
+      </TouchableOpacity>
       <TouchableOpacity>
         {item.ytbChannel === '문복희' ? (
           <View
@@ -68,7 +69,7 @@ const renderYoutuber = (item) => {
   )
 }
 
-export default function SelectedYoutubers() {
+export default function SelectedYoutubers(props) {
   return (
     <View
       style={[
@@ -76,12 +77,10 @@ export default function SelectedYoutubers() {
         {
           position: 'absolute',
           bottom: 0,
-          // marginTop: 20,
           height: 145,
           width: '100%',
           alignItems: 'center',
           marginRight: 10,
-          alignSelf: 'flex-end',
         },
       ]}
     >
@@ -94,12 +93,12 @@ export default function SelectedYoutubers() {
         추가된 유튜버 리스트
       </Text>
       <FlatList
-        data={mokupYoutuber}
+        data={props.youtubers}
         keyExtractor={(item) => item.ytbChannel}
         horizontal
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => renderYoutuber(item)}
-        keyboardShouldPersistTaps="always"
+        renderItem={({ item }) => renderYoutuber(item, props.handelRemoveYoutuber)}
+        // keyboardShouldPersistTaps="always"
       />
     </View>
   )
