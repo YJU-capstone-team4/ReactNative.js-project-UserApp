@@ -110,3 +110,5 @@ export const PINK_6 = '#d03592'
 export const PINK_7 = '#b93a86'
 export const PINK_8 = '#99306f'
 export const PINK_9 = '#6d224f'
+
+export const CEMENT = '#e7ecf0'

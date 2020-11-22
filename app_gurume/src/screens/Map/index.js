@@ -91,19 +91,6 @@ const MapScreen = ({ navigation }) => {
   )
 }
 
-const SelectBoxSwitch = () => {
-  <ToggleSwitch
-
-    isOn={false}
-    onColor="green"
-    offColor="red"
-    label="Example label"
-    labelStyle={{ color: "black", fontWeight: "900" }}
-    size="large"
-    onToggle={isOn => console.log("changed to : ", isOn)}
-  />
-}
-
 const Drawer = createDrawerNavigator();
 
 export default () => {
