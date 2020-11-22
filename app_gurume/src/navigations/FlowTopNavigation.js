@@ -15,25 +15,18 @@ export default function FlowTopNavigation() {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        activeTintColor: Colors.SUCCESS,
-        inactiveTintColor: Colors.BLACK,
-        style: {
-          borderColor: Colors.SUCCESS,
-          borderWidth: 0.9,
-          marginHorizontal: 50,
-          borderRadius: 18,
-          marginTop: 10,
-          // backgroundColor: 'black',
-        },
+        activeTintColor: Colors.BLACK,
         labelStyle: {
-          textAlign: 'center',
+          fontSize: 12,
           fontFamily: Typography.FONT_FAMILY_BOLD,
         },
+        tabStyle: { width: 100 },
+        style: { backgroundColor: Colors.CEMENT },
         indicatorStyle: {
-          borderBottomColor: 'transparent',
           opacity: 0,
           borderBottomWidth: 0,
-        },
+          borderBottomColor: 'transparent'
+        }
       }}
     >
       <Tab.Screen

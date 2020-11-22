@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { Queries } from '~/graphql'
 
 // import screens
-// import mokupYoutuber from './mokupYoutuber'
+import mokupYoutuber from './mokupYoutuber'
 
 const renderYoutuber = (data) => {
   return (
@@ -38,8 +38,8 @@ const renderYoutuber = (data) => {
 export default function YoutuberList() {
   const { loading, error, data } = useQuery(Queries.GET_YOUTUBERS)
 
-  if (loading) return <Text>로딩중입니다!!</Text>
-  if (error) return <Text>에러가 났습니다!!</Text>
+  // if (loading) return <Text>로딩중입니다!!</Text>
+  // if (error) return <Text>에러가 났습니다!!</Text>
 
   return (
     <View
@@ -50,15 +50,15 @@ export default function YoutuberList() {
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 10,
-        borderBottomEndRadius: 10,
-        borderBottomStartRadius: 10,
-        borderTopRightRadius: 10,
+        // borderBottomEndRadius: 10,
+        // borderBottomStartRadius: 10,
+        // borderTopRightRadius: 10,
       }}
     >
       <Text>유튜버 Top 5 랭킹 정보가 들어갈 공간입니다.</Text>
       <Text>YoutuberList</Text>
       <FlatList
-        data={data.ytbChannel}
+        data={mokupYoutuber}
         keyExtractor={(item) => item.ytbChannel}
         horizontal
         showsHorizontalScrollIndicator={false}

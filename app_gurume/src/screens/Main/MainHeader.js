@@ -14,7 +14,7 @@ export default function MainHeader() {
       }}
     >
       <Text>헤더 정보가 들어갈 공간입니다.</Text>
-      <Text>MainHeader</Text>
+      <Text>ビックグルメ</Text>
     </View>
   )
 }

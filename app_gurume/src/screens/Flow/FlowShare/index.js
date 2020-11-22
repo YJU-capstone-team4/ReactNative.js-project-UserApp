@@ -27,11 +27,6 @@ export default function index() {
       <SelectBox />
       <FlowMap />
       <FlowInput />
-      {/* <TouchableOpacity
-        style={[styles.buttonContainer, { marginTop: 20, marginBottom: 10, width: 200 }]}
-      >
-        <Text style={styles.buttonText}>공유하기</Text>
-      </TouchableOpacity> */}
     </ScrollView>
   )
 }

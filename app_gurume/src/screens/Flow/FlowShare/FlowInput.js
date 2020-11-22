@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     marginVertical: 5,
-    textTransform: 'uppercase',
   },
   inputText: {
     fontFamily: Typography.FONT_FAMILY_BOLD,
@@ -40,7 +39,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: Colors.WHITE,
     alignSelf: 'center',
-    textTransform: 'uppercase',
     fontFamily: Typography.FONT_FAMILY_BOLD,
   },
   tagContainer: {
@@ -59,7 +57,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     alignItems: 'center',
-    paddingHorizontal:10
+    paddingHorizontal: 10
   },
   thumbnailBackground: {
     position: 'absolute',
@@ -101,12 +99,10 @@ export default function FlowInput() {
   const [hasGalleryPermission, setHasGalleryPermission] = useState(null)
   const [hasCameraPermission, setHasCameraPermission] = useState(null)
   const [image, setImage] = useState(null)
-  const [camera, setCamera] = useState(null)
-  // const [type, setType] = useState(Camera.Constants.Type.back)
   // -->>
   const [title, setTitle] = useState('데이트 하기 좋은 코스')
   const [hashTag, setHashTag] = useState('')
-  const [hashTags, setHashTags] = useState(dummyTags)
+  const [hashTagList, setHashTagList] = useState(dummyTags)
 
   // 카메라 모듈 권한 확인 :: IIFE
   useEffect(() => {
@@ -124,36 +120,30 @@ export default function FlowInput() {
     if (hashTag === '') {
       Alert.alert('해시태그를 입력해주세요!!!')
     } else {
-      setHashTags([
-        ...hashTags,
+      setHashTagList([
+        ...hashTagList,
         {
           color: '#ff99cc',
           name: hashTag,
         },
       ])
-
       setHashTag('')
-    }
-  }
-
-  // 카메라 모듈 로딩 후, 비동기 처리로 사진 결과값을 가져오기. ( 라이브 사진 촬영 )
-  const handelTakePicture = async () => {
-    if (camera) {
-      const data = await camera.takePictureAsync(null)
-      setImage(data.uri)
     }
   }
 
   // 휴대폰 로컬 저장소에서 이미지 가져오기
   const handelPickImage = async () => {
+    // 유저로 부터 권한을 얻지 못했을 경우
+    if (hasCameraPermission === false || hasGalleryPermission === false) {
+      return Alert.alert('사용자로부터 권한을 얻지 못했습니다.')
+    }
+
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [16, 9], // 사용자로부터 1:1 비율의 이미지 가져오기
       quality: 1,
     })
-
-    // console.log(result)
 
     // 이미지 최종 저장
     if (!result.cancelled) {
@@ -163,35 +153,57 @@ export default function FlowInput() {
 
   // 선택적 해시태그 삭제
   const handelRemoveHashTag = (index) => {
-    if (index < 2) {
-      Alert.alert('지역 해시태그는 삭제 불가능합니다.')
-    } else {
-      Alert.alert(`삭제될 해시태그의 인덱스번호는? ${index}`)
-      // setTitle(`${title} ${index}`)
-      hashTags.splice(index, 1)
-      // setHashTags([hashTags.pop(index, 1)])
-    }
+    const _isDefaultTag = index < 2
+
+    _isDefaultTag ?
+      Alert.alert('기본 해시태그는 삭제 불가능합니다.') :
+      setHashTagList(hashTagList.filter((e, i) => (i !== index)))
   }
 
   const handelUploadFlow = () => {
     if (title.length === 0) {
-      Alert.alert('제목을 입력해주세요!!!')
+      Alert.alert('제목을 입력해주세요.')
+    } else if (image === null) {
+      Alert.alert('썸네일 이미지를 지정해주세요.')
     } else {
       // mutation 쿼리 전송 ..
 
       // 데이터 초기화 ..
       setTitle('')
-      // setHashTags(tags)
       setHashTag('')
       setImage(null)
     }
   }
 
-  // 유저로 부터 권한을 얻지 못했을 경우
-  if (hasCameraPermission === false || hasGalleryPermission === false) {
+  const thumbnail = () => {
     return (
-      <View>
-        <Text>No access to camera</Text>
+      <View style={{ marginVertical: 5 }}>
+        <Image source={{ uri: image }} style={{ flex: 1, height: 200, borderRadius: 10 }} />
+        {/* 불투명 Black 배경 */}
+        <View style={styles.thumbnailBackground} />
+        {/* 썸네일 제목 */}
+        <View style={styles.thumbnailTitle}>
+          <Text numberOfLines={1} style={[styles.buttonText, { color: 'white', fontSize: 40 }]}>{title}</Text>
+        </View>
+        {/* 썸네일 관련 태그 */}
+        <View
+          style={[
+            styles.container,
+            { margin: 10, position: 'absolute', bottom: 10, flexWrap: 'nowrap' },
+          ]}
+        >
+          {hashTagList.map((tag, index) =>
+            index > 5 ? (
+              hashTagList.length - 1 === index ? (
+                <Text style={[styles.buttonText, { marginTop: 15 }]}>...</Text>
+              ) : null
+            ) : (
+                <View key={index} style={[styles.tagContainer, { backgroundColor: tag.color }]}>
+                  <Text style={styles.buttonText}>{tag.name}</Text>
+                </View>
+              )
+          )}
+        </View>
       </View>
     )
   }
@@ -233,13 +245,12 @@ export default function FlowInput() {
       </View>
       <Text style={styles.inputText}># 해시태그</Text>
       <View style={styles.container}>
-        {hashTags.map((tag, index) => (
+        {hashTagList.map((tag, index) => (
           <View
             key={index.toString()}
             style={[styles.tagContainer, { backgroundColor: tag.color }]}
           >
             <TouchableOpacity
-              key={index.toString()}
               style={{
                 position: 'absolute',
                 right: -6,
@@ -249,7 +260,6 @@ export default function FlowInput() {
               onPress={() => handelRemoveHashTag(index)}
             >
               <MaterialCommunityIcons
-                // style={{ margin: 20 }}
                 name="close-circle"
                 color="black"
                 size={19}
@@ -268,34 +278,7 @@ export default function FlowInput() {
       {image && (
         <>
           <Text style={styles.inputText}># 썸네일 미리보기</Text>
-          <View style={{ marginVertical: 5 }}>
-            <Image source={{ uri: image }} style={{ flex: 1, height: 200, borderRadius: 10 }} />
-            {/* 불투명 Black 배경 */}
-            <View style={styles.thumbnailBackground} />
-            {/* 썸네일 제목 */}
-            <View style={styles.thumbnailTitle}>
-              <Text numberOfLines={1} style={[styles.buttonText, { color: 'white', fontSize: 40}]}>{title}</Text>
-            </View>
-            {/* 썸네일 관련 태그 */}
-            <View
-              style={[
-                styles.container,
-                { margin: 10, position: 'absolute', bottom: 10, flexWrap: 'nowrap' },
-              ]}
-            >
-              {hashTags.map((tag, index) =>
-                index > 5 ? (
-                  hashTags.length - 1 === index ? (
-                    <Text style={[styles.buttonText, { marginTop: 15 }]}>...</Text>
-                  ) : null
-                ) : (
-                    <View key={index} style={[styles.tagContainer, { backgroundColor: tag.color }]}>
-                      <Text style={styles.buttonText}>{tag.name}</Text>
-                    </View>
-                  )
-              )}
-            </View>
-          </View>
+          {thumbnail()}
         </>
       )}
     </View>

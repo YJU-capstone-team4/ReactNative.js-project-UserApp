@@ -16,11 +16,11 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     flex: 1,
     backgroundColor: Colors.WHITE,
-    elevation: 20,
+    // elevation: 20,
     shadowColor: Colors.GRAY_9,
   },
   buttonContainer: {
-    elevation: 20,
+    // elevation: 20,
     marginLeft: 12,
     width: 60,
     height: 60,

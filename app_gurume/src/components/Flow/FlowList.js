@@ -1,48 +1,48 @@
 import React from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
-// apollo
-import { useMutation } from '@apollo/react-hooks'
-import { Queries } from '~/graphql'
+// import styles
+import { Colors, Typography } from '@styles'
 
-export default function FlowList() {
-  const [addYoutuber, { loading, error }] = useMutation(Queries.ADD_YOUTUBER)
+// import components
+import PreviewThumb from '@components/PreviewThumb'
 
-  if (error) {
-    return (
-      <View>
-        <Text>에러났음!{JSON.stringify(error)}</Text>
-      </View>
-    )
-  }
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    // elevation: 3,
+    margin: 10,
+    paddingHorizontal: 13,
+    paddingVertical: 7,
+    borderRadius: 20,
+    backgroundColor: Colors.CEMENT,
+    alignSelf: 'flex-end',
+  },
+  buttonText: {
+    color: Colors.BLUE_5,
+    alignSelf: 'center',
+    fontFamily: Typography.FONT_FAMILY_EXTRA_BOLD,
+  },
+})
+
+
+export default function FlowList({ localShareFlow }) {
   return (
     <View
-      style={{
-        backgroundColor: '#FFB900',
-        height: 300,
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 10,
-      }}
+      style={styles.container}
     >
-      <Text>동선 Top 5 랭킹 정보가 들어갈 공간입니다.</Text>
-      <Text>FlowList</Text>
-      <Button
-        title="유튜버 추가"
-        onPress={() =>
-          addYoutuber({
-            variables: {
-              ytbChannel: '안녕하세요',
-              ytbProfile: '개인 설명',
-              ytbLinkAddress: '유튜버 주소',
-              ytbSubscribe: 11123123,
-              ytbHits: 12123123,
-            },
-          })
-        }
-        disabled={loading}
-      />
+      {
+        localShareFlow ? localShareFlow.map((value => <PreviewThumb data={value} />)) : null
+      }
+      
+      <TouchableOpacity style={styles.buttonContainer} >
+        <Text style={styles.buttonText}>더보기</Text>
+      </TouchableOpacity>
     </View>
   )
 }

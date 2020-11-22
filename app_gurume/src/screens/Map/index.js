@@ -5,6 +5,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import ToggleSwitch from 'toggle-switch-react-native'
 import { Colors, Typography } from '@styles'
 
+import mokupYoutuber from '@components/List/mokupYoutuber'
+
 StatusBar.setBarStyle("light-content");
 if (Platform.OS === "android") {
   StatusBar.setBackgroundColor("rgba(0,0,0,0.3)");
@@ -57,6 +59,13 @@ const styles = StyleSheet.create({
 })
 
 const MapScreen = ({ navigation }) => {
+  const [youtubers, setYoutubers] = useState(mokupYoutuber)
+
+  const handelRemoveYoutuber = (channelName) => {
+    console.log(youtubers, channelName)
+
+    setYoutubers(youtubers.filter((e) => (e.ytbChannel !== channelName)))
+  }
   const [toggle, setToggle] = useState(true)
 
   return (
@@ -74,22 +83,12 @@ const MapScreen = ({ navigation }) => {
         ]}>{toggle ? 'ON' : 'OFF'}</Text>
       </TouchableOpacity>
       <SearchInput directionTop navigation={navigation} />
-      {toggle ? <SelectedYoutubers /> : null}
+      {toggle ? <SelectedYoutubers
+        youtubers={youtubers}
+        handelRemoveYoutuber={handelRemoveYoutuber}
+      /> : null}
     </View>
   )
-}
-
-const SelectBoxSwitch = () => {
-  <ToggleSwitch
-
-    isOn={false}
-    onColor="green"
-    offColor="red"
-    label="Example label"
-    labelStyle={{ color: "black", fontWeight: "900" }}
-    size="large"
-    onToggle={isOn => console.log("changed to : ", isOn)}
-  />
 }
 
 const Drawer = createDrawerNavigator();
