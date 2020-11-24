@@ -1,17 +1,9 @@
 import React, { useState } from 'react'
-import { Platform, StyleSheet, View, StatusBar, Text, TouchableOpacity } from 'react-native'
-import { getStatusBarHeight } from "react-native-status-bar-height";
+import { Platform, StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import ToggleSwitch from 'toggle-switch-react-native'
 import { Colors, Typography } from '@styles'
 
 import mokupYoutuber from '@components/List/mokupYoutuber'
-
-StatusBar.setBarStyle("light-content");
-if (Platform.OS === "android") {
-  StatusBar.setBackgroundColor("rgba(0,0,0,0.3)");
-  StatusBar.setTranslucent(true);
-}
 
 // import components
 import SearchInput from '@components/SearchInput'
@@ -27,13 +19,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
-  },
-  topOpacityContainer: {
-    position: 'absolute',
-    top: 0,
-    height: getStatusBarHeight(),
-    backgroundColor: Colors.GRAY_9,
-    opacity: 0.4,
   },
   toggleContainer: {
     position: 'absolute',
@@ -71,9 +56,6 @@ const MapScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <GoogleMap />
-      <View style={styles.topOpacityContainer}>
-        <StatusBar barStyle="light-content" />
-      </View>
       <TouchableOpacity onPress={() => setToggle(!toggle)} style={styles.toggleContainer}>
         <Text style={styles.toggleText}>유튜버 리스트</Text>
         <Text style={[styles.toggleText, styles.toggleOnText,
