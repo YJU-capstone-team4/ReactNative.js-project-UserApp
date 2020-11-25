@@ -4,23 +4,24 @@ import styled from 'styled-components'
 import { Colors, Typography } from './index'
 
 export const Text = styled.Text`
+  color:${Colors.BLACK};
   font-size: ${({ size }) => {
         switch (size) {
             case 12:
-                return Typography.FONT_SIZE_12
+                return parseInt(Number(Typography.FONT_SIZE_12))
             case 14:
-                return Typography.FONT_SIZE_14
+                return parseInt(Number(Typography.FONT_SIZE_14))
             case 18:
-                return Typography.FONT_SIZE_18
+                return parseInt(Number(Typography.FONT_SIZE_18))
             case 20:
-                return Typography.FONT_SIZE_20
+                return parseInt(Number(Typography.FONT_SIZE_20))
             case 22:
-                return Typography.FONT_SIZE_22
+                return parseInt(Number(Typography.FONT_SIZE_22))
             case 16:
             default:
-                return Typography.FONT_SIZE_16
+                return parseInt(Number(Typography.FONT_SIZE_16))
         }
-    }};
+    }}px;
   color: black;
   font-family: ${({ weight }) => {
         switch (weight) {

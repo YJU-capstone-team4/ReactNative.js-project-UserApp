@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Platform, StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Colors, Typography } from '@styles'
 
@@ -14,36 +13,8 @@ import SelectedYoutubers from './SelectedYoutubers'
 import MapSideBar from './MapSideBar'
 
 // import styles
-import {Container} from '../../styles/MapStyles'
-
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'column',
-  },
-  toggleContainer: {
-    position: 'absolute',
-    top: 120,
-    right: 10,
-    backgroundColor: Colors.BLACK,
-    width: 120,
-    paddingVertical: 10,
-    borderRadius: 12,
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row'
-  },
-  toggleText: {
-    fontFamily: Typography.FONT_FAMILY_BOLD,
-    fontSize: Typography.FONT_SIZE_16,
-    color: Colors.WHITE,
-  },
-  toggleOnText: {
-    fontFamily: Typography.FONT_FAMILY_EXTRA_BOLD,
-    paddingLeft: 5
-  }
-})
+import { Container, ToogleContainer } from './MapStyles'
+import { Text } from '@styles/CommonStyles'
 
 const MapScreen = ({ navigation }) => {
   const [youtubers, setYoutubers] = useState(mokupYoutuber)
@@ -57,21 +28,19 @@ const MapScreen = ({ navigation }) => {
 
   return (
     <Container>
-      <GoogleMap />
-      <TouchableOpacity onPress={() => setToggle(!toggle)} style={styles.toggleContainer}>
-        <Text style={styles.toggleText}>유튜버 리스트</Text>
-        <Text style={[styles.toggleText, styles.toggleOnText,
-        {
-          color: toggle ? Colors.GREEN_3 : Colors.RED_3
-        }
-        ]}>{toggle ? 'ON' : 'OFF'}</Text>
-      </TouchableOpacity>
+      <GoogleMap setToggle={setToggle} />
+      <ToogleContainer onPress={() => setToggle(!toggle)}>
+        <Text weight={"BOLD"} style={{ color: Colors.WHITE, marginRight: 4 }}>유튜버 리스트</Text>
+        <Text weight={"EXTRA_BOLD"} style={{ color: toggle ? Colors.GREEN_3 : Colors.RED_3 }}>{toggle ? 'ON' : 'OFF'}</Text>
+      </ToogleContainer>
       <SearchInput directionTop navigation={navigation} />
-      {toggle ? <SelectedYoutubers
-        youtubers={youtubers}
-        handelRemoveYoutuber={handelRemoveYoutuber}
-      /> : null}
-    </Container>
+      {
+        toggle ? <SelectedYoutubers
+          youtubers={youtubers}
+          handelRemoveYoutuber={handelRemoveYoutuber}
+        /> : null
+      }
+    </Container >
   )
 }
 

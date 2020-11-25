@@ -1,96 +1,82 @@
-import React from 'react'
-import { StyleSheet, View, Text, Image } from 'react-native'
-import MapView, { Marker, Callout } from 'react-native-maps'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Image } from 'react-native'
+import MapView, { Marker } from 'react-native-maps'
+
+// import dummy data
+import { markers } from './dummyMapData'
 
 // import styles
-import { Colors, Typography } from '@styles'
+import { CustomMakrer, MarkerContainer, MarkerTitleContainer } from '../styles/GoogleMapStyles'
+import { Text } from '../styles/CommonStyles'
 import markerImage from '@images/delivery_128.png'
-import videoImage from '@images/movie_thumbnail_3.png'
+import youtuberThumb from '@images/thumbnail_5.jpg'
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  plainView: {
-    width: 'auto',
-    backgroundColor: Colors.RED_4
-  },
-  markerConatiner: {
-    width: 40,
-    height: 40,
-    marginTop: 5,
+    ...StyleSheet.absoluteFillObject
   },
   videoConatiner: {
-
+    width: 23,
+    height: 23,
+    borderRadius: 10,
   },
-  videoSource: {
-    height: 100,
-    width: 160,
-    borderColor: Colors.GRAY_8,
-    borderWidth: 2,
-  }
 })
 
-const CustomMarker = () => (
-  <View style={{
-    display: 'flex',
-    alignItems: 'center',
-    // backgroundColor: 'red'
-  }}>
-    <View style={styles.videoConatiner}>
-      <Image source={videoImage} style={styles.videoSource} />
-    </View>
-    <Image source={markerImage} style={styles.markerConatiner} />
-    <View
-      style={{
-        marginTop: 5,
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        backgroundColor: Colors.WHITE,
-        borderColor: Colors.BLUE_6,
-        borderWidth: 1,
-        borderRadius: 25,
-      }}
-    >
-      <Text style={{ color: Colors.BLACK, fontFamily: Typography.FONT_FAMILY_BOLD, fontSize: Typography.FONT_SIZE_14 }}>신전떡볶이</Text>
-    </View>
-  </View>
+const CustomMarker = (props) => (
+  <MarkerContainer>
+    <CustomMakrer source={markerImage} />
+    {
+      props.region.latitudeDelta < 0.02 ?
+        <MarkerTitleContainer>
+          <Image source={props.youtuberImage} style={styles.videoConatiner} />
+          <Text style={{ lineHeight: 26, paddingLeft: 5 }} size={16} weight={"BOLD"}>{props.title}</Text>
+        </MarkerTitleContainer>
+        : null
+    }
+  </MarkerContainer>
 );
 
-export default function GoogleMap() {
+function MarkerSet(props) {
+  return (
+    props.data.map((value, index) => {
+      const { title, youtuberImage } = value
+      return (
+        <Marker
+          key={index}
+          onPress={() => props.setToggle(false)}
+          coordinate={value.coordinate}
+        >
+          <CustomMarker region={props.region} youtuberImage={youtuberImage} title={title} />
+        </Marker>
+      )
+    })
+  )
+}
+
+export default function GoogleMap(props) {
+  const _map = React.useRef(null);
+  const [region, setRegion] = useState({
+    latitude: 35.86990,
+    longitude: 128.59554,
+    latitudeDelta: 0.009,
+    longitudeDelta: 0.009,
+  })
+
+  const initialMapState = {
+    markers,
+    region: {
+      ...region
+    },
+  };
+
   return (
     <MapView
+      ref={_map}
       style={styles.container}
-      initialRegion={{
-        latitude: 35.86990,
-        longitude: 128.59554,
-        longitudeDelta: 0.009,
-        latitudeDelta: 0.009
-      }}
+      initialRegion={initialMapState.region}
+      onRegionChange={region => setRegion(region)}
     >
-      <Marker
-        coordinate={{
-          latitude: 35.86990,
-          longitude: 128.59554,
-        }}
-      >
-        <CustomMarker key={1} />
-        <Callout style={styles.plainView}>
-          <View><Text>안녕하세요</Text></View>
-        </Callout>
-      </Marker>
-      <Marker
-        coordinate={{
-          latitude: 35.86570,
-          longitude: 128.59054,
-        }}
-      >
-        <CustomMarker key={2} />
-      </Marker>
+      <MarkerSet region={region} data={initialMapState.markers} setToggle={props.setToggle} />
     </MapView>
   )
 }
