@@ -1,5 +1,7 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
+
+import {Text} from '../../styles/CommonStyles'
 
 export default function MainHeader() {
   return (
@@ -13,7 +15,7 @@ export default function MainHeader() {
         marginBottom: 10,
       }}
     >
-      <Text>헤더 정보가 들어갈 공간입니다.</Text>
+      <Text weight={"BOLD"} size={20}>헤더 정보가 들어갈 공간입니다.</Text>
       <Text>ビックグルメ</Text>
     </View>
   )

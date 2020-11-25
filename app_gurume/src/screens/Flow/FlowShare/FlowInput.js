@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
   },
   inputText: {
     fontFamily: Typography.FONT_FAMILY_BOLD,
+    fontSize: Typography.FONT_SIZE_16,
     marginVertical: 5,
     marginLeft: 5
   },

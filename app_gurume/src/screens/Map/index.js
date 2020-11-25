@@ -14,6 +14,8 @@ import SelectedYoutubers from './SelectedYoutubers'
 import MapSideBar from './MapSideBar'
 
 // import styles
+import {Container} from '../../styles/MapStyles'
+
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
@@ -54,7 +56,7 @@ const MapScreen = ({ navigation }) => {
   const [toggle, setToggle] = useState(true)
 
   return (
-    <View style={styles.container}>
+    <Container>
       <GoogleMap />
       <TouchableOpacity onPress={() => setToggle(!toggle)} style={styles.toggleContainer}>
         <Text style={styles.toggleText}>유튜버 리스트</Text>
@@ -69,7 +71,7 @@ const MapScreen = ({ navigation }) => {
         youtubers={youtubers}
         handelRemoveYoutuber={handelRemoveYoutuber}
       /> : null}
-    </View>
+    </Container>
   )
 }
 

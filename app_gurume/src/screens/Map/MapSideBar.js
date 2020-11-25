@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         fontFamily: Typography.FONT_FAMILY_BOLD,
         fontSize: Typography.FONT_SIZE_20,
-        marginStart: 10
+        marginStart: 30
     },
     subTextContainer: {
         fontFamily: Typography.FONT_FAMILY_REGULAR,
@@ -30,14 +30,14 @@ const styles = StyleSheet.create({
     },
     folderContainer: {
         marginVertical: 20,
-        marginHorizontal: 10
+        marginHorizontal: 10,
+        borderColor: Colors.GRAY_2,
+        borderBottomWidth: 1,
     },
     folderItemContainer: {
         alignItems: 'flex-start',
         paddingVertical: 20,
-        paddingHorizontal: 25,
-        borderColor: Colors.GRAY_2,
-        borderBottomWidth: 1,
+        paddingHorizontal: 15,
         display: 'flex',
         flexDirection: 'row'
     }
@@ -71,7 +71,7 @@ const folderItem = dummyRoute.map((data, index) =>
     <TouchableOpacity key={index}>
         <View style={styles.container, styles.folderItemContainer}>
             <MaterialCommunityIcons name={data.icon} color="black" size={18} />
-            <Text style={styles.textContainer}>{data.routeName}</Text>
+            <Text style={[styles.textContainer, { color: Colors.GRAY_7 }]}>{data.routeName}</Text>
         </View>
     </TouchableOpacity >
 )
@@ -93,6 +93,9 @@ export default function MapSideBar(props) {
                 </View>
                 <View style={styles.folderContainer}>
                     {folderItem}
+                </View>
+                <View style={styles.folderContainer}>
+                    {/* <Text>환경설정</Text> */}
                 </View>
             </View>
         </DrawerContentScrollView>
