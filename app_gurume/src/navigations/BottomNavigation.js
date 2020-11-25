@@ -17,8 +17,7 @@ export default function BottomNavigation() {
   return (
     <Tab.Navigator
       initialRouteName="Main"
-      // labeled
-      activeColor="#1aa3d5"
+      activeColor="#2e64e5"
       inactiveColor="#000000"
       barStyle={{ backgroundColor: '#FFFFFF' }}
     >
