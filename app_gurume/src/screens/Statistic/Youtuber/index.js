@@ -18,12 +18,15 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     elevation: 3,
-    width: 100,
+    // width: 100,
+    margin: 2,
+    flex: 1,
     paddingVertical: 15,
     backgroundColor: Colors.WHITE,
-    borderColor: '#FFA6C5',
-    borderWidth: 1.5,
-    borderBottomWidth: 0,
+    borderColor: Colors.BLUE_8,
+    borderWidth: 1,
+    borderRadius: 5,
+    // borderBottomWidth: 0,
     alignSelf: 'center',
   },
   buttonText: {
@@ -37,20 +40,24 @@ const styles = StyleSheet.create({
 export default function index() {
   return (
     <View style={styles.selectContainer}>
-      <Text style={{ alignSelf: 'center', padding: 10 }}>유튜버</Text>
+      {/* <Text style={{ alignSelf: 'center', padding: 10 }}>유튜버</Text> */}
       <View
         style={{
           display: 'flex',
           flexDirection: 'row',
+          justifyContent: 'space-around',
+          marginBottom: 5,
+          marginTop: 10,
+          paddingHorizontal: 10,
         }}
       >
-        <TouchableOpacity style={[styles.buttonContainer, { borderTopLeftRadius: 10 }]}>
-          <Text style={styles.buttonText}>인기 유튜버</Text>
+        <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: Colors.BLUE_8, }]}>
+          <Text style={[styles.buttonText, { color: Colors.WHITE }]}>인기 유튜버</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer}>
+        <TouchableOpacity style={[styles.buttonContainer, {}]}>
           <Text style={styles.buttonText}>급상승 유튜버</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.buttonContainer, { borderTopRightRadius: 10 }]}>
+        <TouchableOpacity style={[styles.buttonContainer, {}]}>
           <Text style={styles.buttonText}>급상승 동영상</Text>
         </TouchableOpacity>
       </View>

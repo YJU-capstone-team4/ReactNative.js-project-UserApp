@@ -1,8 +1,8 @@
-import videoThumb_1 from '@images/videoThumbs/video_thumb (1).png'
-import videoThumb_2 from '@images/videoThumbs/video_thumb (2).png'
-import videoThumb_3 from '@images/videoThumbs/video_thumb (3).png'
-import videoThumb_4 from '@images/videoThumbs/video_thumb (4).png'
-import videoThumb_5 from '@images/videoThumbs/video_thumb (5).png'
+import videoThumb_1 from '@images/videoThumbs/video_thumb_1.png'
+import videoThumb_2 from '@images/videoThumbs/video_thumb_2.png'
+import videoThumb_3 from '@images/videoThumbs/video_thumb_3.png'
+import videoThumb_4 from '@images/videoThumbs/video_thumb_4.png'
+import videoThumb_5 from '@images/videoThumbs/video_thumb_5.png'
 
 import youtuberThumb_1 from '@images/thumbnail_1.jpg'
 import youtuberThumb_2 from '@images/thumbnail_2.jpg'

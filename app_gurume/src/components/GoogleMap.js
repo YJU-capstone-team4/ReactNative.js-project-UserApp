@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Image } from 'react-native'
+import { StyleSheet, Image, Animated, View, Dimensions, ScrollView } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 
 // import dummy data
@@ -9,7 +9,11 @@ import { markers } from './dummyMapData'
 import { CustomMakrer, MarkerContainer, MarkerTitleContainer } from '../styles/GoogleMapStyles'
 import { Text } from '../styles/CommonStyles'
 import markerImage from '@images/delivery_128.png'
-import youtuberThumb from '@images/thumbnail_5.jpg'
+
+const { width, height } = Dimensions.get("window");
+const CARD_HEIGHT = 280;
+const CARD_WIDTH = width * 0.8;
+const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
 const styles = StyleSheet.create({
   container: {
@@ -20,6 +24,38 @@ const styles = StyleSheet.create({
     height: 23,
     borderRadius: 10,
   },
+  scrollView: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingVertical: 10,
+  },
+  cardContainer: {
+    // padding: 10,
+    elevation: 5,
+    backgroundColor: "#FFF",
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    marginHorizontal: 10,
+    shadowColor: "#000",
+    shadowRadius: 5,
+    shadowOpacity: 0.3,
+    shadowOffset: { x: 2, y: -2 },
+    height: CARD_HEIGHT,
+    width: CARD_WIDTH,
+    overflow: "hidden",
+  },
+  cardImage: {
+    flex: 3,
+    width: "100%",
+    height: "100%",
+    alignSelf: "center",
+  },
+  textContext: {
+    flex: 2,
+    padding: 10,
+  }
 })
 
 const CustomMarker = (props) => (
@@ -54,7 +90,10 @@ function MarkerSet(props) {
 }
 
 export default function GoogleMap(props) {
+  //TODO Sliding Items on MapView
   const _map = React.useRef(null);
+  const _scrollView = React.useRef(null);
+
   const [region, setRegion] = useState({
     latitude: 35.86990,
     longitude: 128.59554,
@@ -70,13 +109,50 @@ export default function GoogleMap(props) {
   };
 
   return (
-    <MapView
-      ref={_map}
-      style={styles.container}
-      initialRegion={initialMapState.region}
-      onRegionChange={region => setRegion(region)}
-    >
-      <MarkerSet region={region} data={initialMapState.markers} setToggle={props.setToggle} />
-    </MapView>
+    <>
+      <MapView
+        ref={_map}
+        style={styles.container}
+        initialRegion={initialMapState.region}
+        onRegionChange={region => setRegion(region)}
+      >
+        <MarkerSet region={region} data={initialMapState.markers} setToggle={props.setToggle} />
+      </MapView>
+      <Animated.ScrollView
+        ref={_scrollView}
+        horizontal
+        pagingEnabled
+        scrollEventThrottle={1}
+        showsHorizontalScrollIndicator={false}
+        snapToInterval={CARD_WIDTH + 20}
+        snapToAlignment="center"
+        style={styles.scrollView}
+        contentInset={{
+          top: 0,
+          left: SPACING_FOR_CARD_INSET,
+          bottom: 0,
+          right: SPACING_FOR_CARD_INSET
+        }}
+        contentContainerStyle={{
+          paddingHorizontal: Platform.OS === 'android' ? SPACING_FOR_CARD_INSET : 0
+        }}
+      >
+        {
+          initialMapState.markers.map((marker, index) => (
+            <View style={styles.cardContainer} key={index}>
+              <Image
+                source={marker.image}
+                style={styles.cardImage}
+                resizeMode="cover"
+              />
+              <View style={styles.textContext}>
+                <Text numberOfLines={1}>{marker.title}</Text>
+                <Text numberOfLines={1}>{marker.description}</Text>
+              </View>
+            </View>
+          ))
+        }
+      </Animated.ScrollView>
+    </>
   )
 }

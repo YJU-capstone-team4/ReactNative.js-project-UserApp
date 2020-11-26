@@ -6,7 +6,6 @@ import { Colors } from '@styles'
 export const Container = styled.View`
     display: flex;
     flex: 1;
-    flex-direction: column;
 `
 
 export const ToogleContainer = styled.TouchableOpacity`

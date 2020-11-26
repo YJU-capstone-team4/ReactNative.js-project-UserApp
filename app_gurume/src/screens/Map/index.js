@@ -24,7 +24,7 @@ const MapScreen = ({ navigation }) => {
 
     setYoutubers(youtubers.filter((e) => (e.ytbChannel !== channelName)))
   }
-  const [toggle, setToggle] = useState(true)
+  const [toggle, setToggle] = useState(false)
 
   return (
     <Container>

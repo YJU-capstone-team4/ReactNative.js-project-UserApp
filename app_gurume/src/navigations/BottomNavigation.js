@@ -16,7 +16,7 @@ const Tab = createMaterialBottomTabNavigator()
 export default function BottomNavigation() {
   return (
     <Tab.Navigator
-      initialRouteName="Main"
+      initialRouteName="Map"
       activeColor="#2e64e5"
       inactiveColor="#000000"
       barStyle={{ backgroundColor: '#FFFFFF' }}

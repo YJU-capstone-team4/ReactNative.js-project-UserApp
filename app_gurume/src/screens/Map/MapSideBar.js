@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import { DrawerContentScrollView } from '@react-navigation/drawer';
+import { DrawerContentScrollView, Drawer } from '@react-navigation/drawer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 // styles
@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         borderRadius: 80,
-        marginStart: 32
     },
     textContainer: {
         textTransform: 'uppercase',
@@ -30,14 +29,10 @@ const styles = StyleSheet.create({
     },
     folderContainer: {
         marginVertical: 20,
-        marginHorizontal: 10,
-        borderColor: Colors.GRAY_2,
-        borderBottomWidth: 1,
     },
     folderItemContainer: {
         alignItems: 'flex-start',
         paddingVertical: 20,
-        paddingHorizontal: 15,
         display: 'flex',
         flexDirection: 'row'
     }
@@ -68,35 +63,37 @@ const dummyRoute = [
 
 // navigation.goBack()
 const folderItem = dummyRoute.map((data, index) =>
-    <TouchableOpacity key={index}>
-        <View style={styles.container, styles.folderItemContainer}>
-            <MaterialCommunityIcons name={data.icon} color="black" size={18} />
-            <Text style={[styles.textContainer, { color: Colors.GRAY_7 }]}>{data.routeName}</Text>
-        </View>
+    <TouchableOpacity style={styles.container, styles.folderItemContainer} key={index}>
+        <MaterialCommunityIcons name={data.icon} color="black" size={18} />
+        <Text style={[styles.textContainer, { color: Colors.GRAY_7 }]}>{data.routeName}</Text>
     </TouchableOpacity >
 )
 
 export default function MapSideBar(props) {
     return (
         <DrawerContentScrollView {...props}>
-            <View style={{ display: 'flex' }}>
-                <View style={[styles.container, {
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    marginTop: 25,
-                }]}>
-                    <Image style={styles.imageProfile} source={user_profile} />
-                    <View style={{ display: 'flex', flexDirection: 'column' }}>
-                        <Text style={[styles.textContainer, { marginStart: 20 }]}>코코하세요 님</Text>
-                        <Text style={[styles.subTextContainer, { marginStart: 20 }]}>kokohaseyo</Text>
+            <View style={{ display: 'flex', paddingHorizontal: 20 }}>
+                <View style={{ flex: 1 }}>
+                    <View style={[styles.container, {
+                        flexDirection: 'row',
+                        marginTop: 25,
+                    }]}>
+                        <Image style={styles.imageProfile} source={user_profile} />
+                        <View style={{ display: 'flex', flexDirection: 'column' }}>
+                            <Text style={[styles.textContainer, { marginStart: 20 }]}>코코하세요 님</Text>
+                            <Text style={[styles.subTextContainer, { marginStart: 20 }]}>kokohaseyo</Text>
+                        </View>
+                    </View>
+                    <View style={styles.folderContainer}>
+                        {folderItem}
                     </View>
                 </View>
-                <View style={styles.folderContainer}>
-                    {folderItem}
-                </View>
-                <View style={styles.folderContainer}>
-                    {/* <Text>환경설정</Text> */}
-                </View>
+                <TouchableOpacity style={[styles.container, styles.folderItemContainer, {
+                    borderColor: Colors.GRAY_2, borderTopWidth: 1 
+                }]}>
+                    <MaterialCommunityIcons name='exit-to-app' color="black" size={18} />
+                    <Text style={[styles.textContainer, { color: Colors.GRAY_7 }]}>로그아웃</Text>
+                </TouchableOpacity >
             </View>
         </DrawerContentScrollView>
     );
