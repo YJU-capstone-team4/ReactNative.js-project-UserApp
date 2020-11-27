@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { Colors, Typography } from './index'
 
 export const Text = styled.Text`
-  color:${Colors.BLACK};
   font-size: ${({ size }) => {
         switch (size) {
             case 12:
@@ -36,4 +35,14 @@ export const Text = styled.Text`
                 return Typography.FONT_FAMILY_REGULAR
         }
     }};
+`
+
+export const Button = styled.TouchableOpacity`
+    /* width: '100%'; */
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    border-width: ${({ borderWidth }) => borderWidth ? borderWidth : 1}px;
+    border-color: ${({ borderColor }) => borderColor ? borderColor : Colors.RED_3};
 `

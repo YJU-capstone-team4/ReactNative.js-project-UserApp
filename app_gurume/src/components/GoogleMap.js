@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Image, Animated, View, Dimensions, ScrollView } from 'react-native'
+import { StyleSheet, Image, Animated, View, Dimensions, ScrollView, TouchableOpacity } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 
 // import dummy data
@@ -7,13 +7,15 @@ import { markers } from './dummyMapData'
 
 // import styles
 import { CustomMakrer, MarkerContainer, MarkerTitleContainer } from '../styles/GoogleMapStyles'
-import { Text } from '../styles/CommonStyles'
+import { Colors } from '@styles'
+import { Text, Button } from '../styles/CommonStyles'
 import markerImage from '@images/delivery_128.png'
 
 const { width, height } = Dimensions.get("window");
 const CARD_HEIGHT = 280;
-const CARD_WIDTH = width * 0.8;
+const CARD_WIDTH = width * 0.83;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
+// const SPACING_FOR_CARD_INSET = width * 0.1 - 20;
 
 const styles = StyleSheet.create({
   container: {
@@ -29,22 +31,19 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    paddingVertical: 10,
   },
   cardContainer: {
     // padding: 10,
-    elevation: 5,
-    backgroundColor: "#FFF",
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    marginHorizontal: 10,
-    shadowColor: "#000",
-    shadowRadius: 5,
-    shadowOpacity: 0.3,
-    shadowOffset: { x: 2, y: -2 },
+    // borderTopLeftRadius: 8,
+    // borderTopRightRadius: 8,
+
+    // marginLeft: 10,
+    // marginRight: 20,
+    // marginHorizontal: width * 0.02,
+    marginBottom: 5,
     height: CARD_HEIGHT,
     width: CARD_WIDTH,
-    overflow: "hidden",
+    maxWidth: 350,
   },
   cardImage: {
     flex: 3,
@@ -53,8 +52,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   textContext: {
-    flex: 2,
+    flex: 1.5,
     padding: 10,
+    display: 'flex'
   }
 })
 
@@ -121,12 +121,12 @@ export default function GoogleMap(props) {
       <Animated.ScrollView
         ref={_scrollView}
         horizontal
-        pagingEnabled
+        // pagingEnabled
         scrollEventThrottle={1}
         showsHorizontalScrollIndicator={false}
-        snapToInterval={CARD_WIDTH + 20}
-        snapToAlignment="center"
+        snapToInterval={CARD_WIDTH}
         style={styles.scrollView}
+        snapToAlignment="center"
         contentInset={{
           top: 0,
           left: SPACING_FOR_CARD_INSET,
@@ -134,20 +134,40 @@ export default function GoogleMap(props) {
           right: SPACING_FOR_CARD_INSET
         }}
         contentContainerStyle={{
-          paddingHorizontal: Platform.OS === 'android' ? SPACING_FOR_CARD_INSET : 0
+          paddingHorizontal: Platform.OS === 'android' ? SPACING_FOR_CARD_INSET : 0,
         }}
       >
         {
           initialMapState.markers.map((marker, index) => (
-            <View style={styles.cardContainer} key={index}>
-              <Image
-                source={marker.image}
-                style={styles.cardImage}
-                resizeMode="cover"
-              />
-              <View style={styles.textContext}>
-                <Text numberOfLines={1}>{marker.title}</Text>
-                <Text numberOfLines={1}>{marker.description}</Text>
+            <View style={[styles.cardContainer]} key={index}>
+              <View style={{
+                display: 'flex',
+                flex: 1,
+                // padding: 10,
+                margin: 5,
+                elevation: 3,
+                shadowRadius: 10,
+                shadowColor: "#000",
+                shadowOpacity: 0.3,
+                shadowOffset: { x: 2, y: -2 },
+                backgroundColor: "#FFF",
+                borderRadius: 6,
+                overflow: "hidden",
+              }}>
+                <Image
+                  source={marker.image}
+                  style={styles.cardImage}
+                  resizeMode="cover"
+                />
+                <View style={styles.textContext}>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ marginVertical: 6 }} weight={"EXTRA_BOLD"} numberOfLines={1}>{marker.title}</Text>
+                    <Text numberOfLines={1}>{marker.description}</Text>
+                  </View>
+                  <Button style={{}} borderWidth={2}>
+                    <Text style={{ color: Colors.RED_3 }} weight={"BOLD"}>상세보기</Text>
+                  </Button>
+                </View>
               </View>
             </View>
           ))
