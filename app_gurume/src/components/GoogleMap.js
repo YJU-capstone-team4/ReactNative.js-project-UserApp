@@ -1,96 +1,178 @@
-import React from 'react'
-import { StyleSheet, View, Text, Image } from 'react-native'
-import MapView, { Marker, Callout } from 'react-native-maps'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Image, Animated, View, Dimensions, ScrollView, TouchableOpacity } from 'react-native'
+import MapView, { Marker } from 'react-native-maps'
+
+// import dummy data
+import { markers } from './dummyMapData'
 
 // import styles
-import { Colors, Typography } from '@styles'
+import { CustomMakrer, MarkerContainer, MarkerTitleContainer } from '../styles/GoogleMapStyles'
+import { Colors } from '@styles'
+import { Text, Button } from '../styles/CommonStyles'
 import markerImage from '@images/delivery_128.png'
-import videoImage from '@images/movie_thumbnail_3.png'
+
+const { width, height } = Dimensions.get("window");
+const CARD_HEIGHT = 280;
+const CARD_WIDTH = width * 0.83;
+const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
+// const SPACING_FOR_CARD_INSET = width * 0.1 - 20;
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  plainView: {
-    width: 'auto',
-    backgroundColor: Colors.RED_4
-  },
-  markerConatiner: {
-    width: 40,
-    height: 40,
-    marginTop: 5,
+    ...StyleSheet.absoluteFillObject
   },
   videoConatiner: {
-
+    width: 23,
+    height: 23,
+    borderRadius: 10,
   },
-  videoSource: {
-    height: 100,
-    width: 160,
-    borderColor: Colors.GRAY_8,
-    borderWidth: 2,
+  scrollView: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  cardContainer: {
+    // padding: 10,
+    // borderTopLeftRadius: 8,
+    // borderTopRightRadius: 8,
+
+    // marginLeft: 10,
+    // marginRight: 20,
+    // marginHorizontal: width * 0.02,
+    marginBottom: 5,
+    height: CARD_HEIGHT,
+    width: CARD_WIDTH,
+    maxWidth: 350,
+  },
+  cardImage: {
+    flex: 3,
+    width: "100%",
+    height: "100%",
+    alignSelf: "center",
+  },
+  textContext: {
+    flex: 1.5,
+    padding: 10,
+    display: 'flex'
   }
 })
 
-const CustomMarker = () => (
-  <View style={{
-    display: 'flex',
-    alignItems: 'center',
-    // backgroundColor: 'red'
-  }}>
-    <View style={styles.videoConatiner}>
-      <Image source={videoImage} style={styles.videoSource} />
-    </View>
-    <Image source={markerImage} style={styles.markerConatiner} />
-    <View
-      style={{
-        marginTop: 5,
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        backgroundColor: Colors.WHITE,
-        borderColor: Colors.BLUE_6,
-        borderWidth: 1,
-        borderRadius: 25,
-      }}
-    >
-      <Text style={{ color: Colors.BLACK, fontFamily: Typography.FONT_FAMILY_BOLD, fontSize: Typography.FONT_SIZE_14 }}>신전떡볶이</Text>
-    </View>
-  </View>
+const CustomMarker = (props) => (
+  <MarkerContainer>
+    <CustomMakrer source={markerImage} />
+    {
+      props.region.latitudeDelta < 0.02 ?
+        <MarkerTitleContainer>
+          <Image source={props.youtuberImage} style={styles.videoConatiner} />
+          <Text style={{ lineHeight: 26, paddingLeft: 5 }} size={16} weight={"BOLD"}>{props.title}</Text>
+        </MarkerTitleContainer>
+        : null
+    }
+  </MarkerContainer>
 );
 
-export default function GoogleMap() {
+function MarkerSet(props) {
   return (
-    <MapView
-      style={styles.container}
-      initialRegion={{
-        latitude: 35.86990,
-        longitude: 128.59554,
-        longitudeDelta: 0.009,
-        latitudeDelta: 0.009
-      }}
-    >
-      <Marker
-        coordinate={{
-          latitude: 35.86990,
-          longitude: 128.59554,
+    props.data.map((value, index) => {
+      const { title, youtuberImage } = value
+      return (
+        <Marker
+          key={index}
+          onPress={() => props.setToggle(false)}
+          coordinate={value.coordinate}
+        >
+          <CustomMarker region={props.region} youtuberImage={youtuberImage} title={title} />
+        </Marker>
+      )
+    })
+  )
+}
+
+export default function GoogleMap(props) {
+  //TODO Sliding Items on MapView
+  const _map = React.useRef(null);
+  const _scrollView = React.useRef(null);
+
+  const [region, setRegion] = useState({
+    latitude: 35.86990,
+    longitude: 128.59554,
+    latitudeDelta: 0.009,
+    longitudeDelta: 0.009,
+  })
+
+  const initialMapState = {
+    markers,
+    region: {
+      ...region
+    },
+  };
+
+  return (
+    <>
+      <MapView
+        ref={_map}
+        style={styles.container}
+        initialRegion={initialMapState.region}
+        onRegionChange={region => setRegion(region)}
+      >
+        <MarkerSet region={region} data={initialMapState.markers} setToggle={props.setToggle} />
+      </MapView>
+      <Animated.ScrollView
+        ref={_scrollView}
+        horizontal
+        // pagingEnabled
+        scrollEventThrottle={1}
+        showsHorizontalScrollIndicator={false}
+        snapToInterval={CARD_WIDTH}
+        style={styles.scrollView}
+        snapToAlignment="center"
+        contentInset={{
+          top: 0,
+          left: SPACING_FOR_CARD_INSET,
+          bottom: 0,
+          right: SPACING_FOR_CARD_INSET
+        }}
+        contentContainerStyle={{
+          paddingHorizontal: Platform.OS === 'android' ? SPACING_FOR_CARD_INSET : 0,
         }}
       >
-        <CustomMarker key={1} />
-        <Callout style={styles.plainView}>
-          <View><Text>안녕하세요</Text></View>
-        </Callout>
-      </Marker>
-      <Marker
-        coordinate={{
-          latitude: 35.86570,
-          longitude: 128.59054,
-        }}
-      >
-        <CustomMarker key={2} />
-      </Marker>
-    </MapView>
+        {
+          initialMapState.markers.map((marker, index) => (
+            <View style={[styles.cardContainer]} key={index}>
+              <View style={{
+                display: 'flex',
+                flex: 1,
+                // padding: 10,
+                margin: 5,
+                elevation: 3,
+                shadowRadius: 10,
+                shadowColor: "#000",
+                shadowOpacity: 0.3,
+                shadowOffset: { x: 2, y: -2 },
+                backgroundColor: "#FFF",
+                borderRadius: 6,
+                overflow: "hidden",
+              }}>
+                <Image
+                  source={marker.image}
+                  style={styles.cardImage}
+                  resizeMode="cover"
+                />
+                <View style={styles.textContext}>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ marginVertical: 6 }} weight={"EXTRA_BOLD"} numberOfLines={1}>{marker.title}</Text>
+                    <Text numberOfLines={1}>{marker.description}</Text>
+                  </View>
+                  <Button style={{}} borderWidth={2}>
+                    <Text style={{ color: Colors.RED_3 }} weight={"BOLD"}>상세보기</Text>
+                  </Button>
+                </View>
+              </View>
+            </View>
+          ))
+        }
+      </Animated.ScrollView>
+    </>
   )
 }

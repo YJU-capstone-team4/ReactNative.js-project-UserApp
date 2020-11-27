@@ -26,8 +26,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     height: getStatusBarHeight(),
-    backgroundColor: Colors.GRAY_9,
-    opacity: 0.4,
   }
 })
 

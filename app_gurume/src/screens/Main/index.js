@@ -7,13 +7,6 @@ import { Colors, Typography } from '@styles'
 import { useQuery } from '@apollo/react-hooks'
 import { Queries } from '~/graphql'
 
-
-StatusBar.setBarStyle("light-content");
-if (Platform.OS === "android") {
-  StatusBar.setBackgroundColor("rgba(0,0,0,0.3)");
-  StatusBar.setTranslucent(true);
-}
-
 // import components
 import SearchInput from '@components/SearchInput'
 import YoutuberList from '@components/List/YoutuberList'
@@ -25,11 +18,14 @@ import MainHeader from './MainHeader'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: getStatusBarHeight(),
   },
   textContainer: {
     fontFamily: Typography.FONT_FAMILY_BOLD,
     padding: 10
+  },
+  statusBar: {
+    height: getStatusBarHeight(),
+    backgroundColor: Colors.BLUE_5
   }
 })
 
@@ -44,7 +40,7 @@ export default () => {
 
   return (
     <ScrollView style={styles.container}>
-      <StatusBar />
+      <View style={styles.statusBar} />
       <MainHeader />
       <SearchInput />
       <Text style={styles.textContainer}>{region}를 방문한 유튜버</Text>
