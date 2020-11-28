@@ -9,7 +9,7 @@ export default function MainHeader() {
   return (
     <View
       style={{
-        backgroundColor: Colors.BLUE_6,
+        backgroundColor: Colors.RED_4,
         height: 150,
         // flex: 1,
         justifyContent: 'center',

@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   },
   statusBar: {
     height: getStatusBarHeight(),
-    backgroundColor: Colors.BLUE_5
+    backgroundColor: Colors.RED_4
   }
 })
 

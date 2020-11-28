@@ -1,8 +1,8 @@
 import React from 'react'
-import { ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 
 // import styles
-import { Colors, Typography } from '@styles'
+import { Text } from '@styles/CommonStyles'
 
 // import components
 import SelectBox from '@components/SelectBox'

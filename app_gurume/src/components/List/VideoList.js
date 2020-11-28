@@ -1,30 +1,32 @@
 import React from 'react'
-import { View, Text, FlatList, Image } from 'react-native'
+import { View, Text, FlatList, Image, Dimensions, TouchableOpacity } from 'react-native'
+const { width, height } = Dimensions.get("window");
+const SPACING_FOR_CARD_INSET = width * 0.01;
 
 // import styles
 import { Colors, Typography } from '@styles'
 
 // import screens
-import mokupViedo from './mokupViedo'
+import mokupViedo from '../../model/mokupViedo'
 
 const renderVideo = (data) => {
   return (
-    <View
-      style={{
-        marginHorizontal: 5,
-        marginTop:20,
-        borderRadius: 10,
-        backgroundColor: 'white',
-      }}
-    >
+    <TouchableOpacity activeOpacity={0.8} style={{
+      marginHorizontal: 5,
+      marginTop: 20,
+      marginBottom: 3,
+      borderRadius: 10,
+      backgroundColor: 'white',
+      elevation: 3,
+    }}>
       <Image style={{
-        position:'absolute',
-        zIndex:10,
-        top:-20,
-        left:-11,
-        width:50,
-        height:50,
-      }} source={data.medal}/>
+        position: 'absolute',
+        zIndex: 10,
+        top: -20,
+        left: -11,
+        width: 50,
+        height: 50,
+      }} source={data.medal} />
       <Image
         style={{ width: 200, height: 150, borderTopRightRadius: 10, borderTopLeftRadius: 10 }}
         source={data.ytbThumbnail}
@@ -42,7 +44,7 @@ const renderVideo = (data) => {
       >
         조회수 {data.hits}만회
       </Text>
-    </View>
+    </TouchableOpacity>
   )
 }
 
@@ -50,19 +52,11 @@ export default function VideoList() {
   return (
     <View
       style={{
-        backgroundColor: '#FFA6C5',
-        height: 275,
-        justifyContent: 'center',
-        alignItems: 'center',
-        // marginBottom: 10,
-        // borderBottomEndRadius: 10,
-        // borderBottomStartRadius: 10,
-        // borderTopRightRadius: 10,
-        paddingVertical: 10,
+        height: 225,
       }}
     >
-      <Text>유튜버 조회수 Top 5 영상 정보가 들어갈 공간입니다.</Text>
-      <Text>VideoList</Text>
+      {/* <Text>유튜버 조회수 Top 5 영상 정보가 들어갈 공간입니다.</Text>
+      <Text>VideoList</Text> */}
       <FlatList
         data={mokupViedo}
         keyExtractor={(item) => item.storeId}
@@ -70,6 +64,13 @@ export default function VideoList() {
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => renderVideo(item)}
         keyboardShouldPersistTaps="always"
+        contentInset={{
+          top: 0, left: SPACING_FOR_CARD_INSET,
+          bottom: 0, right: SPACING_FOR_CARD_INSET
+        }}
+        contentContainerStyle={{
+          paddingHorizontal: Platform.OS === 'android' ? SPACING_FOR_CARD_INSET : 0,
+        }}
       />
     </View>
   )

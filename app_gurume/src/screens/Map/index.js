@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet } from 'react-native'
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Colors, Typography } from '@styles'
 
-import mokupYoutuber from '@components/List/mokupYoutuber'
+import mokupYoutuber from '../../model/mokupYoutuber'
 
 // import components
 import SearchInput from '@components/SearchInput'
@@ -13,8 +13,22 @@ import SelectedYoutubers from './SelectedYoutubers'
 import MapSideBar from './MapSideBar'
 
 // import styles
+import { Colors, Typography } from '@styles'
 import { Container, ToogleContainer } from './MapStyles'
 import { Text } from '@styles/CommonStyles'
+
+const styles = StyleSheet.create({
+  textTitle: {
+    flex: 1,
+    color: Colors.WHITE,
+    textAlign: 'right',
+    marginRight: 5
+  },
+  firstToggle: {
+    right: 135,
+    width: 100
+  },
+})
 
 const MapScreen = ({ navigation }) => {
   const [youtubers, setYoutubers] = useState(mokupYoutuber)
@@ -24,18 +38,48 @@ const MapScreen = ({ navigation }) => {
 
     setYoutubers(youtubers.filter((e) => (e.ytbChannel !== channelName)))
   }
-  const [toggle, setToggle] = useState(false)
+
+  const [youtuberToggle, setYoutuberToggle] = useState(false)
+  const [storeToggle, setStoreToggle] = useState(false)
+
+  useEffect(() => {
+    if (youtuberToggle) {
+      setStoreToggle(false)
+    }
+  }, [youtuberToggle])
+
+  useEffect(() => {
+    if (storeToggle) {
+      setYoutuberToggle(false)
+    }
+  }, [storeToggle])
 
   return (
     <Container>
-      <GoogleMap setToggle={setToggle} />
-      <ToogleContainer onPress={() => setToggle(!toggle)}>
-        <Text weight={"BOLD"} style={{ color: Colors.WHITE, marginRight: 4 }}>유튜버 리스트</Text>
-        <Text weight={"EXTRA_BOLD"} style={{ color: toggle ? Colors.GREEN_3 : Colors.RED_3 }}>{toggle ? 'ON' : 'OFF'}</Text>
+      <GoogleMap navigation={navigation} storeToggle={storeToggle} setStoreToggle={setStoreToggle} setYoutuberToggle={setYoutuberToggle} />
+      <ToogleContainer activeOpacity={0.6} onPress={() => setYoutuberToggle(!youtuberToggle)}>
+        <Text weight={"BOLD"} style={styles.textTitle}>유튜버 리스트</Text>
+        <Text weight={"EXTRA_BOLD"} style={{
+          color: youtuberToggle ? Colors.GREEN_3 : Colors.RED_3,
+          width: 33.5,
+          textAlign: 'left'
+        }}>
+          {youtuberToggle ? 'ON' : 'OFF'}
+        </Text>
+      </ToogleContainer>
+      <ToogleContainer activeOpacity={0.6} style={styles.firstToggle} onPress={() => setStoreToggle(!storeToggle)}>
+        <Text weight={"BOLD"} style={styles.textTitle}>가게정보</Text>
+        <Text weight={"EXTRA_BOLD"} style={{
+          color: storeToggle ? Colors.GREEN_3 : Colors.RED_3,
+          width: 35,
+          textAlign: 'left'
+        }}>
+          {storeToggle ? 'ON' : 'OFF'}
+        </Text>
       </ToogleContainer>
       <SearchInput directionTop navigation={navigation} />
       {
-        toggle ? <SelectedYoutubers
+        youtuberToggle ? <SelectedYoutubers
           youtubers={youtubers}
           handelRemoveYoutuber={handelRemoveYoutuber}
         /> : null

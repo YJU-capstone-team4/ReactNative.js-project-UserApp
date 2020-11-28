@@ -14,6 +14,11 @@ const Tab = createMaterialTopTabNavigator()
 export default function FlowTopNavigation() {
   return (
     <Tab.Navigator
+      screenOptions={{
+        headerStyle: {
+          elevation : 0
+        }
+      }}
       tabBarOptions={{
         activeTintColor: Colors.BLACK,
         labelStyle: {
@@ -21,11 +26,11 @@ export default function FlowTopNavigation() {
           fontFamily: Typography.FONT_FAMILY_BOLD,
         },
         tabStyle: { width: 100 },
-        style: { backgroundColor: Colors.CEMENT },
+        style: { backgroundColor: Colors.CEMENT, elevation: 0 },
         indicatorStyle: {
-          opacity: 0,
-          borderBottomWidth: 0,
-          borderBottomColor: 'transparent'
+          // opacity: 0,
+          borderBottomWidth: 2,
+          borderBottomColor: Colors.BLACK
         }
       }}
     >

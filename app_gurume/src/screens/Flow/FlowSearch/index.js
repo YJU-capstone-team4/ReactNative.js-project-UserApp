@@ -1,5 +1,7 @@
 import React from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
+
+import { Text } from '@styles/CommonStyles'
 
 // import components
 import SearchInput from '@components/SearchInput'
