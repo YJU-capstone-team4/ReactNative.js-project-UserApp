@@ -15,7 +15,7 @@ export const ToogleContainer = styled.TouchableOpacity`
     background-color: ${Colors.BLACK};
     width: 120px;
     padding: 10px 0px;
-    border-radius: 12px;
+    border-radius: 17px;
     display: flex;
     justify-content: center;
     flex-direction: row;

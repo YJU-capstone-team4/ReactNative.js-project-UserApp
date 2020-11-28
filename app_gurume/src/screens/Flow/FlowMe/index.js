@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     paddingTop: 15,
-    paddingHorizontal: 15,
+    paddingHorizontal: 5,
     backgroundColor: Colors.CEMENT
   },
   buttonContainer: {

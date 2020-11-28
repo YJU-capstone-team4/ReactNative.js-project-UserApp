@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, StyleSheet } from 'react-native'
 
 // import styles
 import { Colors, Typography } from '@styles'
+import { Text } from '@styles/CommonStyles'
 
 // import components
 import PreviewThumb from '@components/PreviewThumb'
@@ -15,18 +16,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonContainer: {
-    // elevation: 3,
+    elevation: 1,
     margin: 10,
     paddingHorizontal: 13,
     paddingVertical: 7,
-    borderRadius: 20,
+    borderRadius: 10,
     backgroundColor: Colors.CEMENT,
     alignSelf: 'flex-end',
   },
   buttonText: {
     color: Colors.BLUE_5,
     alignSelf: 'center',
-    fontFamily: Typography.FONT_FAMILY_EXTRA_BOLD,
   },
 })
 

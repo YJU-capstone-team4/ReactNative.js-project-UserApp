@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 })
 
 const renderYoutuber = (item, handelRemoveYoutuber) => {
-  console.log(item)
+  // console.log(item)
   return (
     <View
       style={{
