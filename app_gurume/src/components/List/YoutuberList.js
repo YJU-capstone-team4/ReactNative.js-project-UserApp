@@ -58,7 +58,7 @@ export default function YoutuberList() {
       <Text>YoutuberList</Text> */}
       <FlatList
         data={mokupYoutuber}
-        keyExtractor={(item) => item.ytbChannel}
+        keyExtractor={(item, index) => `${item.ytbChannel}-${index}`}
         horizontal
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => renderYoutuber(item)}

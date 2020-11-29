@@ -8,6 +8,7 @@ import { Text } from '@styles/CommonStyles'
 // import components
 import VideoList from '@components/List/VideoList'
 import YoutuberList from '@components/List/YoutuberList'
+import GoogleMiniMap from '@components/GoogleMiniMap.js'
 
 const styles = StyleSheet.create({
   container: {
@@ -51,6 +52,27 @@ export default (props) => {
           <View style={styles.videoWrapper}>
             <VideoList />
           </View>
+        </View>
+        <View style={styles.contentWrapper}>
+          <Text weight={"BOLD"} style={{ marginTop: 10 }} size={22}>{route.params.storeName} 를 포함한 Top3 동선</Text>
+          <View style={[styles.contentWrapper, { marginBottom: 4 }]}>
+            <Text size={20} style={{ marginTop: 20 }}>
+              <Text size={22} weight={"EXTRA_BOLD"} style={{ color: Colors.RED_4 }}>1</Text>
+              . 킹크랩이 땡기는 날에는 바로 여기!
+            </Text>
+            <Text size={20} style={{ marginTop: 20 }}>
+              <Text size={22} weight={"EXTRA_BOLD"} style={{ color: Colors.RED_4 }}>2</Text>
+              . 킹크랩이 땡기는 날에는 바로 여기!
+            </Text>
+            <Text size={20} style={{ marginTop: 20 }}>
+              <Text size={22} weight={"EXTRA_BOLD"} style={{ color: Colors.RED_4 }}>3</Text>
+              . 킹크랩이 땡기는 날에는 바로 여기!
+            </Text>
+          </View>
+        </View>
+        <View style={[styles.contentWrapper, { marginHorizontal: 0 }]}>
+          <Text weight={"BOLD"} style={{ margin: 10 }} size={22}>주변 명소 추천</Text>
+          <GoogleMiniMap />
         </View>
       </ScrollView>
     </SafeAreaView>

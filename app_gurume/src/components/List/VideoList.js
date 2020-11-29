@@ -59,7 +59,7 @@ export default function VideoList() {
       <Text>VideoList</Text> */}
       <FlatList
         data={mokupViedo}
-        keyExtractor={(item) => item.storeId}
+        keyExtractor={(item, index) => `${item.storeId}-${index}`}
         horizontal
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => renderVideo(item)}
