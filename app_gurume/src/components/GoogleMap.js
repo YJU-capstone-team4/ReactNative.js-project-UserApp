@@ -125,7 +125,9 @@ export default function GoogleMap(props) {
 
   useEffect(() => {
     mapAnimation.addListener(({ value }) => {
-      let index = Math.floor(value / CARD_WIDTH + 0.1)  // 30 % 넘어 갈 경우 다음 번 인덱스로 넘기기
+      let index = Math.floor(value / CARD_WIDTH + 0.05)  // 30 % 넘어 갈 경우 다음 번 인덱스로 넘기기
+      console.log('test : ', value)
+      console.log('index : ', index)
 
       if (index >= state.markers.length) {
         index = state.markers.length - 1
@@ -150,7 +152,7 @@ export default function GoogleMap(props) {
             350
           )
         }
-      }, 10)
+      }, 5)
     })
   })
 

@@ -21,7 +21,7 @@ export const Text = styled.Text`
                 return parseInt(Number(Typography.FONT_SIZE_16))
         }
     }}px;
-  color: black;
+  color:  ${({ color }) => color ? color : Colors.BLACK};
   font-family: ${({ weight }) => {
         switch (weight) {
             case 'BOLD':
@@ -45,4 +45,5 @@ export const Button = styled.TouchableOpacity`
     border-radius: 3px;
     border-width: ${({ borderWidth }) => borderWidth ? borderWidth : 1}px;
     border-color: ${({ borderColor }) => borderColor ? borderColor : Colors.RED_3};
+    background-color: ${({ backgroundColor }) => backgroundColor ? backgroundColor : Colors.WHITE};
 `
