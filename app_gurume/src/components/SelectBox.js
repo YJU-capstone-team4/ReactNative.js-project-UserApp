@@ -16,23 +16,23 @@ export default function SelectBox() {
           {
             label: '대구 여행 코스',
             value: 'usa',
-            icon: () => <Icon name="flag" size={18} color="#900" />,
+            icon: () => <Icon name="hash" size={18} color="#900" />,
             hidden: true,
           },
           {
             label: '부산 여행 코스',
             value: 'uk',
-            icon: () => <Icon name="flag" size={18} color="#900" />,
+            icon: () => <Icon name="hash" size={18} color="#900" />,
           },
           {
             label: '서울 홍대 맛집 코스',
             value: 'france',
-            icon: () => <Icon name="flag" size={18} color="#900" />,
+            icon: () => <Icon name="hash" size={18} color="#900" />,
           },
           {
             label: '전주 맛집 코스',
             value: 'junju',
-            icon: () => <Icon name="flag" size={18} color="#900" />,
+            icon: () => <Icon name="hash" size={18} color="#900" />,
           },
         ]}
         defaultValue={itemValue}

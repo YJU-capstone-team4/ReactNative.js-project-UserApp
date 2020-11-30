@@ -116,7 +116,7 @@ export const sub_markers = [
     },
     {
         coordinate: {
-            latitude: 35.86690,
+            latitude: 35.86790,
             longitude: 128.59654,
         },
         title: "영진전문대학교",

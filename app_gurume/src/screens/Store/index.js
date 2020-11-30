@@ -72,7 +72,9 @@ export default (props) => {
         </View>
         <View style={[styles.contentWrapper, { marginHorizontal: 0 }]}>
           <Text weight={"BOLD"} style={{ margin: 10 }} size={22}>주변 명소 추천</Text>
+          {/* <View style={{ }}> */}
           <GoogleMiniMap />
+          {/* </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>
