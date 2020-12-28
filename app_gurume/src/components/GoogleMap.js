@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Image, Animated, View, Dimensions, ScrollView, TouchableOpacity } from 'react-native'
-import MapView, { Marker } from 'react-native-maps'
+import MapView from "react-native-map-clustering";
+import { Marker } from 'react-native-maps'
 
 // import dummy data
 import { markers } from '../model/mokupMap'
@@ -78,7 +79,7 @@ const CustomMarker = (props) => (
   </MarkerContainer>
 );
 
-function MarkerSet(props) {
+const MarkerSet = (props) => {
   const { data, region, setYoutuberToggle, setStoreToggle } = props
   return (
     data.map((value, index) => {
@@ -164,12 +165,97 @@ export default function GoogleMap(props) {
         initialRegion={state.region}
         onRegionChange={region => setRegion(region)}
       >
-        <MarkerSet
+        {
+          state.markers.map((value, index) => {
+            const { title, youtuberImage } = value
+            return (
+              <Marker
+                key={index}
+                onPress={() => {
+                  props.setYoutuberToggle(false)
+                  props.setStoreToggle((prevStatus) => !prevStatus ? true : prevStatus)
+                }}
+                coordinate={value.coordinate}
+              >
+                <CustomMarker region={region} youtuberImage={youtuberImage} title={title} />
+              </Marker>
+            )
+          })
+        }
+        {/* <MarkerSet
           region={region}
           data={state.markers}
           setYoutuberToggle={props.setYoutuberToggle}
           setStoreToggle={props.setStoreToggle}
-        />
+        /> */}
+        {/* <Marker
+          coordinate={{
+            latitude: 35.86990,
+            longitude: 128.59554,
+          }}
+        >
+          <CustomMarker region={region} title='할매국밥원조' />
+        </Marker>
+        <Marker coordinate={{
+          latitude: 35.84190,
+          longitude: 128.59754,
+        }} >
+          <CustomMarker region={region}  title={'칼국수맛집'} />
+        </Marker>
+        <Marker coordinate={{
+          latitude: 35.86570,
+          longitude: 128.59054,
+        }} >
+          <CustomMarker region={region} title={'칼국수맛집'} />
+        </Marker>
+        <Marker coordinate={{
+          latitude: 35.86390,
+          longitude: 128.59154,
+        }} >
+          <CustomMarker region={region}  title={'칼국수맛집'} />
+        </Marker>
+        <Marker coordinate={{
+          latitude: 35.86190,
+          longitude: 128.59054,
+        }} >
+          <CustomMarker region={region}  title={'칼국수맛집'} />
+        </Marker>
+        <Marker coordinate={{
+          latitude: 35.85190,
+          longitude: 128.59054,
+        }} >
+          <CustomMarker region={region}  title={'칼국수맛집'} />
+        </Marker>
+        <Marker coordinate={{
+          latitude: 35.85990,
+          longitude: 128.5554,
+        }} >
+          <CustomMarker region={region}  title={'칼국수맛집'} />
+        </Marker>
+        <Marker coordinate={{
+          latitude: 35.86470,
+          longitude: 128.59854,
+        }} >
+          <CustomMarker region={region}  title={'칼국수맛집'} />
+        </Marker>
+        <Marker coordinate={{
+          latitude: 35.86990,
+          longitude: 128.59954,
+        }} >
+          <CustomMarker region={region}  title={'칼국수맛집'} />
+        </Marker>
+        <Marker coordinate={{
+          latitude: 35.86790,
+          longitude: 128.59654,
+        }} >
+          <CustomMarker region={region}  title={'칼국수맛집'} />
+        </Marker>
+        <Marker coordinate={{
+          latitude: 35.85290,
+          longitude: 128.59354,
+        }} >
+          <CustomMarker region={region}  title={'칼국수맛집'} />
+        </Marker> */}
       </MapView>
       {props.storeToggle ?
         <Animated.ScrollView
