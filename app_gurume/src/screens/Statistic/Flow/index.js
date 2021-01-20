@@ -8,6 +8,18 @@ import { Text } from '@styles/CommonStyles'
 // import components
 import FlowList from '@components/Flow/FlowList'
 
+export default function index() {
+  return (
+    <View style={styles.selectContainer}>
+      <Text style={{ alignSelf: 'center', padding: 10 }}>동선</Text>
+      <FlowList />
+      <TouchableOpacity style={styles.buttonContainer}>
+        <Text weight={"BOLD"} style={{ color: Colors.WHITE }}>더보기</Text>
+      </TouchableOpacity>
+    </View>
+  )
+}
+
 const styles = StyleSheet.create({
   selectContainer: {
     marginBottom: 10,
@@ -24,15 +36,3 @@ const styles = StyleSheet.create({
 
   }
 })
-
-export default function index() {
-  return (
-    <View style={styles.selectContainer}>
-      <Text style={{ alignSelf: 'center', padding: 10 }}>동선</Text>
-      <FlowList />
-      <TouchableOpacity style={styles.buttonContainer}>
-        <Text weight={"BOLD"} style={{ color: Colors.WHITE }}>더보기</Text>
-      </TouchableOpacity>
-    </View>
-  )
-}

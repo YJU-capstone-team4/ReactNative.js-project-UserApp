@@ -14,23 +14,14 @@ import coffeeMarkerImage from '@images/coffee_128.png'
 
 const { width, height } = Dimensions.get("window");
 
-const styles = StyleSheet.create({
-    container: {
-        // width: '100%',
-        height: height * 0.5,
-        // height: 500 
-        // ...StyleSheet.absoluteFillObject
-    },
-})
-
 const CustomMarker = (props) => (
     <MarkerContainer>
         <CustomMakrer source={props.type === 'coffee' ? coffeeMarkerImage : touristMarkerImage} />
         {
             // props.region.latitudeDelta < 0.02 ?
-            <MarkerTitleContainer style={{ borderColor: props.type === 'coffee' ? Colors.RED_9 : Colors.BLUE_3 }}>
-                <Text style={{ lineHeight: 26, paddingLeft: 5 }} size={16} weight={"BOLD"}>{props.title}</Text>
-            </MarkerTitleContainer>
+            // <MarkerTitleContainer style={{ borderColor: props.type === 'coffee' ? Colors.RED_9 : Colors.BLUE_3 }}>
+            //     <Text style={{ lineHeight: 26, paddingLeft: 5 }} size={16} weight={"BOLD"}>{props.title}</Text>
+            // </MarkerTitleContainer>
             // : null
         }
     </MarkerContainer>
@@ -96,3 +87,12 @@ export default function GoogleMiniMap(props) {
         </>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        width: '100%',
+        height: height * 0.5,
+        // height: 500 
+        // ...StyleSheet.absoluteFillObject
+    },
+})

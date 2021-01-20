@@ -10,14 +10,6 @@ import FlowList from '@components/Flow/FlowList'
 // import screens
 import FlowHashTags from './FlowHashTags'
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    marginTop: 10,
-    paddingHorizontal: 5,
-  },
-})
-
 export default function index() {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
@@ -34,3 +26,11 @@ export default function index() {
     </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    marginTop: 10,
+    paddingHorizontal: 5,
+  },
+})

@@ -13,17 +13,6 @@ import Flow from './Flow'
 // styles
 import { Colors } from '@styles'
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    // paddingHorizontal: 10,
-  },
-  statusBar: {
-    height: getStatusBarHeight(),
-    backgroundColor: Colors.BLUE_7
-  }
-})
-
 export default () => {
   return (
     <ScrollView style={styles.container}>
@@ -35,3 +24,14 @@ export default () => {
     </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    // paddingHorizontal: 10,
+  },
+  statusBar: {
+    height: getStatusBarHeight(),
+    backgroundColor: Colors.BLUE_7
+  }
+})

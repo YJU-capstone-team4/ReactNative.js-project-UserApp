@@ -8,6 +8,22 @@ import { Text } from '@styles/CommonStyles'
 // import components
 import PreviewThumb from '@components/PreviewThumb'
 
+export default function FlowList({ localShareFlow }) {
+  return (
+    <View
+      style={styles.container}
+    >
+      {
+        localShareFlow ? localShareFlow.map((value => <PreviewThumb data={value} />)) : null
+      }
+      
+      <TouchableOpacity style={styles.buttonContainer} >
+        <Text style={styles.buttonText}>더보기</Text>
+      </TouchableOpacity>
+    </View>
+  )
+}
+
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
@@ -29,20 +45,3 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 })
-
-
-export default function FlowList({ localShareFlow }) {
-  return (
-    <View
-      style={styles.container}
-    >
-      {
-        localShareFlow ? localShareFlow.map((value => <PreviewThumb data={value} />)) : null
-      }
-      
-      <TouchableOpacity style={styles.buttonContainer} >
-        <Text style={styles.buttonText}>더보기</Text>
-      </TouchableOpacity>
-    </View>
-  )
-}

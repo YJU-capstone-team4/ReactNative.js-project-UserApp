@@ -11,32 +11,6 @@ import YoutuberList from '@components/List/YoutuberList'
 // import screens
 import YoutuberChart from './YoutuberChart'
 
-const styles = StyleSheet.create({
-  selectContainer: {
-    // backgroundColor: Colors.PRIMARY,
-    marginBottom: 10,
-  },
-  buttonContainer: {
-    elevation: 3,
-    // width: 100,
-    margin: 2,
-    flex: 1,
-    paddingVertical: 15,
-    backgroundColor: Colors.WHITE,
-    borderColor: Colors.BLUE_8,
-    borderWidth: 1,
-    borderRadius: 5,
-    // borderBottomWidth: 0,
-    alignSelf: 'center',
-  },
-  buttonText: {
-    color: Colors.BLACK,
-    alignSelf: 'center',
-    textTransform: 'uppercase',
-    fontFamily: Typography.FONT_FAMILY_BOLD,
-  },
-})
-
 export default function index() {
   return (
     <View style={styles.selectContainer}>
@@ -69,3 +43,29 @@ export default function index() {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  selectContainer: {
+    // backgroundColor: Colors.PRIMARY,
+    marginBottom: 10,
+  },
+  buttonContainer: {
+    elevation: 3,
+    // width: 100,
+    margin: 2,
+    flex: 1,
+    paddingVertical: 15,
+    backgroundColor: Colors.WHITE,
+    borderColor: Colors.BLUE_8,
+    borderWidth: 1,
+    borderRadius: 5,
+    // borderBottomWidth: 0,
+    alignSelf: 'center',
+  },
+  buttonText: {
+    color: Colors.BLACK,
+    alignSelf: 'center',
+    textTransform: 'uppercase',
+    fontFamily: Typography.FONT_FAMILY_BOLD,
+  },
+})

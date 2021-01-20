@@ -15,6 +15,27 @@ import FlowList from '@components/Flow/FlowList'
 // import screens
 import MainHeader from './MainHeader'
 
+
+export default () => {
+  const [region, setRegion] = useState('서울특별시')
+
+  const lat = 33.364805
+  const lng = 126.542671
+
+  return (
+    <ScrollView style={styles.container}>
+      <View style={styles.statusBar} />
+      <MainHeader />
+      <SearchInput />
+      <Text style={styles.textContainer}>{region}를 방문한 유튜버</Text>
+      <YoutuberList />
+      <Text style={styles.textContainer}>{region} Top5 인기 동선</Text>
+      {/* TODO GraphQL 걷어 낸 부분 데이터 교체 필수 */}
+      {/* {data ? <FlowList localShareFlow={data.localShareFlow} /> : null} */}
+    </ScrollView>
+  )
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -28,29 +49,3 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.RED_4
   }
 })
-
-export default () => {
-  const [region, setRegion] = useState('서울특별시')
-  const { loading, error, data } = useQuery(Queries.GET_TOP_FLOWS, {
-    variables: { region },
-  })
-
-  const lat = 33.364805
-  const lng = 126.542671
-
-  return (
-    <ScrollView style={styles.container}>
-      <View style={styles.statusBar} />
-      <MainHeader />
-      <SearchInput />
-      <Text style={styles.textContainer}>{region}를 방문한 유튜버</Text>
-      <YoutuberList />
-      {/* <Text>{JSON.stringify(Queries.GET_TOP_FLOWS)}</Text> */}
-      {/* <Text>{loading ? '로딩중 ?' + loading : '로딩중'}</Text> */}
-      {/* <Text>{data ? '결과는 ?' + JSON.stringify(data.localShareFlow) : data}</Text> */}
-      {/* <Text>{error ? '에러내용은 ?' + JSON.stringify(error) : JSON.stringify(error)}</Text> */}
-      <Text style={styles.textContainer}>{region} Top5 인기 동선</Text>
-      {data ? <FlowList localShareFlow={data.localShareFlow} /> : null}
-    </ScrollView>
-  )
-}

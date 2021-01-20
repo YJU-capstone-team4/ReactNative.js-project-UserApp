@@ -13,14 +13,6 @@ import YoutuberProfile from './YoutuberProfile'
 import YoutuberRank from './YoutuberRank'
 import YoutuberMovieInfo from './YoutuberMovieInfo'
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    marginTop: getStatusBarHeight(),
-    // opacity: 0.8,
-  },
-})
-
 export default () => {
   return (
     <ScrollView style={styles.container}>
@@ -36,3 +28,11 @@ export default () => {
     </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    marginTop: getStatusBarHeight(),
+    // opacity: 0.8,
+  },
+})
