@@ -7,71 +7,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 // import styles
 import { Colors, Typography } from '@styles'
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  inputContainer: {
-    borderColor: Colors.GRAY_LIGHT,
-    borderWidth: 1,
-    borderRadius: 10,
-    fontFamily: Typography.FONT_FAMILY_REGULAR,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    marginVertical: 5,
-  },
-  inputText: {
-    fontFamily: Typography.FONT_FAMILY_BOLD,
-    fontSize: Typography.FONT_SIZE_16,
-    marginVertical: 5,
-    marginLeft: 5
-  },
-  buttonContainer: {
-    elevation: 3,
-    margin: 5,
-    width: 100,
-    paddingVertical: 15,
-    borderRadius: 10,
-    backgroundColor: Colors.DEEP_BLUE,
-    alignSelf: 'center',
-  },
-  buttonText: {
-    color: Colors.WHITE,
-    alignSelf: 'center',
-    fontFamily: Typography.FONT_FAMILY_BOLD,
-  },
-  tagContainer: {
-    elevation: 3,
-    margin: 5,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderRadius: 16,
-    minWidth: 50,
-    backgroundColor: Colors.PRIMARY,
-    alignSelf: 'center',
-  },
-  thumbnailTitle: {
-    position: 'absolute',
-    top: 65,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-    paddingHorizontal: 10
-  },
-  thumbnailBackground: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    flex: 1,
-    height: 200,
-    backgroundColor: 'black',
-    opacity: 0.6,
-    borderRadius: 10,
-  },
-})
-
 const dummyTags = [
   {
     color: '#ff99cc',
@@ -285,3 +220,68 @@ export default function FlowInput() {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  inputContainer: {
+    borderColor: Colors.GRAY_LIGHT,
+    borderWidth: 1,
+    borderRadius: 10,
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    marginVertical: 5,
+  },
+  inputText: {
+    fontFamily: Typography.FONT_FAMILY_BOLD,
+    fontSize: Typography.FONT_SIZE_16,
+    marginVertical: 5,
+    marginLeft: 5
+  },
+  buttonContainer: {
+    elevation: 3,
+    margin: 5,
+    width: 100,
+    paddingVertical: 15,
+    borderRadius: 10,
+    backgroundColor: Colors.DEEP_BLUE,
+    alignSelf: 'center',
+  },
+  buttonText: {
+    color: Colors.WHITE,
+    alignSelf: 'center',
+    fontFamily: Typography.FONT_FAMILY_BOLD,
+  },
+  tagContainer: {
+    elevation: 3,
+    margin: 5,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    borderRadius: 16,
+    minWidth: 50,
+    backgroundColor: Colors.PRIMARY,
+    alignSelf: 'center',
+  },
+  thumbnailTitle: {
+    position: 'absolute',
+    top: 65,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    paddingHorizontal: 10
+  },
+  thumbnailBackground: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    flex: 1,
+    height: 200,
+    backgroundColor: 'black',
+    opacity: 0.6,
+    borderRadius: 10,
+  },
+})

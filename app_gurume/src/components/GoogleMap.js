@@ -18,53 +18,6 @@ const CARD_HEIGHT = 280;
 const CARD_WIDTH = width * 0.83;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
-const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject
-  },
-  videoConatiner: {
-    width: 23,
-    height: 23,
-    borderRadius: 10,
-  },
-  scrollView: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
-  cardContainer: {
-    marginBottom: 5,
-    height: CARD_HEIGHT,
-    width: CARD_WIDTH,
-    maxWidth: 350,
-  },
-  cardCover: {
-    display: 'flex',
-    flex: 1,
-    margin: 5,
-    elevation: 3,
-    shadowRadius: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.3,
-    shadowOffset: { x: 2, y: -2 },
-    backgroundColor: "#FFF",
-    borderRadius: 6,
-    overflow: "hidden",
-  },
-  cardImage: {
-    flex: 3,
-    width: "100%",
-    height: "100%",
-    alignSelf: "center",
-  },
-  textContext: {
-    flex: 1.5,
-    padding: 10,
-    display: 'flex'
-  }
-})
-
 const CustomMarker = (props) => (
   <MarkerContainer>
     <CustomMakrer source={markerImage} />
@@ -313,3 +266,50 @@ export default function GoogleMap(props) {
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    ...StyleSheet.absoluteFillObject
+  },
+  videoConatiner: {
+    width: 23,
+    height: 23,
+    borderRadius: 10,
+  },
+  scrollView: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  cardContainer: {
+    marginBottom: 5,
+    height: CARD_HEIGHT,
+    width: CARD_WIDTH,
+    maxWidth: 350,
+  },
+  cardCover: {
+    display: 'flex',
+    flex: 1,
+    margin: 5,
+    elevation: 3,
+    shadowRadius: 10,
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowOffset: { x: 2, y: -2 },
+    backgroundColor: "#FFF",
+    borderRadius: 6,
+    overflow: "hidden",
+  },
+  cardImage: {
+    flex: 3,
+    width: "100%",
+    height: "100%",
+    alignSelf: "center",
+  },
+  textContext: {
+    flex: 1.5,
+    padding: 10,
+    display: 'flex'
+  }
+})

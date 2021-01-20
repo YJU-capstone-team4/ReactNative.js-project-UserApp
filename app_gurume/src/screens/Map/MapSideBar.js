@@ -15,57 +15,6 @@ import { Colors, Typography } from '@styles'
 import user_profile from '@images/user_profile.png'
 import under_arrow from '@images/under_arrow.png'
 
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        alignItems: 'center',
-    },
-    imageProfile: {
-        width: 70,
-        height: 70,
-        borderRadius: 80,
-    },
-    flowBtnContainer: {
-        borderRadius: 6,
-        elevation: 6,
-        shadowRadius: 10,
-        shadowColor: "#000",
-        shadowOpacity: 0.3,
-        shadowOffset: { x: 2, y: -2 },
-    },
-    subHeaberContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        marginTop: getStatusBarHeight(),
-        height: 48,
-        borderColor: Colors.GRAY_3,
-        borderBottomWidth: 1,
-        padding: 10,
-    },
-    arrowContainer: {
-        alignItems: 'center',
-        marginVertical: 10,
-    },
-    arrowImage: {
-        width: 20,
-        height: 20,
-    },
-    folderText: {
-        color: Colors.GRAY_7,
-        marginStart: 30,
-        marginTop: 1
-    },
-    folderContainer: {
-        marginVertical: 20,
-    },
-    folderItemContainer: {
-        alignItems: 'flex-start',
-        paddingVertical: 20,
-        display: 'flex',
-        flexDirection: 'row'
-    }
-})
-
 // navigation.goBack()
 
 export default function MapSideBar(props) {
@@ -178,3 +127,54 @@ export default function MapSideBar(props) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+    imageProfile: {
+        width: 70,
+        height: 70,
+        borderRadius: 80,
+    },
+    flowBtnContainer: {
+        borderRadius: 6,
+        elevation: 6,
+        shadowRadius: 10,
+        shadowColor: "#000",
+        shadowOpacity: 0.3,
+        shadowOffset: { x: 2, y: -2 },
+    },
+    subHeaberContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: getStatusBarHeight(),
+        height: 48,
+        borderColor: Colors.GRAY_3,
+        borderBottomWidth: 1,
+        padding: 10,
+    },
+    arrowContainer: {
+        alignItems: 'center',
+        marginVertical: 10,
+    },
+    arrowImage: {
+        width: 20,
+        height: 20,
+    },
+    folderText: {
+        color: Colors.GRAY_7,
+        marginStart: 30,
+        marginTop: 1
+    },
+    folderContainer: {
+        marginVertical: 20,
+    },
+    folderItemContainer: {
+        alignItems: 'flex-start',
+        paddingVertical: 20,
+        display: 'flex',
+        flexDirection: 'row'
+    }
+})

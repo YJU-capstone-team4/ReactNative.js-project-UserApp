@@ -11,6 +11,20 @@ import FlowMap from '@components/Flow/FlowMap'
 
 // import screens
 
+export default function index() {
+  return (
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+      {/* <Text>동선 - 내 동선</Text>
+      <Text>FlowMe - Index.js</Text> */}
+      {/* <Text>내가 공유한 동선 리스트</Text> */}
+      <FlowList />
+      {/* <Text>추가한 동선 리스트</Text> */}
+      <SelectBox />
+      <FlowMap />
+    </ScrollView>
+  )
+}
+
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
@@ -33,17 +47,3 @@ const styles = StyleSheet.create({
     fontFamily: Typography.FONT_FAMILY_BOLD,
   },
 })
-
-export default function index() {
-  return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-      {/* <Text>동선 - 내 동선</Text>
-      <Text>FlowMe - Index.js</Text> */}
-      {/* <Text>내가 공유한 동선 리스트</Text> */}
-      <FlowList />
-      {/* <Text>추가한 동선 리스트</Text> */}
-      <SelectBox />
-      <FlowMap />
-    </ScrollView>
-  )
-}

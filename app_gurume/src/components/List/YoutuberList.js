@@ -1,10 +1,6 @@
 import React from 'react'
 import { View, FlatList, Image } from 'react-native'
 
-// apollo
-import { useQuery } from '@apollo/react-hooks'
-import { Queries } from '~/graphql'
-
 // import screens
 import mokupYoutuber from '../../model/mokupYoutuber'
 
@@ -29,7 +25,7 @@ const renderYoutuber = (data) => {
         style={{ borderRadius: 230, width: 170, height: 170 }}
         source={data.ytbProfile}
       />
-      <Text style={{ marginTop: 20 }}>체널명 : {data.ytbChannel}</Text>
+      <Text weight={"BOLD"} style={{ marginTop: 20 }}>체널명 : {data.ytbChannel}</Text>
       <Text style={{ margin: 15, color: 'gray' }}>구독자수 : {data.ytbSubscribe}</Text>
       <Text style={{ color: 'gray' }}>방문맛집수 : {data.ytbHits}</Text>
       {/* <Text style={{ margin: 5 }}>{data.ytbLinkAddress}</Text> */}
@@ -38,11 +34,6 @@ const renderYoutuber = (data) => {
 }
 
 export default function YoutuberList() {
-  const { loading, error, data } = useQuery(Queries.GET_YOUTUBERS)
-
-  // if (loading) return <Text>로딩중입니다!!</Text>
-  // if (error) return <Text>에러가 났습니다!!</Text>
-
   return (
     <View
       style={{

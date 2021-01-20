@@ -5,23 +5,6 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity, Alert } from
 import { Colors, Typography } from '@styles'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-const styles = StyleSheet.create({
-  inputContainer: {
-    elevation: 20,
-    borderTopStartRadius: 20,
-    borderTopEndRadius: 20,
-    borderWidth: 1,
-    borderColor: Colors.GRAY_LIGHT,
-    backgroundColor: Colors.WHITE,
-    shadowColor: Colors.GRAY_9,
-    textTransform: 'uppercase',
-  },
-  textType: {
-    fontFamily: Typography.FONT_FAMILY_REGULAR,
-    padding: 7,
-  },
-})
-
 const renderYoutuber = (item, handelRemoveYoutuber) => {
   // console.log(item)
   return (
@@ -103,3 +86,20 @@ export default function SelectedYoutubers(props) {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  inputContainer: {
+    elevation: 20,
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
+    borderWidth: 1,
+    borderColor: Colors.GRAY_LIGHT,
+    backgroundColor: Colors.WHITE,
+    shadowColor: Colors.GRAY_9,
+    textTransform: 'uppercase',
+  },
+  textType: {
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
+    padding: 7,
+  },
+})
