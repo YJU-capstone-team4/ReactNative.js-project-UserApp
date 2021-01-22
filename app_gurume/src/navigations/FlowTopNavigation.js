@@ -26,7 +26,7 @@ export default function FlowTopNavigation() {
           fontFamily: Typography.FONT_FAMILY_BOLD,
         },
         tabStyle: { width: 100 },
-        style: { backgroundColor: Colors.CEMENT, elevation: 0 },
+        style: { backgroundColor: Colors.WHITE, elevation: 0 },
         indicatorStyle: {
           // opacity: 0,
           borderBottomWidth: 2,

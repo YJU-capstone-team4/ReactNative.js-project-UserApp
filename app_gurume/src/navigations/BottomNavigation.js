@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -16,23 +16,29 @@ import StatisticScreen from '@screens/Statistic'
 import YoutuberScreen from '@screens/Youtuber'
 import StoreScreen from '@screens/Store'
 
-const Tab = createMaterialBottomTabNavigator()
+const Tab = createBottomTabNavigator()
 const MapStack = createStackNavigator();
 
 export default function BottomNavigation() {
   return (
     <Tab.Navigator
+      tabBarOptions={{
+        activeTintColor: 'tomato', // 탭 활성
+        inactiveTintColor: 'gray', // 탭 비활성
+        labelStyle: {
+          fontSize: 12,
+          fontFamily: Typography.FONT_FAMILY_BOLD,
+          marginBottom: 3
+        },
+      }}
       initialRouteName="Map"
-      activeColor={Colors.RED_4}
-      inactiveColor={Colors.RED_1}
-      barStyle={{ backgroundColor: '#FFFFFF' }}
+      barStyle={{ backgroundColor: Colors.WHITE }}
     >
       <Tab.Screen
         name="Main"
         component={MainScreen}
         options={{
-          tabBarLabel: '메인',
-          // tabBarColor: Colors.BLUE_4,
+          tabBarLabel: '홈',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home-map-marker" color={color} size={26} />
           ),
@@ -43,7 +49,6 @@ export default function BottomNavigation() {
         component={MapStackScreen}
         options={{
           tabBarLabel: '지도',
-          // tabBarColor: Colors.RED_4,
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="map-legend" color={color} size={26} />
           ),
@@ -53,21 +58,19 @@ export default function BottomNavigation() {
         name="Flow"
         component={FlowScreen}
         options={{
-          tabBarLabel: '동선',
-          // tabBarColor: Colors.GREEN_4,
+          tabBarLabel: '루트',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="map-marker-path" color={color} size={26} />
           ),
         }}
       />
       <Tab.Screen
-        name="통계"
+        name="statistic"
         component={StatisticScreen}
         options={{
           tabBarLabel: '통계',
-          // tabBarColor: Colors.PURPLE_4,
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="chart-areaspline" color={color} size={26} />
+            <MaterialCommunityIcons name="chart-bubble" color={color} size={26} />
           ),
         }}
       />
@@ -76,13 +79,12 @@ export default function BottomNavigation() {
         component={YoutuberScreen}
         options={{
           tabBarLabel: '유튜버',
-          // tabBarColor: Colors.PINK_4,
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="cloud-search" color={color} size={26} />
+            <MaterialCommunityIcons name="youtube" color={color} size={26} />
           ),
         }}
       />
-    </Tab.Navigator>
+    </Tab.Navigator >
   )
 }
 

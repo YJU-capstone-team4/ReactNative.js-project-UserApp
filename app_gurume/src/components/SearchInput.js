@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     height: 60,
     paddingVertical: 15,
     borderRadius: 10,
-    backgroundColor: Colors.RED_4,
+    backgroundColor: Colors.GRAY_8,
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
