@@ -16,9 +16,9 @@ import YoutuberMovieInfo from './YoutuberMovieInfo'
 export default () => {
   return (
     <ScrollView style={styles.container}>
-      <SearchInput />
       <ThumbsUp />
       <YoutuberProfile />
+      <SearchInput />
       <YoutuberRank />
       <HashTagList />
       <Text style={{ padding: 10 }}>조회수 Top 5 영상</Text>

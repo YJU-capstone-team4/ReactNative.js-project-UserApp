@@ -10,7 +10,7 @@ export default function youtuberProfile() {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 10,
+        // marginBottom: 10,
       }}
     >
       <Text>유튜버 정보가 들어갈 공간입니다.</Text>

@@ -6,19 +6,15 @@ import { useFonts } from '@use-expo/font'
 import { AppLoading } from 'expo'
 import { Colors } from '@styles'
 
-// Apollo
-import { ApolloProvider } from '@apollo/react-hooks'
-import { apolloClient } from '~/graphql'
-
 // Navigation Component
 import RootNavigationContainer from './src/navigations/RootNavigation'
 
 // StatusBar
-StatusBar.setBarStyle("light-content");
-if (Platform.OS === "android") {
-  StatusBar.setBackgroundColor("rgba(0,0,0,0.3)");
-  StatusBar.setTranslucent(true);
-}
+// StatusBar.setBarStyle("light-content");
+// if (Platform.OS === "android") {
+//   StatusBar.setBackgroundColor("rgba(0,0,0,0.3)");
+//   StatusBar.setTranslucent(true);
+// }
 
 // import styles
 const styles = StyleSheet.create({
@@ -41,15 +37,13 @@ export default function App() {
 
   return (
     <>
-      <View style={styles.topOpacityContainer}>
+      {/* <View style={styles.topOpacityContainer}>
         <StatusBar barStyle="light-content" />
-      </View>
+      </View> */}
       {!isLoaded ? (
         <AppLoading />
       ) : (
-          <ApolloProvider client={apolloClient}>
-            <RootNavigationContainer />
-          </ApolloProvider>
+          <RootNavigationContainer />
         )}
     </>
   )
