@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 // import styles
-import { Colors, Typography } from './index'
+import { Colors } from './index'
 
 export const MarkerTitleContainer = styled.View`
         margin-top: 5px;
@@ -19,7 +19,7 @@ export const MarkerContainer = styled.View`
     align-items: center;
 `
 
-export const CustomMakrer = styled.Image`
+export const CustomMarker = styled.Image`
     width: 40px;
     height: 40px;
     margin-top: 5px;

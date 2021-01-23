@@ -20,16 +20,17 @@ export default function SearchInput(props) {
       }}
     >
       <View style={styles.inputContainer}>
-        {props.directionTop ? <MaterialCommunityIcons
+        {/* TODO 로그인 전에는 내 정보 버튼 비활성화 */}
+        {/* {props.directionTop ? <MaterialCommunityIcons
           onPress={() => props.navigation.openDrawer()}
           style={styles.hambugerContainer}
           name="format-list-bulleted"
           color="black"
           size={30}
-        /> : null}
+        /> : null} */}
         <TextInput
           style={{
-            paddingLeft: props.directionTop ? 30 : 0,
+            // paddingLeft: props.directionTop ? 30 : 0,
             fontFamily: Typography.FONT_FAMILY_REGULAR,
             fontSize: Typography.FONT_SIZE_16,
           }}

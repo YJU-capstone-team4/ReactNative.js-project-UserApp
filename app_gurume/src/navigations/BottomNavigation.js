@@ -15,9 +15,13 @@ import FlowScreen from '@screens/Flow'
 import StatisticScreen from '@screens/Statistic'
 import YoutuberScreen from '@screens/Youtuber'
 import StoreScreen from '@screens/Store'
+import UserScreen from '@screens/User'
+import SignInScreen from '@screens/User/SignIn'
+import SignUpScreen from '@screens/User/SignUp';
 
 const Tab = createBottomTabNavigator()
-const MapStack = createStackNavigator();
+const MapStack = createStackNavigator()
+const MainStack = createStackNavigator()
 
 export default function BottomNavigation() {
   return (
@@ -36,7 +40,7 @@ export default function BottomNavigation() {
     >
       <Tab.Screen
         name="Main"
-        component={MainScreen}
+        component={MainStackScreen}
         options={{
           tabBarLabel: '홈',
           tabBarIcon: ({ color }) => (
@@ -88,6 +92,50 @@ export default function BottomNavigation() {
   )
 }
 
+const MainStackScreen = ({ navigation }) => {
+  return (
+    <MainStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          shadowColor: 'black', // iOS
+          elevation: 0, // Android
+        },
+        headerTitleStyle: {
+          fontFamily: Typography.FONT_FAMILY_BOLD,
+          marginTop: 2,
+          marginLeft: -10,
+        }
+      }}>
+      <MapStack.Screen
+        name="main"
+        options={{ headerMode: 'none', headerShown: false }}
+        component={MainScreen}
+      />
+      <MapStack.Screen
+        name="signIn"
+        options={{
+          title: '로그인',
+        }}
+        component={SignInScreen}
+      />
+      <MapStack.Screen
+        name="signUp"
+        options={{
+          title: '회원가입',
+        }}
+        component={SignUpScreen}
+      />
+      <MapStack.Screen
+        name="userInfo"
+        options={{
+          title: '내 정보',
+        }}
+        component={UserScreen}
+      />
+    </MainStack.Navigator>
+  )
+}
+
 const MapStackScreen = ({ navigation }) => {
   return (
     <MapStack.Navigator
@@ -110,6 +158,13 @@ const MapStackScreen = ({ navigation }) => {
         name="storeMap"
         options={{
           title: '상세정보',
+        }}
+        component={StoreScreen}
+      />
+      <MapStack.Screen
+        name="userInfo"
+        option={{
+          title: '내 정보'
         }}
         component={StoreScreen}
       />

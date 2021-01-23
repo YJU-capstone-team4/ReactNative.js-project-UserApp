@@ -15,7 +15,7 @@ import NoticeContainer from './NoticeContainer'
 import LocationSelector from './ModalSelector'
 
 
-export default () => {
+export default (props) => {
   const [region, setRegion] = useState('서울특별시')
 
   const lat = 33.364805
@@ -25,7 +25,7 @@ export default () => {
     <View>
       <View style={styles.statusBar} />
       <ScrollView stickyHeaderIndices={[0]}>
-        <MainHeader region={region} setRegion={setRegion} />
+        <MainHeader navi={props.navigation} region={region} setRegion={setRegion} />
         <NoticeContainer />
         {/* <SearchInput /> */}
         <View style={styles.wrapContainer}>

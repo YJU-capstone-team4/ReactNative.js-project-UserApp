@@ -1,5 +1,4 @@
 import React from 'react'
-import { View, Text } from 'react-native'
 
 import ModalSelector from 'react-native-modal-selector'
 import { Typography } from '../../styles';
@@ -17,9 +16,11 @@ const LocationSelector = (props) => {
             visible={props.modalOpen}
             cancelText={"취소"}
             touchableStyle={{ display: 'none' }}
-            optionTextStyle={{ fontFamily: Typography.FONT_FAMILY_REGULAR }}
-            cancelTextStyle={{ fontFamily: Typography.FONT_FAMILY_REGULAR }}
-            onChange={(option) => { handleSetRegion(option) }} />
+            optionTextStyle={{ fontFamily: Typography.FONT_FAMILY_REGULAR, paddingVertical: 10 }}
+            cancelTextStyle={{ fontFamily: Typography.FONT_FAMILY_REGULAR, paddingVertical: 10 }}
+            onChange={(option) => { handleSetRegion(option) }}
+            onModalClose={() => props.setModalOpen(!props.modalOpen)}
+        />
     )
 }
 

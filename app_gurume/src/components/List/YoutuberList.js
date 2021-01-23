@@ -12,7 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const renderYoutuber = (data) => {
   return (
     <View style={{ marginHorizontal: 6 }}>
-      <TouchableOpacity>
+      <TouchableOpacity activeOpacity={0.8}>
         <Image
           style={{ width: 170, height: 170 }}
           source={data.ytbProfile}

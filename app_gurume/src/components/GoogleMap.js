@@ -8,7 +8,7 @@ import { markers } from '../model/mokupMap'
 
 // import styles
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { CustomMakrer, MarkerContainer, MarkerTitleContainer } from '../styles/GoogleMapStyles'
+import { CustomMarker, MarkerContainer, MarkerTitleContainer } from '../styles/GoogleMapStyles'
 import { Colors } from '@styles'
 import { Text, Button } from '../styles/CommonStyles'
 import markerImage from '@images/delivery_128.png'
@@ -18,9 +18,9 @@ const CARD_HEIGHT = 280;
 const CARD_WIDTH = width * 0.83;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
-const CustomMarker = (props) => (
+const YoutubeMarker = (props) => (
   <MarkerContainer>
-    <CustomMakrer source={markerImage} />
+    <CustomMarker source={markerImage} />
     {
       props.region.latitudeDelta < 0.02 ?
         <MarkerTitleContainer>
@@ -31,27 +31,6 @@ const CustomMarker = (props) => (
     }
   </MarkerContainer>
 );
-
-const MarkerSet = (props) => {
-  const { data, region, setYoutuberToggle, setStoreToggle } = props
-  return (
-    data.map((value, index) => {
-      const { title, youtuberImage } = value
-      return (
-        <Marker
-          key={index}
-          onPress={() => {
-            setYoutuberToggle(false)
-            setStoreToggle((prevStatus) => !prevStatus ? true : prevStatus)
-          }}
-          coordinate={value.coordinate}
-        >
-          <CustomMarker region={region} youtuberImage={youtuberImage} title={title} />
-        </Marker>
-      )
-    })
-  )
-}
 
 export default function GoogleMap(props) {
   const [region, setRegion] = useState({
@@ -130,85 +109,11 @@ export default function GoogleMap(props) {
                 }}
                 coordinate={value.coordinate}
               >
-                <CustomMarker region={region} youtuberImage={youtuberImage} title={title} />
+                <YoutubeMarker region={region} youtuberImage={youtuberImage} title={title} />
               </Marker>
             )
           })
         }
-        {/* <MarkerSet
-          region={region}
-          data={state.markers}
-          setYoutuberToggle={props.setYoutuberToggle}
-          setStoreToggle={props.setStoreToggle}
-        /> */}
-        {/* <Marker
-          coordinate={{
-            latitude: 35.86990,
-            longitude: 128.59554,
-          }}
-        >
-          <CustomMarker region={region} title='할매국밥원조' />
-        </Marker>
-        <Marker coordinate={{
-          latitude: 35.84190,
-          longitude: 128.59754,
-        }} >
-          <CustomMarker region={region}  title={'칼국수맛집'} />
-        </Marker>
-        <Marker coordinate={{
-          latitude: 35.86570,
-          longitude: 128.59054,
-        }} >
-          <CustomMarker region={region} title={'칼국수맛집'} />
-        </Marker>
-        <Marker coordinate={{
-          latitude: 35.86390,
-          longitude: 128.59154,
-        }} >
-          <CustomMarker region={region}  title={'칼국수맛집'} />
-        </Marker>
-        <Marker coordinate={{
-          latitude: 35.86190,
-          longitude: 128.59054,
-        }} >
-          <CustomMarker region={region}  title={'칼국수맛집'} />
-        </Marker>
-        <Marker coordinate={{
-          latitude: 35.85190,
-          longitude: 128.59054,
-        }} >
-          <CustomMarker region={region}  title={'칼국수맛집'} />
-        </Marker>
-        <Marker coordinate={{
-          latitude: 35.85990,
-          longitude: 128.5554,
-        }} >
-          <CustomMarker region={region}  title={'칼국수맛집'} />
-        </Marker>
-        <Marker coordinate={{
-          latitude: 35.86470,
-          longitude: 128.59854,
-        }} >
-          <CustomMarker region={region}  title={'칼국수맛집'} />
-        </Marker>
-        <Marker coordinate={{
-          latitude: 35.86990,
-          longitude: 128.59954,
-        }} >
-          <CustomMarker region={region}  title={'칼국수맛집'} />
-        </Marker>
-        <Marker coordinate={{
-          latitude: 35.86790,
-          longitude: 128.59654,
-        }} >
-          <CustomMarker region={region}  title={'칼국수맛집'} />
-        </Marker>
-        <Marker coordinate={{
-          latitude: 35.85290,
-          longitude: 128.59354,
-        }} >
-          <CustomMarker region={region}  title={'칼국수맛집'} />
-        </Marker> */}
       </MapView>
       {props.storeToggle ?
         <Animated.ScrollView
@@ -246,6 +151,7 @@ export default function GoogleMap(props) {
                       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ marginVertical: 6 }} weight={"EXTRA_BOLD"} numberOfLines={1}>{marker.title}</Text>
                         <TouchableOpacity style={{ marginTop: 3 }}>
+                          {/* TODO 로그인 전에는 전부 비활성화 -> 클릭시 로그인 창으로 Navigation 이용해서 이동 */}
                           <MaterialCommunityIcons style={{ borderRadius: 50, backgroundColor: Colors.GRAY_6 }} name="star" color={Colors.YELLOW_3} size={20} />
                         </TouchableOpacity>
                       </View>

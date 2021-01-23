@@ -38,15 +38,15 @@ export default function MapSideBar(props) {
                         <View style={{ flex: 1, zIndex: 100 }}>
                             <SelectBox userFlow={mokupFolder} />
                         </View>
-                        <Button style={styles.flowBtnContainer} backgroundColor={Colors.RED_3} borderColor={Colors.RED_3}>
-                            <Text style={{ paddingVertical: 7 }} size={18} color={Colors.WHITE}>기사식당 돼지불백</Text>
-                        </Button>
+                        {/* <Button style={styles.flowBtnContainer} backgroundColor={Colors.RED_3} borderColor={Colors.RED_3}> */}
+                        <Text style={{ paddingVertical: 7 }} size={18} color={Colors.GRAY_9}>기사식당 돼지불백</Text>
+                        {/* </Button> */}
                         <View style={styles.arrowContainer}>
                             <Image style={styles.arrowImage} source={under_arrow} />
                         </View>
-                        <Button style={styles.flowBtnContainer} backgroundColor={Colors.RED_3} borderColor={Colors.RED_3}>
-                            <Text style={{ paddingVertical: 7 }} size={18} color={Colors.WHITE}>퍼즈 X 베이커리</Text>
-                        </Button>
+                        {/* <Button style={styles.flowBtnContainer} backgroundColor={Colors.RED_3} borderColor={Colors.RED_3}> */}
+                        <Text style={{ paddingVertical: 7 }} size={18} color={Colors.GRAY_9}>퍼즈 X 베이커리</Text>
+                        {/* </Button> */}
                         <View style={styles.arrowContainer}>
                             <Image style={styles.arrowImage} source={under_arrow} />
                         </View>

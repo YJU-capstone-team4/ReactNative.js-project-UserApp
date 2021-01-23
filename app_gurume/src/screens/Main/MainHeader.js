@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Ionicons from 'react-native-vector-icons/Feather'
 
@@ -25,16 +25,28 @@ export default function MainHeader(props) {
     ])
   }, [])
 
+  const handleInfoNavi = (navigation) => {
+    // TODO 자연스러운 화면 이동 로직 
+    // 여기서 'userInfo' or 'signIn' 페이지로 이동할지 결정해야 함.
+    navigation.navigate('signIn', {
+      // storeId: index,
+      // storeName: marker.title,
+    })
+  }
+
   return (
     <View style={{ display: 'flex', flexDirection: 'row', paddingVertical: 5, justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.GRAY_1 }}>
       <Ionicons size={20} style={{ justifyContent: 'flex-end', marginLeft: 15 }} name="bell" color={Colors.GRAY_8} />
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <TouchableOpacity
+        activeOpacity={0.8} //깜빡임을 조절하는 기능 
+        hitSlop={{ top: 32, bottom: 32, left: 32, right: 32 }} //터치영역을 확장
+        onPress={() => { setModalOpen(!modalOpen) }} style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text size={22} weight={'BOLD'} style={{ color: Colors.GRAY_8 }}>{props.region}</Text>
-        <MaterialCommunityIcons onPress={() => { setModalOpen(!modalOpen) }} size={33} style={{ marginLeft: -5 }} name="menu-down" color={Colors.GRAY_8}>
-          <ModalSelector data={locationInfo} modalOpen={modalOpen} setRegion={props.setRegion} />
+        <MaterialCommunityIcons size={33} style={{ marginLeft: -5 }} name="menu-down" color={Colors.GRAY_8}>
+          <ModalSelector data={locationInfo} modalOpen={modalOpen} setModalOpen={setModalOpen} setRegion={props.setRegion} />
         </MaterialCommunityIcons>
-      </View>
-      <Ionicons size={20} style={{ justifyContent: 'flex-end', marginRight: 15 }} name="settings" color={Colors.GRAY_8} />
+      </TouchableOpacity>
+      <Ionicons onPress={() => handleInfoNavi(props.navi)} size={20} style={{ justifyContent: 'flex-end', marginRight: 15 }} name="settings" color={Colors.GRAY_8} />
     </View>
   )
 }
