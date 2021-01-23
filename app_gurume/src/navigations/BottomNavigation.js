@@ -89,15 +89,11 @@ export default function BottomNavigation() {
 }
 
 const MapStackScreen = ({ navigation }) => {
-
   return (
     <MapStack.Navigator
       screenOptions={{
-        // header: null,
         headerStyle: {
-          // height:95,
-          // backgroundColor: colors.background,
-          // shadowColor: colors.background, // iOS
+          shadowColor: 'black', // iOS
           elevation: 0, // Android
         },
         headerTitleStyle: {
@@ -105,7 +101,6 @@ const MapStackScreen = ({ navigation }) => {
           marginTop: 2,
           marginLeft: -10,
         }
-        // headerTintColor: colors.text,
       }}>
       <MapStack.Screen
         name="map"

@@ -18,8 +18,8 @@ export default function NoticeContainer() {
         // imageStyle={{ borderRadius: 13 }}
         >
             <Text style={{ color: Colors.WHITE, marginBottom: 10, marginLeft: 20, fontSize: 25 }} weight={"BOLD"}>환영합니다! 코코님</Text>
-            <Text style={{ color: Colors.WHITE, marginBottom: 10, marginLeft: 20, fontSize: 25 }} weight={"BOLD"}>유튜브 데이터를 한 곳으로</Text>
-            <Text style={{ color: Colors.WHITE, marginBottom: 10, marginLeft: 20, fontSize: 20 }} weight={"BOLD"}>이용해보세요!</Text>
+            <Text style={{ color: Colors.WHITE, marginBottom: 10, marginLeft: 20, fontSize: 29 }} weight={"BOLD"}>빅데이터 유튜브 정보를</Text>
+            <Text style={{ color: Colors.WHITE, marginBottom: 10, marginLeft: 20, fontSize: 23 }} weight={"BOLD"}>이용해보세요!</Text>
         </ImageBackground>
     )
 }

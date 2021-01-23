@@ -15,8 +15,8 @@ export default (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false} >
-        <View style={styles.contentWrapper}>
-          <Text weight={"BOLD"} style={{ fontSize: 50, color: Colors.RED_3 }}>{route.params.storeName}</Text>
+        <View style={[styles.contentWrapper, { paddingTop: 20, paddingBottom: 10, paddingLeft: 5 }]}>
+          <Text weight={"BOLD"} style={{ fontSize: 50, color: Colors.GRAY_8 }}>{route.params.storeName}</Text>
           <Text style={{ marginTop: 10, color: Colors.GRAY_9 }} size={22}>대구광역시 북구 복현동 동북로 55길 13-6</Text>
         </View>
         <View style={[styles.contentWrapper, { marginHorizontal: 0 }]}>
@@ -49,7 +49,7 @@ export default (props) => {
           </View>
         </View>
         <View style={[styles.contentWrapper, { marginHorizontal: 7 }]}>
-          <Text weight={"BOLD"} style={{ margin: 10, marginLeft: 0  }} size={22}>🐥 주변 명소 추천</Text>
+          <Text weight={"BOLD"} style={{ margin: 10, marginLeft: 0 }} size={22}>🐥 주변 명소 추천</Text>
           {/* <View style={{ }}> */}
           <GoogleMiniMap />
           {/* </View> */}
@@ -63,11 +63,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flex: 1,
-    // marginTop: 10,
     backgroundColor: Colors.WHITE
-    // justifyContent: 'center',
-    // alignItems: 'center',
-
   },
   contentWrapper: {
     marginHorizontal: 10,
@@ -75,7 +71,7 @@ const styles = StyleSheet.create({
   },
   videoWrapper: {
     marginTop: 10,
-    backgroundColor: Colors.RED_3 + 80,
+    backgroundColor: Colors.GRAY_2 + 50,
     paddingTop: 10,
     paddingBottom: 15,
   }

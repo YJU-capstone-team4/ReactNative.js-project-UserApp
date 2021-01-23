@@ -12,6 +12,7 @@ import { Text } from '../../styles/CommonStyles'
 // import screens
 import MainHeader from './MainHeader'
 import NoticeContainer from './NoticeContainer'
+import LocationSelector from './ModalSelector'
 
 
 export default () => {
@@ -24,7 +25,7 @@ export default () => {
     <View>
       <View style={styles.statusBar} />
       <ScrollView stickyHeaderIndices={[0]}>
-        <MainHeader />
+        <MainHeader region={region} setRegion={setRegion} />
         <NoticeContainer />
         {/* <SearchInput /> */}
         <View style={styles.wrapContainer}>
@@ -42,6 +43,7 @@ export default () => {
         </View>
         {/* TODO GraphQL 걷어 낸 부분 데이터 교체 필수 */}
         {/* {data ? <FlowList localShareFlow={data.localShareFlow} /> : null} */}
+        <LocationSelector/>
       </ScrollView>
     </View>
   )
