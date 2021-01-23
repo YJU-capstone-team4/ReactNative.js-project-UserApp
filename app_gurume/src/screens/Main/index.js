@@ -11,6 +11,7 @@ import { Text } from '../../styles/CommonStyles'
 
 // import screens
 import MainHeader from './MainHeader'
+import NoticeContainer from './NoticeContainer'
 
 
 export default () => {
@@ -20,16 +21,29 @@ export default () => {
   const lng = 126.542671
 
   return (
-    <ScrollView style={styles.container}>
-      {/* <View style={styles.statusBar} /> */}
-      <MainHeader />
-      <SearchInput />
-      <Text style={styles.textContainer} size={20}>🇰🇷 <Text size={22} weight="BOLD">{region}</Text>를 방문한 유튜버</Text>
-      <YoutuberList />
-      <Text style={styles.textContainer}>{region} Top5 인기 동선</Text>
-      {/* TODO GraphQL 걷어 낸 부분 데이터 교체 필수 */}
-      {/* {data ? <FlowList localShareFlow={data.localShareFlow} /> : null} */}
-    </ScrollView>
+    <View>
+      <View style={styles.statusBar} />
+      <ScrollView stickyHeaderIndices={[0]}>
+        <MainHeader />
+        <NoticeContainer />
+        {/* <SearchInput /> */}
+        <View style={styles.wrapContainer}>
+          <Text style={styles.textContainer} size={20}>🇰🇷 <Text size={22} weight="BOLD">{region}</Text>를 방문한 유튜버</Text>
+          <YoutuberList />
+        </View>
+        <View style={styles.wrapContainer, { marginTop: 5 }}>
+          <Text style={styles.textContainer}>{region} Top5 인기 동선</Text>
+        </View>
+        <View style={styles.wrapContainer, { marginTop: 5 }}>
+          <Text style={styles.textContainer}>{region} Top5 인기 동선</Text>
+        </View>
+        <View style={styles.wrapContainer, { marginTop: 5 }}>
+          <Text style={styles.textContainer}>{region} Top5 인기 동선</Text>
+        </View>
+        {/* TODO GraphQL 걷어 낸 부분 데이터 교체 필수 */}
+        {/* {data ? <FlowList localShareFlow={data.localShareFlow} /> : null} */}
+      </ScrollView>
+    </View>
   )
 }
 
@@ -39,10 +53,15 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.GRAY_1
   },
   textContainer: {
-    padding: 10
+    paddingLeft: 10,
+    paddingBottom: 15,
   },
   statusBar: {
     height: getStatusBarHeight(),
-    backgroundColor: Colors.RED_4
+    backgroundColor: Colors.GRAY_1
+  },
+  wrapContainer: {
+    backgroundColor: Colors.WHITE,
+    paddingVertical: 30
   }
 })

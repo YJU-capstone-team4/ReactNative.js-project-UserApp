@@ -7,18 +7,18 @@ import thumb_5 from '@images/thumbnail_5.jpg'
 
 export default [
   {
-    ytbChannel: '문복희',
+    ytbChannel: '문복희 Eat with Boki',
     ytbProfile: thumb_2,
     ytbLinkAddress: '/boki__tube',
     ytbSubscribe: 1499999,
-    ytbHits: 20000001,
+    ytbHits: 70,
   },
   {
-    ytbChannel: '엠브로',
+    ytbChannel: '엠브로 MBRO',
     ytbProfile: thumb_3,
     ytbLinkAddress: '/bro_man',
     ytbSubscribe: 1499999,
-    ytbHits: 20000001,
+    ytbHits: 33,
   },
   {
     ytbChannel: '떵개떵',
@@ -28,14 +28,14 @@ export default [
     ytbHits: 20000001,
   },
   {
-    ytbChannel: '테스트용',
+    ytbChannel: "흥삼이네",
     ytbProfile: thumb_4,
     ytbLinkAddress: '/yang_man',
     ytbSubscribe: 2333333,
     ytbHits: 200234001,
   },
   {
-    ytbChannel: '쯔양',
+    ytbChannel: 'tzuyang쯔양',
     ytbProfile: thumb_5,
     ytbLinkAddress: '/yang_man_1',
     ytbSubscribe: 5555323,

@@ -7,6 +7,7 @@ import mokupYoutuber from '../../model/mokupYoutuber'
 // styles
 import { Colors } from '@styles'
 import { Text } from '../../styles/CommonStyles'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const renderYoutuber = (data) => {
   return (
@@ -32,12 +33,29 @@ const renderYoutuber = (data) => {
     //   </View>
     //   {/* <Text style={{ margin: 5 }}>{data.ytbLinkAddress}</Text> */}
     // </View>
-    <View style={{ margin: 10, alignItems: 'center' }}>
+    // <View style={{ margin: 5, borderRadius: 5, padding: 10, justifyContent: 'space-evenly', backgroundColor: Colors.WHITE }}>
+    <View style={{ marginHorizontal: 6 }}>
       <Image
-        style={{ borderRadius: 100, width: 170, height: 170 }}
+        style={{ width: 170, height: 170 }}
         source={data.ytbProfile}
       />
-      <Text weight={"BOLD"} size={18} style={{ marginTop: 10 }}>{data.ytbChannel}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', position: 'relative', bottom: 23 }}>
+        {/* <MaterialCommunityIcons name="youtube" color={Colors.BLACK} size={16} /> */}
+        <Text size={20} weight={'BOLD'} style={{ backgroundColor: Colors.RED_4, padding: 3, color: Colors.WHITE, letterSpacing: -0.5 }}>300K</Text>
+      </View>
+      <View>
+        <Text size={20} style={{ marginTop: -10 }}>{data.ytbChannel}</Text>
+        {/* 영상 개수 */}
+        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginVertical: 5 }}>
+          <MaterialCommunityIcons name="youtube" color={Colors.RED_3} size={16} />
+          <Text style={{ color: Colors.GRAY_8, marginVertical: 3, marginLeft: 5 }}>영상 : {data.ytbHits}</Text>
+        </View>
+        {/* 구독자 수 */}
+        {/* <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+          <MaterialCommunityIcons name="star" color={Colors.YELLOW_6} size={16} />
+          <Text style={{ color: Colors.GRAY_8, marginVertical: 3, marginLeft: 5 }}>구독자 : {data.ytbSubscribe}</Text>
+        </View> */}
+      </View>
     </View>
   )
 }
@@ -47,7 +65,7 @@ export default function YoutuberList() {
     <View
       style={{
         // backgroundColor: Colors.RED_4 + '90',
-        height: 300,
+        height: 225,
         marginHorizontal: 5
         // flex: 1,
         // borderBottomEndRadius: 10,
