@@ -4,28 +4,6 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 // import styles
 import { Colors, Typography } from '@styles'
 
-const styles = StyleSheet.create({
-  selectContainer: {
-    backgroundColor: Colors.PRIMARY,
-    marginBottom: 10,
-  },
-  buttonContainer: {
-    elevation: 3,
-    margin: 5,
-    width: 100,
-    paddingVertical: 15,
-    borderRadius: 10,
-    backgroundColor: Colors.DEEP_BLUE,
-    alignSelf: 'center',
-  },
-  buttonText: {
-    color: Colors.WHITE,
-    alignSelf: 'center',
-    textTransform: 'uppercase',
-    fontFamily: Typography.FONT_FAMILY_BOLD,
-  },
-})
-
 export default function YoutuberChart() {
   return (
     <>
@@ -59,3 +37,25 @@ export default function YoutuberChart() {
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  selectContainer: {
+    backgroundColor: Colors.PRIMARY,
+    marginBottom: 10,
+  },
+  buttonContainer: {
+    elevation: 3,
+    margin: 5,
+    width: 100,
+    paddingVertical: 15,
+    borderRadius: 10,
+    backgroundColor: Colors.DEEP_BLUE,
+    alignSelf: 'center',
+  },
+  buttonText: {
+    color: Colors.WHITE,
+    alignSelf: 'center',
+    textTransform: 'uppercase',
+    fontFamily: Typography.FONT_FAMILY_BOLD,
+  },
+})

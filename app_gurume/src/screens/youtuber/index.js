@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, StyleSheet, ScrollView } from 'react-native'
+import { getStatusBarHeight } from "react-native-status-bar-height"; 
 
 // import components
 import SearchInput from '@components/SearchInput'
@@ -12,20 +13,12 @@ import YoutuberProfile from './YoutuberProfile'
 import YoutuberRank from './YoutuberRank'
 import YoutuberMovieInfo from './YoutuberMovieInfo'
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    marginTop: 30,
-    // opacity: 0.8,
-  },
-})
-
 export default () => {
   return (
     <ScrollView style={styles.container}>
-      <SearchInput />
       <ThumbsUp />
       <YoutuberProfile />
+      <SearchInput />
       <YoutuberRank />
       <HashTagList />
       <Text style={{ padding: 10 }}>조회수 Top 5 영상</Text>
@@ -35,3 +28,11 @@ export default () => {
     </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    marginTop: getStatusBarHeight(),
+    // opacity: 0.8,
+  },
+})

@@ -1,8 +1,8 @@
 import React from 'react'
-import { ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 
 // import styles
-import { Colors, Typography } from '@styles'
+import { Text } from '@styles/CommonStyles'
 
 // import components
 import SelectBox from '@components/SelectBox'
@@ -14,24 +14,19 @@ import FlowInput from './FlowInput'
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    marginTop: 30,
-    marginHorizontal: 10,
+    marginTop: 10,
+    paddingHorizontal: 5,
   },
 })
 
 export default function index() {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <Text>동선 - 공유</Text>
       <Text>FlowShare</Text>
       <SelectBox />
       <FlowMap />
       <FlowInput />
-      {/* <TouchableOpacity
-        style={[styles.buttonContainer, { marginTop: 20, marginBottom: 10, width: 200 }]}
-      >
-        <Text style={styles.buttonText}>공유하기</Text>
-      </TouchableOpacity> */}
     </ScrollView>
   )
 }
