@@ -13,22 +13,9 @@ import SelectedYoutubers from './SelectedYoutubers'
 import MapSideBar from './MapSideBar'
 
 // import styles
-import { Colors, Typography } from '@styles'
-import { Container, ToogleContainer } from './MapStyles'
+import { Colors } from '@styles'
+import { Container, ToggleContainer } from './MapStyles'
 import { Text } from '@styles/CommonStyles'
-
-const styles = StyleSheet.create({
-  textTitle: {
-    flex: 1,
-    color: Colors.WHITE,
-    textAlign: 'right',
-    marginRight: 5
-  },
-  firstToggle: {
-    right: 135,
-    width: 100
-  },
-})
 
 const MapScreen = ({ navigation }) => {
   const [youtubers, setYoutubers] = useState(mokupYoutuber)
@@ -57,7 +44,7 @@ const MapScreen = ({ navigation }) => {
   return (
     <Container>
       <GoogleMap navigation={navigation} storeToggle={storeToggle} setStoreToggle={setStoreToggle} setYoutuberToggle={setYoutuberToggle} />
-      <ToogleContainer activeOpacity={0.6} onPress={() => setYoutuberToggle(!youtuberToggle)}>
+      <ToggleContainer activeOpacity={0.6} onPress={() => setYoutuberToggle(!youtuberToggle)}>
         <Text weight={"BOLD"} style={styles.textTitle}>유튜버 리스트</Text>
         <Text weight={"EXTRA_BOLD"} style={{
           color: youtuberToggle ? Colors.GREEN_3 : Colors.RED_3,
@@ -66,8 +53,8 @@ const MapScreen = ({ navigation }) => {
         }}>
           {youtuberToggle ? 'ON' : 'OFF'}
         </Text>
-      </ToogleContainer>
-      <ToogleContainer activeOpacity={0.6} style={styles.firstToggle} onPress={() => setStoreToggle(!storeToggle)}>
+      </ToggleContainer>
+      <ToggleContainer activeOpacity={0.6} style={styles.firstToggle} onPress={() => setStoreToggle(!storeToggle)}>
         <Text weight={"BOLD"} style={styles.textTitle}>가게정보</Text>
         <Text weight={"EXTRA_BOLD"} style={{
           color: storeToggle ? Colors.GREEN_3 : Colors.RED_3,
@@ -76,7 +63,7 @@ const MapScreen = ({ navigation }) => {
         }}>
           {storeToggle ? 'ON' : 'OFF'}
         </Text>
-      </ToogleContainer>
+      </ToggleContainer>
       <SearchInput directionTop navigation={navigation} />
       {
         youtuberToggle ? <SelectedYoutubers
@@ -99,3 +86,16 @@ export default () => {
     </Drawer.Navigator>
   )
 }
+
+const styles = StyleSheet.create({
+  textTitle: {
+    flex: 1,
+    color: Colors.WHITE,
+    textAlign: 'right',
+    marginRight: 5
+  },
+  firstToggle: {
+    right: 135,
+    width: 100
+  },
+})

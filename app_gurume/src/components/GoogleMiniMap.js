@@ -6,7 +6,7 @@ import MapView, { Marker } from 'react-native-maps'
 import { sub_markers } from '../model/mokupMap'
 
 // import styles
-import { CustomMakrer, MarkerContainer, MarkerTitleContainer } from '../styles/GoogleMapStyles'
+import { CustomMarker, MarkerContainer, MarkerTitleContainer } from '../styles/GoogleMapStyles'
 import { Colors } from '@styles'
 import { Text, Button } from '../styles/CommonStyles'
 import touristMarkerImage from '@images/tourist_128.png'
@@ -14,9 +14,9 @@ import coffeeMarkerImage from '@images/coffee_128.png'
 
 const { width, height } = Dimensions.get("window");
 
-const CustomMarker = (props) => (
+const SpotMarker = (props) => (
     <MarkerContainer>
-        <CustomMakrer source={props.type === 'coffee' ? coffeeMarkerImage : touristMarkerImage} />
+        <CustomMarker source={props.type === 'coffee' ? coffeeMarkerImage : touristMarkerImage} />
         {
             // props.region.latitudeDelta < 0.02 ?
             // <MarkerTitleContainer style={{ borderColor: props.type === 'coffee' ? Colors.RED_9 : Colors.BLUE_3 }}>
@@ -37,7 +37,7 @@ function MarkerSet(props) {
                     key={`${title}-${index}`}
                     coordinate={value.coordinate}
                 >
-                    <CustomMarker region={region} youtuberImage={youtuberImage} title={title} type={type} />
+                    <SpotMarker region={region} youtuberImage={youtuberImage} title={title} type={type} />
                 </Marker>
             )
         })

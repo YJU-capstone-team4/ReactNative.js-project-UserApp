@@ -8,7 +8,7 @@ export const Container = styled.View`
     flex: 1;
 `
 
-export const ToogleContainer = styled.TouchableOpacity`
+export const ToggleContainer = styled.TouchableOpacity`
     position: absolute;
     top: 120px;
     right: 10px;
