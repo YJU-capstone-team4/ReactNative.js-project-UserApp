@@ -1,5 +1,7 @@
 import React from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
+
+import { Text } from '@styles/CommonStyles'
 
 // import components
 import SearchInput from '@components/SearchInput'
@@ -8,18 +10,9 @@ import FlowList from '@components/Flow/FlowList'
 // import screens
 import FlowHashTags from './FlowHashTags'
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    marginTop: 30,
-    paddingHorizontal: 10,
-    // opacity: 0.6,
-  },
-})
-
 export default function index() {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       <Text>동선 - 검색</Text>
       <Text>FlowSearch - Index.js</Text>
       <SearchInput />
@@ -33,3 +26,11 @@ export default function index() {
     </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    marginTop: 10,
+    paddingHorizontal: 5,
+  },
+})

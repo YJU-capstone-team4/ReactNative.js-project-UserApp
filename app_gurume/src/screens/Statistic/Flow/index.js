@@ -1,11 +1,24 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 // import styles
 import { Colors, Typography } from '@styles'
+import { Text } from '@styles/CommonStyles'
 
 // import components
 import FlowList from '@components/Flow/FlowList'
+
+export default function index() {
+  return (
+    <View style={styles.selectContainer}>
+      <Text style={{ alignSelf: 'center', padding: 10 }}>동선</Text>
+      <FlowList />
+      <TouchableOpacity style={styles.buttonContainer}>
+        <Text weight={"BOLD"} style={{ color: Colors.WHITE }}>더보기</Text>
+      </TouchableOpacity>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   selectContainer: {
@@ -19,23 +32,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: Colors.DEEP_BLUE,
     alignSelf: 'flex-end',
-  },
-  buttonText: {
-    color: Colors.WHITE,
-    alignSelf: 'center',
-    textTransform: 'uppercase',
-    fontFamily: Typography.FONT_FAMILY_BOLD,
-  },
-})
+    alignItems: 'center'
 
-export default function index() {
-  return (
-    <View style={styles.selectContainer}>
-      <Text style={{ alignSelf: 'center', padding: 10 }}>동선</Text>
-      <FlowList />
-      <TouchableOpacity style={styles.buttonContainer}>
-        <Text style={styles.buttonText}>더보기</Text>
-      </TouchableOpacity>
-    </View>
-  )
-}
+  }
+})
