@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, StyleSheet, SafeAreaView, FlatList } from 'react-native'
 
 // import styles
@@ -11,12 +11,14 @@ import YoutuberList from '@components/List/YoutuberList'
 import StoreList from '@components/List/StoreList.js'
 import StoreRecommend from './StoreRecommend'
 import StoreHeader from './StoreHeader'
+import YoutubePlayer from '../../components/YoutubePlayer'
 
 // import mokup data
 import mokupViedo from '../../model/mokupViedo'
 
 export default (props) => {
   const { route } = props
+  const [isVisible, setIsVisible] = useState(true)
   return (
     <SafeAreaView style={styles.container}>
       {/* TODO ScrollView 안에 FlatList가 들어가있으면 안되는 이슈로, ScrollView를 지우고, FlatList의 LisHeaderComponent를 이용하여 ScrollView 기능 대체 */}
@@ -36,7 +38,7 @@ export default (props) => {
             <View style={[styles.contentWrapper, { marginHorizontal: 0 }]}>
               <Text weight={"BOLD"} style={{ marginTop: 10, marginLeft: 13 }} size={22}>📺 {route.params.storeName} 관련 영상</Text>
               <View style={styles.videoWrapper}>
-                <VideoList />
+                <VideoList setIsVisible={setIsVisible} />
               </View>
             </View>
             {/* Top 순위 동선 추천 */}
@@ -50,13 +52,11 @@ export default (props) => {
         data={mokupViedo}
         keyExtractor={(item, index) => `${item.storeId}-${index}`}
         numColumns={2}  // 괄호 안에 숫자만큼 열로 만들어줌.
-        columnWrapperStyle={{ flexWrap: 'wrap', alignItems:'center' }}
+        columnWrapperStyle={{ flexWrap: 'wrap', alignItems: 'center' }}
         renderItem={({ item }) => <StoreList data={item} />}
         ListFooterComponent={
           // TODO 푸터가 필요한가 ?
-          <View style={{ flex: 1, alignSelf: 'flex-start' }}>
-            <Text>안녕하세요</Text>
-          </View>
+          <YoutubePlayer isVisible={isVisible} setIsVisible={setIsVisible} videoId='r-LNSGSCDJg' />
         }
       />
     </SafeAreaView>

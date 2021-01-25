@@ -4,7 +4,6 @@ import { getStatusBarHeight } from "react-native-status-bar-height";
 import { Colors, Typography } from '@styles'
 
 // import components
-import SearchInput from '@components/SearchInput'
 import YoutuberList from '@components/List/YoutuberList'
 import FlowList from '@components/Flow/FlowList'
 import { Text } from '../../styles/CommonStyles'
@@ -13,7 +12,6 @@ import { Text } from '../../styles/CommonStyles'
 import MainHeader from './MainHeader'
 import NoticeContainer from './NoticeContainer'
 import LocationSelector from './ModalSelector'
-
 
 export default (props) => {
   const [region, setRegion] = useState('서울특별시')
