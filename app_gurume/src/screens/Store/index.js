@@ -38,7 +38,7 @@ export default (props) => {
             <View style={[styles.contentWrapper, { marginHorizontal: 0 }]}>
               <Text weight={"BOLD"} style={{ marginTop: 10, marginLeft: 13 }} size={22}>📺 {route.params.storeName} 관련 영상</Text>
               <View style={styles.videoWrapper}>
-                <VideoList />
+                <VideoList setIsVisible={setIsVisible} />
               </View>
             </View>
             {/* Top 순위 동선 추천 */}
