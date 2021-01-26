@@ -35,7 +35,7 @@ export default function BottomNavigation() {
           marginBottom: 3
         },
       }}
-      initialRouteName="Map"
+      initialRouteName="Main"
       barStyle={{ backgroundColor: Colors.WHITE }}
     >
       <Tab.Screen

@@ -22,6 +22,7 @@
     "apollo-link-http": "^1.5.17",
     "expo": "^39.0.5",
     "expo-camera": "^9.0.0",
+    "expo-google-app-auth": "^8.1.4",
     "expo-image-picker": "^9.1.1",
     "expo-status-bar": "~1.0.2",
     "graphql": "^15.4.0",
