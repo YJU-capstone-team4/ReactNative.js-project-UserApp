@@ -4,11 +4,12 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native'
 // import styles
 import { Colors, Typography } from '@styles'
 import { Text } from '@styles/CommonStyles'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 // import components
 import PreviewThumb from '@components/PreviewThumb'
 
-export default function FlowList({ localShareFlow }) {
+export default function FlowList({ localShareFlow, navi }) {
   return (
     <View
       style={styles.container}
@@ -16,9 +17,10 @@ export default function FlowList({ localShareFlow }) {
       {
         localShareFlow ? localShareFlow.map((value => <PreviewThumb data={value} />)) : null
       }
-      
-      <TouchableOpacity style={styles.buttonContainer} >
+
+      <TouchableOpacity onPress={() => navi.navigate('sharedFlow')} style={styles.buttonWrapper}>
         <Text style={styles.buttonText}>더보기</Text>
+        <MaterialCommunityIcons name="chevron-right" />
       </TouchableOpacity>
     </View>
   )
@@ -41,7 +43,10 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   buttonText: {
-    color: Colors.BLUE_5,
+    color: Colors.GRAY_8,
     alignSelf: 'center',
   },
+  buttonWrapper: {
+    flexDirection: 'row'
+  }
 })

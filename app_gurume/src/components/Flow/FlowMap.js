@@ -7,7 +7,7 @@ export default function FlowMap() {
   return (
     <View
       style={{
-        backgroundColor: '#68D168',
+        backgroundColor: '#68D16860',
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
