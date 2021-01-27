@@ -27,7 +27,8 @@ export default (props) => {
         <NoticeContainer />
         {/* <SearchInput /> */}
         <View style={styles.wrapContainer}>
-          <Text style={styles.textContainer} size={20}>🇰🇷 <Text size={22} weight="BOLD">{region}</Text>를 방문한 유튜버</Text>
+          {/* 🇰🇷  */}
+          <Text style={styles.textContainer} size={20}><Text size={22} weight="BOLD">{region}</Text>를 방문한 유튜버</Text>
           <YoutuberList />
         </View>
         <View style={styles.wrapContainer, { marginTop: 5 }}>

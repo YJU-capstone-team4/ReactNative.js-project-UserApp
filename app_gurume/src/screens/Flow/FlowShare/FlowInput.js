@@ -198,7 +198,7 @@ export default function FlowInput() {
               <MaterialCommunityIcons
                 name="close-circle"
                 color="black"
-                size={19}
+                size={23}
               />
             </TouchableOpacity>
             <Text style={styles.buttonText}>{tag.name}</Text>

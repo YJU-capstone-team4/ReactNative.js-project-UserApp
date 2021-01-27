@@ -11,14 +11,6 @@ import FlowMap from '@components/Flow/FlowMap'
 // import screens
 import FlowInput from './FlowInput'
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    marginTop: 10,
-    paddingHorizontal: 5,
-  },
-})
-
 export default function index() {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
@@ -30,3 +22,11 @@ export default function index() {
     </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    marginTop: 10,
+    paddingHorizontal: 5,
+  },
+})

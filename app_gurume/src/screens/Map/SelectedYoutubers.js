@@ -47,7 +47,7 @@ const renderYoutuber = (item, handelRemoveYoutuber) => {
           source={item.ytbProfile}
         />
       </TouchableOpacity>
-      <Text style={styles.textType}>{item.ytbChannel}</Text>
+      <Text numberOfLines={1} style={[styles.textType, {width: 60}]}>{item.ytbChannel}</Text>
     </View>
   )
 }
@@ -81,6 +81,8 @@ export default function SelectedYoutubers(props) {
         horizontal
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => renderYoutuber(item, props.handelRemoveYoutuber)}
+        windowSize={5}
+        initialNumToRender={5}
         // keyboardShouldPersistTaps="always"
       />
     </View>

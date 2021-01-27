@@ -14,11 +14,12 @@ import StoreHeader from './StoreHeader'
 import YoutubePlayer from '../../components/YoutubePlayer'
 
 // import mokup data
-import mokupViedo from '../../model/mokupViedo'
+import mokupTrips from '../../model/mokupTrips'
 
 export default (props) => {
   const { route } = props
-  const [isVisible, setIsVisible] = useState(true)
+  const [isVisible, setIsVisible] = useState(false)
+  const [videoId, setVideoId] = useState('r-LNSGSCDJg')
   return (
     <SafeAreaView style={styles.container}>
       {/* TODO ScrollView 안에 FlatList가 들어가있으면 안되는 이슈로, ScrollView를 지우고, FlatList의 LisHeaderComponent를 이용하여 ScrollView 기능 대체 */}
@@ -49,14 +50,14 @@ export default (props) => {
             </View>
           </>
         }
-        data={mokupViedo}
+        data={mokupTrips}
         keyExtractor={(item, index) => `${item.storeId}-${index}`}
         numColumns={2}  // 괄호 안에 숫자만큼 열로 만들어줌.
         columnWrapperStyle={{ flexWrap: 'wrap', alignItems: 'center' }}
         renderItem={({ item }) => <StoreList data={item} />}
         ListFooterComponent={
           // TODO 푸터가 필요한가 ?
-          <YoutubePlayer isVisible={isVisible} setIsVisible={setIsVisible} videoId='r-LNSGSCDJg' />
+          <YoutubePlayer isVisible={isVisible} setIsVisible={setIsVisible} videoId={videoId} />
         }
       />
     </SafeAreaView>

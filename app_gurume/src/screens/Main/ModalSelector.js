@@ -20,6 +20,7 @@ const LocationSelector = (props) => {
             cancelTextStyle={{ fontFamily: Typography.FONT_FAMILY_REGULAR, paddingVertical: 10 }}
             onChange={(option) => { handleSetRegion(option) }}
             onModalClose={() => props.setModalOpen(!props.modalOpen)}
+            overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.8)' }}
         />
     )
 }
