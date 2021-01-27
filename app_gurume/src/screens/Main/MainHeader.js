@@ -4,10 +4,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Feather'
 
 // import screens
-import ModalSelector from './ModalSelector'
-
 import { Text } from '../../styles/CommonStyles'
 import { Colors } from '@styles'
+import ModalSelector from './../../components/ModalSelector';
 
 export default function MainHeader(props) {
   const [modalOpen, setModalOpen] = useState(false)
@@ -43,7 +42,7 @@ export default function MainHeader(props) {
         onPress={() => { setModalOpen(!modalOpen) }} style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Text size={22} weight={'BOLD'} style={{ color: Colors.GRAY_8 }}>{props.region}</Text>
         <MaterialCommunityIcons size={33} style={{ marginLeft: -5 }} name="menu-down" color={Colors.GRAY_8}>
-          <ModalSelector data={locationInfo} modalOpen={modalOpen} setModalOpen={setModalOpen} setRegion={props.setRegion} />
+          <ModalSelector data={locationInfo} modalOpen={modalOpen} setModalOpen={setModalOpen} onChange={props.setRegion} />
         </MaterialCommunityIcons>
       </TouchableOpacity>
       <Ionicons onPress={() => handleInfoNavi(props.navi)} size={20} style={{ justifyContent: 'flex-end', marginRight: 15 }} name="settings" color={Colors.GRAY_8} />

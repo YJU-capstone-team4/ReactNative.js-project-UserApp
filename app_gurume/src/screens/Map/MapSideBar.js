@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
-import { View, SafeAreaView, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import { DrawerContentScrollView, Drawer } from '@react-navigation/drawer';
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { DrawerContentScrollView } from '@react-navigation/drawer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { getStatusBarHeight } from "react-native-status-bar-height";
 
 // components
 import SelectBox from '@components/SelectBox'
-import { Button, Text } from '../../styles/CommonStyles'
+import { Text } from '../../styles/CommonStyles'
 import { mokupSideRoute } from '../../model/mokupSideRoute'
 import { mokupUser, mokupFolder } from '../../model/mokupUser'
 
 // styles
-import { Colors, Typography } from '@styles'
+import { Colors } from '@styles'
 import user_profile from '@images/user_profile.png'
-import under_arrow from '@images/under_arrow.png'
+import MapFlows from './MapFlows';
 
 // navigation.goBack()
 
@@ -23,77 +23,27 @@ export default function MapSideBar(props) {
     // console.log(userFlow)
     return (
         <View style={{ flex: 1 }}>
+            {/* 동선 페이지로 이동했는가 ? */}
             {
                 showFlows ?
                     <View style={styles.subHeaberContainer}>
-                        <MaterialCommunityIcons
-                            onPress={() => setShowFlows(false)}
-                            name="arrow-left" color="black" size={24} />
+                        <MaterialCommunityIcons onPress={() => setShowFlows(false)} name="arrow-left" color="black" size={24} />
                         <Text style={{ marginTop: 5, marginStart: 10 }} size={20}>동선 폴더</Text>
                     </View> : null
             }
+            {/* 메뉴 리스트 나열 */}
             <DrawerContentScrollView {...props}>
-                {showFlows ? (
-                    <View style={{ display: 'flex', marginTop: -40, paddingHorizontal: 20 }}>
-                        <View style={{ flex: 1, zIndex: 100 }}>
-                            <SelectBox userFlow={mokupFolder} />
+                {showFlows ?
+                    // *** 동선 폴더 접근 ***
+                    (
+                        <View style={{ display: 'flex', marginTop: -40, paddingHorizontal: 20 }}>
+                            <View style={{ flex: 1, zIndex: 100 }}>
+                                <SelectBox userFlow={mokupFolder} />
+                            </View>
+                            <MapFlows navi={props.navigation} />
                         </View>
-                        {/* <Button style={styles.flowBtnContainer} backgroundColor={Colors.RED_3} borderColor={Colors.RED_3}> */}
-                        <Text style={{ paddingVertical: 7 }} size={18} color={Colors.GRAY_9}>기사식당 돼지불백</Text>
-                        {/* </Button> */}
-                        <View style={styles.arrowContainer}>
-                            <Image style={styles.arrowImage} source={under_arrow} />
-                        </View>
-                        {/* <Button style={styles.flowBtnContainer} backgroundColor={Colors.RED_3} borderColor={Colors.RED_3}> */}
-                        <Text style={{ paddingVertical: 7 }} size={18} color={Colors.GRAY_9}>퍼즈 X 베이커리</Text>
-                        {/* </Button> */}
-                        <View style={styles.arrowContainer}>
-                            <Image style={styles.arrowImage} source={under_arrow} />
-                        </View>
-                        <Button style={styles.flowBtnContainer} backgroundColor={Colors.RED_3} borderColor={Colors.RED_3}>
-                            <Text style={{ paddingVertical: 7 }} size={18} color={Colors.WHITE}>핸즈커피 반석점</Text>
-                        </Button>
-                        <View style={styles.arrowContainer}>
-                            <Image style={styles.arrowImage} source={under_arrow} />
-                        </View>
-                        <Button style={styles.flowBtnContainer} backgroundColor={Colors.RED_3} borderColor={Colors.RED_3}>
-                            <Text style={{ paddingVertical: 7 }} size={18} color={Colors.WHITE}>토스트엔후르츠</Text>
-                        </Button>
-                        <View style={styles.arrowContainer}>
-                            <Image style={styles.arrowImage} source={under_arrow} />
-                        </View>
-                        <Button style={styles.flowBtnContainer} backgroundColor={Colors.RED_3} borderColor={Colors.RED_3}>
-                            <Text style={{ paddingVertical: 7 }} size={18} color={Colors.WHITE}>오늘은 떡볶이집</Text>
-                        </Button>
-                        <View style={styles.arrowContainer}>
-                            <Image style={styles.arrowImage} source={under_arrow} />
-                        </View>
-                        <Button style={styles.flowBtnContainer} backgroundColor={Colors.RED_3} borderColor={Colors.RED_3}>
-                            <Text style={{ paddingVertical: 7 }} size={18} color={Colors.WHITE}>상세보기</Text>
-                        </Button>
-                        <View style={styles.arrowContainer}>
-                            <Image style={styles.arrowImage} source={under_arrow} />
-                        </View>
-                        <Button style={styles.flowBtnContainer} backgroundColor={Colors.RED_3} borderColor={Colors.RED_3}>
-                            <Text style={{ paddingVertical: 7 }} size={18} color={Colors.WHITE}>오늘은 떡볶이집</Text>
-                        </Button>
-                        <View style={styles.arrowContainer}>
-                            <Image style={styles.arrowImage} source={under_arrow} />
-                        </View>
-                        <Button style={styles.flowBtnContainer} backgroundColor={Colors.RED_3} borderColor={Colors.RED_3}>
-                            <Text style={{ paddingVertical: 7 }} size={18} color={Colors.WHITE}>상세보기</Text>
-                        </Button>
-                        <View style={styles.arrowContainer}>
-                            <Image style={styles.arrowImage} source={under_arrow} />
-                        </View>
-                        <Button style={styles.flowBtnContainer} backgroundColor={Colors.RED_3} borderColor={Colors.RED_3}>
-                            <Text style={{ paddingVertical: 7 }} size={18} color={Colors.WHITE}>오늘은 떡볶이집</Text>
-                        </Button>
-
-                        <Button style={[styles.flowBtnContainer, { marginVertical: 20 }]} backgroundColor={Colors.BLACK} borderColor={Colors.BLACK}>
-                            <Text style={{ paddingVertical: 7 }} size={18} color={Colors.WHITE}>상세보기</Text>
-                        </Button>
-                    </View>) :
+                    ) :
+                    // *** 일반 매뉴 접근 ***
                     <View style={{ display: 'flex', paddingHorizontal: 20 }}>
                         <View style={{ flex: 1 }}>
                             <View style={[styles.container, {
@@ -138,14 +88,6 @@ const styles = StyleSheet.create({
         height: 70,
         borderRadius: 80,
     },
-    flowBtnContainer: {
-        borderRadius: 6,
-        elevation: 6,
-        shadowRadius: 10,
-        shadowColor: "#000",
-        shadowOpacity: 0.3,
-        shadowOffset: { x: 2, y: -2 },
-    },
     subHeaberContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -154,14 +96,6 @@ const styles = StyleSheet.create({
         borderColor: Colors.GRAY_3,
         borderBottomWidth: 1,
         padding: 10,
-    },
-    arrowContainer: {
-        alignItems: 'center',
-        marginVertical: 10,
-    },
-    arrowImage: {
-        width: 20,
-        height: 20,
     },
     folderText: {
         color: Colors.GRAY_7,
