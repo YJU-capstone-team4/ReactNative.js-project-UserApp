@@ -12,9 +12,13 @@ export default function StoreList({ data }) {
         <View style={styles.container}>
             <Image
                 style={styles.InfoImageContainer}
-                source={data.ytbThumbnail}
+                // source={data.ytbThumbnail}
+                source={{
+                    uri: data.ytbThumbnail,
+                }}
+
             />
-            <View style={[styles.infoContainer, { flex: 1, justifyContent: 'space-between', paddingTop: 16 }]}>
+            <View style={[styles.infoContainer, { flex: 1, justifyContent: 'space-between', paddingTop: 10 }]}>
                 <Text weight={"BOLD"} size={18}>{data.ytbVideoName}</Text>
                 <TouchableOpacity
                     hitSlop={{ top: 32, bottom: 32, left: 32, right: 32 }} //터치영역을 확장
