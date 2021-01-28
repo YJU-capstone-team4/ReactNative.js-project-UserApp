@@ -39,7 +39,6 @@ const GoogleMap = (props) => {
           style={styles.container}
           initialRegion={state.region}
           onPress={() => props.setStoreToggle((prevStatus) => false)}
-          // onRegionChange={React.useCallback((region) => setRegion(region))}
           tracksViewChanges={false}
           minZoomLevel={6}
           radius={60}
@@ -51,7 +50,7 @@ const GoogleMap = (props) => {
             const { inSideColor, outSideColor, clusterScale } = clusterColorPicker(points)
 
             let outSideWidth = 60 * clusterScale
-            let inSideWidth = 40 * clusterScale
+            let inSideWidth = 45 * clusterScale
 
             return (
               <Marker
@@ -89,7 +88,7 @@ const GoogleMap = (props) => {
                   coordinate={value}
                   showCallout={false}
                 >
-                  {/* <YoutubeMarker youtuberImage={youtuberImage} title={title} /> */}
+                  <YoutubeMarker youtuberImage={youtuberImage} title={title} />
                 </Marker>
               )
             })

@@ -58,6 +58,7 @@ export default function SelectedYoutubers(props) {
       style={[
         styles.inputContainer,
         {
+          flex: 1,
           position: 'absolute',
           bottom: 0,
           height: 145,

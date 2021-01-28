@@ -15,6 +15,7 @@ import GoogleMap from '@components/GoogleMap'
 import MapStorePreview from './MapStorePreview';
 import SelectedYoutubers from './SelectedYoutubers'
 import MapSideBar from './MapSideBar'
+import ModalYoutuber from './../../components/ModalYoutuber';
 
 // import styles
 import { Colors } from '@styles'
@@ -24,7 +25,7 @@ import { Text } from '@styles/CommonStyles'
 const MapScreen = ({ navigation }) => {
 
 
-  // ** 토글 제어 **
+  // ******** 토글 제어 ********
 
   // <<-- 유튜버 토글
   const [youtuberToggle, setYoutuberToggle] = useState(false)
@@ -42,10 +43,17 @@ const MapScreen = ({ navigation }) => {
   const [storeIndex, setStoreIndex] = useState(0)
   const [storeToggle, setStoreToggle] = useState(false)
   // -->>
+  
+  // <<-- 유튜버 검색 결과 토글
+  const [searchToggle, setSearchToggle] = useState(false)
 
-  //** 토글 제어 **
+  //******** 토글 제어 ********
 
-  const [youtubeMarkers, setYoutubeMarkers] = useState(mokupMarkers1)
+  //******** 지도 제어 ********
+  const [youtubeMarkers, setYoutubeMarkers] = useState(mokupMarkers1)             // 지도 메인 마커 데이터 셋
+  const [searchYoutuber, setSearchYoutuber] = useState('')                        // 유튜버 검색 text
+  // TODO 유튜버 검색 -> 현재 사용중인 마커 변경 알고리즘 작성.
+  //******** 지도 제어 ********
 
   useEffect(() => {
     if (youtuberToggle) {
@@ -61,10 +69,9 @@ const MapScreen = ({ navigation }) => {
 
   return (
     <Container>
-      {/* FIXME 문제 발견했어!!!!! storeToggle 를 계속 감시해서 새롭게 마커를 찍고 있엇던거임 시부랭... */}
+      {/* 구글 메인 Map Component */}
       <GoogleMap
         // navigation={navigation}
-        // storeToggle={storeToggle}
         data={youtubeMarkers}
         setStoreIndex={setStoreIndex}
         setStoreToggle={setStoreToggle}
@@ -93,14 +100,18 @@ const MapScreen = ({ navigation }) => {
         </Text>
       </ToggleContainer>
       {/* 검색 인풋박스 */}
-      <SearchInput directionTop navigation={navigation} />
-      {
-        youtuberToggle ? <SelectedYoutubers youtubers={youtubers} handleRemoveYoutuber={handleRemoveYoutuber} /> : null
-      }
+      <SearchInput
+        text={searchYoutuber}
+        setText={setSearchYoutuber}
+        onPress={setSearchToggle}
+        directionTop navigation={navigation}
+      />
+      {/* 유튜버 리스트 모달 */}
+      {youtuberToggle ? <SelectedYoutubers youtubers={youtubers} handleRemoveYoutuber={handleRemoveYoutuber} /> : null}
       {/* 가게 정보 미리보기 모달 */}
-      {
-        storeToggle ? <MapStorePreview storeIndex={storeIndex} navigation={navigation} /> : null
-      }
+      {storeToggle ? <MapStorePreview storeIndex={storeIndex} navigation={navigation} /> : null}
+      {/* 유튜버 검색 리스트 모달 */}
+      {searchToggle ? <ModalYoutuber searchYoutuber={searchYoutuber} setVisibleToggle={setSearchToggle} /> : null}
     </Container >
   )
 }
