@@ -80,7 +80,7 @@ export default function SelectedYoutubers(props) {
         keyExtractor={(item) => item.ytbChannel}
         horizontal
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => renderYoutuber(item, props.handelRemoveYoutuber)}
+        renderItem={({ item }) => renderYoutuber(item, props.handleRemoveYoutuber)}
         windowSize={5}
         initialNumToRender={5}
         // keyboardShouldPersistTaps="always"
