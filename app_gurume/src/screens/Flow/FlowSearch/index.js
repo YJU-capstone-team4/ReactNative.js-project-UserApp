@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 
 // import styles
@@ -7,35 +7,36 @@ import { Text } from '@styles/CommonStyles'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 // import components
-import SearchInput from '@components/SearchInput'
 import FlowList from '@components/Flow/FlowList'
+import PlusInput from '@components/PlusInput'
 
 // import screens
 import FlowHashTags from './FlowHashTags'
 
 export default function index() {
+  const [hashTagText, setHashTagText] = useState('')
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-      {/* <Text>동선 - 검색</Text>
-      <Text>FlowSearch - Index.js</Text> */}
-      <SearchInput />
+      {/* Header ... */}
       <View style={styles.textWrapper}>
-        <MaterialCommunityIcons name="pound" color={Colors.GRAY_7} size={18} />
+        <MaterialCommunityIcons name="pound-box" color={Colors.RED_3} size={18} />
         <Text style={styles.textContainer}>해시태그 조합으로 </Text>
         <View style={styles.textHighlighter}>
-          <Text size={20} >원하는 결과</Text>
+          <Text size={22} >원하는 결과</Text>
         </View>
         <Text style={styles.textContainer}>를 한눈에!</Text>
       </View>
-      <FlowHashTags />
-      <View style={styles.textWrapper}>
-        <MaterialCommunityIcons name="folder-pound-outline" color={Colors.GRAY_7} size={18} />
+      {/* 해시태그 추가 컴포넌트 */}
+      <PlusInput setHashTagText={setHashTagText} />
+      {/* 추가된 해시태그 리스트 */}
+      <FlowHashTags hashTagText={hashTagText} />
+      {/* 해시태그 조합으로 검색된 공유 동선 리스트 */}
+      <View style={[styles.textWrapper, { paddingTop: 5}]}>
+        <MaterialCommunityIcons name="pound-box" color={Colors.RED_3} size={18} />
         <Text style={styles.textContainer}>검색 결과</Text>
       </View>
-      <View style={{ backgroundColor: '#3DFF92', paddingVertical: 10 }}>
-        <Text>FlowList 순회 ...</Text>
-        <FlowList />
-      </View>
+      <FlowList />
     </ScrollView>
   )
 }
@@ -49,14 +50,16 @@ const styles = StyleSheet.create({
   textWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 10,
+    paddingTop: 20,
+    paddingBottom: 15,
+    paddingLeft: 10
   },
   textContainer: {
     fontSize: 18,
     paddingLeft: 5
   },
   textHighlighter: {
-    borderBottomColor: Colors.YELLOW_4,
-    borderBottomWidth: 3,
+    borderBottomColor: Colors.RED_4 + "90",
+    borderBottomWidth: 2,
   }
 })

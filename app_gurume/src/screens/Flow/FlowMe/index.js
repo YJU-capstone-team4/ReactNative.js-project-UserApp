@@ -16,7 +16,6 @@ import FlowMap from '@components/Flow/FlowMap'
 export default function index(props) {
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-      {/* <Text>FlowMe - Index.js</Text> */}
       <View style={styles.textWrapper}>
         <MaterialCommunityIcons name="youtube" color={Colors.RED_4} size={20} />
         <Text style={styles.textContainer}> 내가 공유한 동선 리스트</Text>
@@ -32,7 +31,7 @@ export default function index(props) {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    paddingTop: 15,
+    paddingTop: 10,
     paddingHorizontal: 5,
     backgroundColor: Colors.WHITE
   },
@@ -53,6 +52,7 @@ const styles = StyleSheet.create({
   textWrapper: {
     flexDirection: 'row',
     paddingVertical: 10,
+    paddingLeft: 10,
     alignItems: 'center'
   },
   textContainer: {
