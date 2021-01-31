@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-around',
     borderRadius: 5,
-    marginVertical: 10,
+    marginVertical: 5,
   },
   headerContainer: {
     flex: 1,

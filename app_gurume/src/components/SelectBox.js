@@ -7,6 +7,7 @@ import ModalSelector from './ModalSelector'
 // import styles
 import FeatherIcons from 'react-native-vector-icons/Feather'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import EntypoIcons from 'react-native-vector-icons/Entypo'
 import { Colors, Typography } from '@styles'
 import { Text } from '@styles/CommonStyles'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -37,7 +38,7 @@ const SelectBox = (props) => {
   useEffect(() => {
     setUserFlows([
       { key: -1, section: true, label: '지역선택' },
-      { key: 0, label: '코코의 여름 여행' },
+      { key: 0, label: 'YJU 여름 여행' },
       { key: 1, label: '제주도 여행' },
       { key: 2, label: '국밥팸 서울나들이' },
       { key: 3, label: '부산여행' },
@@ -46,23 +47,27 @@ const SelectBox = (props) => {
 
   // 폴더 변경 감지
   useEffect(() => {
-    Alert.alert("폴더가 변경되었습니다!")
+    // Alert.alert("폴더가 변경되었습니다!")
+    console.log("폴더가 변경되었습니다!")
   }, [itemValue])
 
   return (
     <>
       {
         userFlows ?
-          <View style={styles.container}>
-            <View style={styles.folderWrap}>
-              <View style={{ flexDirection: 'row' }}>
-                <MaterialCommunityIcons size={15} color={Colors.RED_3} style={{paddingRight: 3}} name="folder-open-outline" />
-                <Text size={18}> {itemValue ? itemValue.label : userFlows[1].label}</Text>
-              </View>
-              <TouchableOpacity onPress={() => setModalOpen(true)}>
-                <FeatherIcons name="chevron-down" size={18} color={Colors.GRAY_8} />
-              </TouchableOpacity>
+          <View style={styles.folderWrap}>
+            <View style={{ flexDirection: 'row' }}>
+              <MaterialCommunityIcons size={16} color={Colors.RED_3} style={{ paddingRight: 3 }} name="map-marker" />
+              {/* <EntypoIcons size={15} color={Colors.RED_4} style={{ paddingRight: 3 }} name="folder-video" /> */}
+              <Text size={20}> {itemValue ? itemValue.label : userFlows[1].label}</Text>
             </View>
+            <TouchableOpacity
+              style={styles.downIcon}
+              onPress={() => setModalOpen(true)}
+              hitSlop={{ top: 60, right: 60, bottom: 60, left: 60 }}
+            >
+              <FeatherIcons name="chevron-down" size={22} color={Colors.GRAY_8} />
+            </TouchableOpacity>
           </View>
           : null
       }
@@ -83,19 +88,22 @@ const SelectBox = (props) => {
 export default SelectBox
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingVertical: 10
-  },
   folderWrap: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.GRAY_1,
+    backgroundColor: Colors.GRAY_1 + '80',
     padding: 15,
     paddingLeft: 20,
+    marginVertical: 10,
     borderRadius: 10,
-    borderColor: Colors.GRAY_3,
+    borderColor: Colors.GRAY_4,
     borderWidth: 0.4
+  },
+  downIcon: {
+    // position: 'absolute',
+    // left: 20,
+    // top: 10,
+    marginLeft: 10
   }
 })

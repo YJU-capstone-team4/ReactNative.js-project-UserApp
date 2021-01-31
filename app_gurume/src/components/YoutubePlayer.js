@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Animated } from 'react-native'
+import { StyleSheet, View, Animated, Dimensions } from 'react-native'
 
 // import modules
 import Modal from 'react-native-modal';
 import Youtube from "react-native-youtube-iframe";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
+// import styles
 import { Colors, Typography } from '@styles'
 import { Text } from '@styles/CommonStyles'
 
-// 유튜브 플레이어는 모달로 감싸서 처리.
 const YoutubePlayer = (props) => {
     const [isReady, setIsReady] = useState(false)
 
@@ -24,7 +24,7 @@ const YoutubePlayer = (props) => {
                 friction: 1,
                 useNativeDriver: true,
             }),
-            { iterations: 1000 },
+            { iterations: 500 },
         ).start();
     }, [startValue, endValue])
     // -->>
@@ -43,13 +43,18 @@ const YoutubePlayer = (props) => {
             isVisible={Boolean(props.isVisible)}
             swipeDirection="down"
             onSwipeComplete={() => handleSwipeComplete(props)}
+            // coverScreen={false}
+            // deviceHeight={Math.max(Dimensions.get('window').height, Dimensions.get('screen').height)}
+            style={{ marginHorizontal: 5 }}
         >
             <View style={styles.container}>
                 <Youtube
-                    height={180}
+                    style={{ zindex: 10000 }}
+                    height={195}
                     apiKey={'AIzaSyCrS8s_D9BpIshutUGsQ8gz6mQee3sn7K4'} //여러분의 API_KEY 보안 잘해주세요^^!
                     videoId={props.videoId} // 리스트에서 보낸 videoId를 받아옴
                     onReady={(state) => handleChangeState(state)}   // 영상 상태변화 감지
+                    allowsFullscreenVideo={false}
                 />
                 {isReady ? null : <Text style={styles.loadingText}>로딩중...</Text>}
                 <View style={styles.textContainer}>
@@ -66,7 +71,11 @@ const YoutubePlayer = (props) => {
                         },
                     ],
                 }]} >
-                    <MaterialCommunityIcons color={Colors.BLUE_4} size={30} name="chevron-triple-down" />
+                    <MaterialCommunityIcons
+                        color={Colors.BLUE_4}
+                        size={30}
+                        name="chevron-triple-down"
+                    />
                 </Animated.View>
             </View>
         </Modal>
@@ -78,11 +87,10 @@ export default YoutubePlayer
 const styles = StyleSheet.create({
     container: {
         backgroundColor: Colors.WHITE,
-        display: 'flex',
         paddingTop: 40,
         paddingBottom: 0,
         paddingHorizontal: 7,
-        borderRadius: 10
+        borderRadius: 10,
     },
     textContainer: {
         paddingTop: 10,

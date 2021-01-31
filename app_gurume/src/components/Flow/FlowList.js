@@ -26,14 +26,14 @@ const mokupData = [
     },
     userTags: ['봄', '수성못', '벚꽃']
   },
-  {
-    shareTitle: '공유 동선입니다!!',
-    adminTag: {
-      regionTag: ['대구광역시'],
-      seasonTag: '가을'
-    },
-    userTags: ['봄', '수성못', '벚꽃']
-  },
+  // {
+  //   shareTitle: '공유 동선입니다!!',
+  //   adminTag: {
+  //     regionTag: ['대구광역시'],
+  //     seasonTag: '가을'
+  //   },
+  //   userTags: ['봄', '수성못', '벚꽃']
+  // },
 ]
 
 export default function FlowList({ localShareFlow, navi }) {
@@ -57,5 +57,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'center',
+    paddingBottom: 10
   }
 })

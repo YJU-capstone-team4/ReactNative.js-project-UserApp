@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Dimensions } from 'react-native'
 import Modal from 'react-native-modal-selector'
 import { Typography, Colors, StyleSheet } from '@styles';
 
@@ -14,8 +14,8 @@ const ModalSelector = (props) => {
             cancelTextStyle={{ fontFamily: Typography.FONT_FAMILY_REGULAR, paddingVertical: 10 }}
             onChange={(option) => { props.onChange(option) }}
             onModalClose={() => props.setModalOpen(false)}
-            overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.85)' }}
-            cancelContainerStyle={{}}
+            overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.85)', height: Dimensions.get('window').height }}
+            // style={{ height: Dimensions.get('window').height + 20}}
         />
     )
 }
