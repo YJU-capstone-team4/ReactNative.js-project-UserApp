@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 export default function index() {
   return (
     <View style={styles.container}>
+      {/* TODO FlowHeader 는 로그인 여부에 따라서 DISPLAY NONE 처리. */}
       {/* <FlowHeader /> */}
       <View style={{ marginTop: getStatusBarHeight() }} />
       <FlowTopNavigation />

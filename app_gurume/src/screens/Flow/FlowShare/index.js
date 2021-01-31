@@ -22,7 +22,9 @@ export default function index() {
         {/* TODO 헤더 네이밍 다시하자. */}
         <Text style={styles.textContainer}> 공유하지 않은 동선 리스트</Text>
       </View>
-      <SelectBox />
+      <View style={{ paddingHorizontal: 6 }}>
+        <SelectBox />
+      </View>
       <FlowMap />
       <FlowInput />
     </ScrollView>
@@ -38,8 +40,9 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     flexDirection: 'row',
-    paddingVertical: 10,
-    paddingLeft: 5,
+    paddingTop: 10,
+    paddingBottom: 5,
+    paddingLeft: 10,
     alignItems: 'center'
   },
   textContainer: {

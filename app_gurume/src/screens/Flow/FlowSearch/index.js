@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   textWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 20,
+    paddingTop: 21,
     paddingBottom: 15,
     paddingLeft: 10
   },

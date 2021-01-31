@@ -1,10 +1,11 @@
 import React from 'react'
-import { ScrollView, StyleSheet, View, TouchableOpacity } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 
 // import styles
 import { Colors, Typography } from '@styles'
 import { Text } from '@styles/CommonStyles'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 // import components
 import FlowList from '@components/Flow/FlowList'
@@ -12,19 +13,35 @@ import SelectBox from '@components/SelectBox'
 import FlowMap from '@components/Flow/FlowMap'
 
 // import screens
+import DraggableFlowList from './DraggableFlowList';
 
 export default function index(props) {
+  const EMPTY_ARRAY = []              // ScrollView + FlatList 충돌로 빈 배열 선언
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
-      <View style={styles.textWrapper}>
-        <MaterialCommunityIcons name="youtube" color={Colors.RED_4} size={20} />
-        <Text style={styles.textContainer}> 내가 공유한 동선 리스트</Text>
-      </View>
-      <FlowList navi={props.navigation} />
-      {/* <Text>추가한 동선 리스트</Text> */}
-      <SelectBox />
-      <FlowMap />
-    </ScrollView>
+    <FlatList
+      data={EMPTY_ARRAY}
+      style={styles.container}
+      ListFooterComponent={
+        <>
+          {/* <FlowList navi={props.navigation} /> */}
+          {/* <Text>추가한 동선 리스트</Text> */}
+          <View style={styles.textWrapper}>
+            <FontAwesome name="share-square" color={Colors.GRAY_9} size={20} />
+            <Text style={styles.textContainer}> 내가 추가한 동선 폴더</Text>
+          </View>
+          <View style={{ paddingHorizontal: 6 }}>
+            <SelectBox />
+          </View>
+          {/* FIXME 공유 동선 조회는 동선 관리 페이지 보다는 공유하기 페이지가 더 잘어울리는듯. */}
+          {/* <View style={styles.textWrapper}>
+            <FontAwesome name="share-square" color={Colors.GRAY_9} size={20} />
+            <Text style={styles.textContainer}> 공유 동선 조회</Text>
+          </View> */}
+          <FlowMap />
+          <DraggableFlowList />
+        </>
+      }
+    />
   )
 }
 
@@ -51,7 +68,8 @@ const styles = StyleSheet.create({
   },
   textWrapper: {
     flexDirection: 'row',
-    paddingVertical: 10,
+    paddingTop: 10,
+    paddingBottom: 5,
     paddingLeft: 10,
     alignItems: 'center'
   },
