@@ -1,64 +1,56 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { Text } from '@styles/CommonStyles'
 import { Colors } from '@styles'
 
-export default function FlowHashTags() {
+// import utils
+import { convertRegion } from '@utils'
+
+// import mokup
+import mokupRegion from '../../../model/mokupRegion'
+
+// === TEST CODE ===
+// 지역 임시 태그 생성.
+const exampleData = mokupRegion.map((item, index) => {
+  return {
+    key: `region-${index}`,
+    label: String(convertRegion(item)),
+    onPress: Boolean(Math.round(Math.random()))
+  }
+})
+
+export default function FlowHashTags(props) {
+  const [regionTags, setRegionTags] = useState(exampleData)
+  const [userHashTags, setUserHashTags] = useState(['야식이 입맛', '고기맛집'])
+
+  useEffect(() => {
+    if (props.signalOnPress === true) {
+      setUserHashTags([...userHashTags, props.hashTagText])
+      props.setSignalOnPress(false)
+      props.setHashTagText('')
+      // TODO 여기서 검색결과 반영 로직 주는게 좋겠다.
+    }
+
+  }, [props.signalOnPress])
+
   return (
     <View style={styles.container}    >
       <View style={styles.headerContainer}>
         <Text weight="BOLD" size={20} style={styles.titleWrapper}># 지역별 해시태그</Text>
         {/* 해시태그 */}
         <View style={styles.hashtagContainerWrapper}>
-          <View style={styles.hashtagContainer}>
+          {/* <View style={styles.hashtagContainer}>
             <Text color={Colors.WHITE} weight="BOLD" size={16}>서울</Text>
           </View>
           <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
             <Text color={Colors.GRAY_5} weight="BOLD" size={16}>인천</Text>
-          </View>
-          <View style={styles.hashtagContainer}>
-            <Text color={Colors.WHITE} weight="BOLD" size={16}>광주</Text>
-          </View>
-          <View style={styles.hashtagContainer}>
-            <Text color={Colors.WHITE} weight="BOLD" size={16}>대구</Text>
-          </View>
-          <View style={styles.hashtagContainer}>
-            <Text color={Colors.WHITE} weight="BOLD" size={16}>울산</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
-            <Text color={Colors.GRAY_5} weight="BOLD" size={16}>부산</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
-            <Text color={Colors.GRAY_5} weight="BOLD" size={16}>세종시</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
-            <Text color={Colors.GRAY_5} weight="BOLD" size={16}>경기</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
-            <Text color={Colors.GRAY_5} weight="BOLD" size={16}>강원</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
-            <Text color={Colors.GRAY_5} weight="BOLD" size={16}>충남</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
-            <Text color={Colors.GRAY_5} weight="BOLD" size={16}>충북</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
-            <Text color={Colors.GRAY_5} weight="BOLD" size={16}>경북</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
-            <Text color={Colors.GRAY_5} weight="BOLD" size={16}>경남</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
-            <Text color={Colors.GRAY_5} weight="BOLD" size={16}>전북</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
-            <Text color={Colors.GRAY_5} weight="BOLD" size={16}>전남</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
-            <Text color={Colors.GRAY_5} weight="BOLD" size={16}>제주</Text>
-          </View>
+          </View> */}
+          {regionTags.map(item =>
+            <View key={item.key} style={[styles.hashtagContainer, item.onPress ? null : { backgroundColor: Colors.GRAY_2 }]}>
+              <Text color={item.onPress ? Colors.WHITE : Colors.GRAY_5} weight="BOLD" size={16}>{item.label}</Text>
+            </View>
+          )}
         </View>
       </View>
       <View style={styles.headerContainer}>
@@ -82,13 +74,14 @@ export default function FlowHashTags() {
       <View style={styles.headerContainer}>
         <Text weight="BOLD" size={20} style={styles.titleWrapper}># 사용자가 추가한 해시태그</Text>
         {/* 해시태그 */}
-        <View style={{ flexDirection: 'row', paddingHorizontal: 10 }}>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
-            <Text color={Colors.WHITE} weight="BOLD" size={16}># 야식이 입맛</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
-            <Text color={Colors.WHITE} weight="BOLD" size={16}># 고기맛집</Text>
-          </View>
+        <View style={styles.userHashTagContainer}>
+          {
+            userHashTags.map((item, index) =>
+              <View key={`user-${index}`} style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
+                <Text color={Colors.WHITE} weight="BOLD" size={16}># {item}</Text>
+              </View>
+            )
+          }
         </View>
       </View>
     </View>
@@ -133,4 +126,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 4
   },
+  userHashTagContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 10,
+    flexWrap: 'wrap',
+  }
 })
