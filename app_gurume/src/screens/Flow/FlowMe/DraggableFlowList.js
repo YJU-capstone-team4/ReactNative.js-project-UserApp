@@ -9,22 +9,22 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { Colors } from '@styles';
 
 
-const NUM_ITEMS = 10;
+const NUM_ITEMS = 10
 
 function getColor(i) {
-    const multiplier = 255 / (NUM_ITEMS - 1);
-    const colorVal = i * multiplier;
-    return `rgb(${colorVal}, ${Math.abs(128 - colorVal)}, ${255 - colorVal})`;
+    const multiplier = 255 / (NUM_ITEMS - 1)
+    const colorVal = i * multiplier
+    return `rgb(${colorVal}, ${Math.abs(128 - colorVal)}, ${255 - colorVal})`
 }
 
 const exampleData = [...Array(5)].map((d, index) => {
-    const backgroundColor = getColor(index);
+    const backgroundColor = getColor(index)
     return {
         key: `item-${backgroundColor}`,
         label: String(index),
         backgroundColor,
-    };
-});
+    }
+})
 
 
 function DraggableFlowList() {

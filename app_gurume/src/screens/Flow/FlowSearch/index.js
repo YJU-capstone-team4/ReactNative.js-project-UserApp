@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
 
 // import styles
@@ -15,6 +15,7 @@ import FlowHashTags from './FlowHashTags'
 
 export default function index() {
   const [hashTagText, setHashTagText] = useState('')
+  const [signalOnPress, setSignalOnPress] = useState(false)
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
@@ -28,11 +29,20 @@ export default function index() {
         <Text style={styles.textContainer}>를 한눈에!</Text>
       </View>
       {/* 해시태그 추가 컴포넌트 */}
-      <PlusInput setHashTagText={setHashTagText} />
+      <PlusInput
+        text={hashTagText}
+        onChangeText={setHashTagText}
+        onPress={setSignalOnPress}
+      />
       {/* 추가된 해시태그 리스트 */}
-      <FlowHashTags hashTagText={hashTagText} />
+      <FlowHashTags
+        signalOnPress={signalOnPress}
+        setSignalOnPress={setSignalOnPress}
+        hashTagText={hashTagText}
+        setHashTagText={setHashTagText}
+      />
       {/* 해시태그 조합으로 검색된 공유 동선 리스트 */}
-      <View style={[styles.textWrapper, { paddingTop: 5}]}>
+      <View style={[styles.textWrapper, { paddingTop: 5 }]}>
         <MaterialCommunityIcons name="pound-box" color={Colors.RED_3} size={18} />
         <Text style={styles.textContainer}>검색 결과</Text>
       </View>

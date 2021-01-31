@@ -5,7 +5,7 @@ import { FlatList, StyleSheet, View } from 'react-native'
 import { Colors, Typography } from '@styles'
 import { Text } from '@styles/CommonStyles'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 
 // import components
 import FlowList from '@components/Flow/FlowList'
@@ -26,7 +26,7 @@ export default function index(props) {
           {/* <FlowList navi={props.navigation} /> */}
           {/* <Text>추가한 동선 리스트</Text> */}
           <View style={styles.textWrapper}>
-            <FontAwesome name="share-square" color={Colors.GRAY_9} size={20} />
+            <FontAwesome name="rss-square" color={Colors.GRAY_9} size={18} />
             <Text style={styles.textContainer}> 내가 추가한 동선 폴더</Text>
           </View>
           <View style={{ paddingHorizontal: 6 }}>

@@ -4,12 +4,18 @@ import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Colors, Typography } from '@styles';
 
-const plusInput = () => {
+const plusInput = (props) => {
     return (
         <View style={styles.container}>
-            <TextInput style={styles.textContainer} placeholder="해시태그를 추가해보세요 !" />
+            <TextInput
+                style={styles.textContainer}
+                placeholder="해시태그를 추가해보세요 !"
+                onChangeText={(text) => props.onChangeText(text)}
+                value={props.text}
+            />
             {/* 검색 아이콘 */}
             <TouchableOpacity
+                onPress={() => props.onPress(true)}
                 style={{ position: 'absolute', right: 20 }}
                 hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }}
             >
