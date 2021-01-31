@@ -11,7 +11,6 @@ import { Text } from '../../styles/CommonStyles'
 // import screens
 import MainHeader from './MainHeader'
 import NoticeContainer from './NoticeContainer'
-// import LocationSelector from './ModalSelector'
 
 export default (props) => {
   const [region, setRegion] = useState({ key: 0, label: '서울특별시' })
@@ -31,18 +30,10 @@ export default (props) => {
           <Text style={styles.textContainer} size={20}><Text size={22} weight="BOLD">{region.label}</Text>를 방문한 유튜버</Text>
           <YoutuberList />
         </View>
-        <View style={styles.wrapContainer, { marginTop: 5 }}>
-          <Text style={styles.textContainer}>{region.label} Top5 인기 동선</Text>
+        <View style={[styles.wrapContainer, { marginTop: 10 }]}>
+          <Text style={styles.textContainer} size={20}><Text size={22} weight="BOLD">{region.label}</Text> Top5 인기 동선</Text>
+          <FlowList />
         </View>
-        <View style={styles.wrapContainer, { marginTop: 5 }}>
-          <Text style={styles.textContainer}>{region.label} Top5 인기 동선</Text>
-        </View>
-        <View style={styles.wrapContainer, { marginTop: 5 }}>
-          <Text style={styles.textContainer}>{region.label} Top5 인기 동선</Text>
-        </View>
-        {/* TODO GraphQL 걷어 낸 부분 데이터 교체 필수 */}
-        {/* {data ? <FlowList localShareFlow={data.localShareFlow} /> : null} */}
-        {/* <LocationSelector/> */}
       </ScrollView>
     </View>
   )

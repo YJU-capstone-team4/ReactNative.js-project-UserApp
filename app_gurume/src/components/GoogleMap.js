@@ -62,7 +62,7 @@ const GoogleMap = (props) => {
                 onPress={onPress}
                 tracksViewChanges={false}
               >
-                <View style={[styles.clusterWrapper, { width: outSideWidth, height: outSideWidth, backgroundColor: outSideColor, opacity: 0.7 }]}>
+                <View style={[styles.clusterWrapper, { width: outSideWidth, height: outSideWidth, backgroundColor: outSideColor }]}>
                   <View style={[styles.clusterWrapper, { width: inSideWidth, height: inSideWidth, backgroundColor: inSideColor }]}>
                     <Text weight={"BOLD"} color={Colors.WHITE} style={{ opacity: 1, fontSize: 22 }}>{points}+</Text>
                   </View>

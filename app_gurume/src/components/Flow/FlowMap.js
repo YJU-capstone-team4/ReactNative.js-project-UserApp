@@ -14,8 +14,6 @@ export default function FlowMap() {
         marginBottom: 10,
       }}
     >
-      <Text>내가 추가한 동선 리스트 정보가 들어갈 공간입니다.</Text>
-      <Text>FlowMap</Text>
       <Image style={{ margin: 10 }} source={flowMap} resizeMode="cover" />
     </View>
   )

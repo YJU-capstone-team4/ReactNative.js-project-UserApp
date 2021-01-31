@@ -37,7 +37,7 @@ const ModalYoutuber = (props) => {
                 <Text size={22} weight="BOLD">검색결과</Text>
             </View>
             <ScrollView style={{ flex: 1 }} stickyHeaderIndices={[1]}>
-                {/* 검색 컴포넌트 */}
+                {/* TODO 모달화 검색 컴포넌트  */}
                 <View style={styles.searchContainer}>
                     <TextInput style={styles.searchText} placeholder="맛집 정보가 궁금해?" />
                     {/* 검색 아이콘 */}
