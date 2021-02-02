@@ -33,7 +33,7 @@ const GoogleMap = (props) => {
 
   return (
     <>
-      { props.data ? 
+      { props.data ?
         <MapView
           ref={_map}
           style={styles.container}
@@ -73,8 +73,8 @@ const GoogleMap = (props) => {
         >
           {
             // TODO 커스텀 마커 이미지 적용하기.
-            props.data.map((value, index) => {
-              const { title, youtuberImage } = value
+            props.data.ytbStoreTb.map((value, index) => {
+              const { storeName, location } = value
               console.log('🔥 ' + index + "번째 마커 생성!")
               return (
                 <Marker
@@ -85,10 +85,10 @@ const GoogleMap = (props) => {
                     props.setStoreToggle((prevStatus) => !prevStatus ? true : prevStatus)
                   }, [])}
                   tracksViewChanges={false}
-                  coordinate={value}
+                  coordinate={{ latitude: location.lat, longitude: location.lng }}
                   showCallout={false}
                 >
-                  <YoutubeMarker youtuberImage={youtuberImage} title={title} />
+                  <YoutubeMarker title={storeName} />
                 </Marker>
               )
             })
