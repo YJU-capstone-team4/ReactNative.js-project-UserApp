@@ -18,31 +18,38 @@ export default function SearchInput(props) {
   }
 
   return (
-    <View style={[styles.container, { marginTop: props.directionTop ? 40 : null }]}    >
+    <View style={[styles.container, { marginTop: props.directionTop ? 80 : null }]}    >
       <View style={styles.inputContainer}>
         {/* TODO Screen :: 지도 - 로그인 전에는 내 정보 버튼 비활성화 !!! */}
-        {props.directionTop ? <MaterialCommunityIcons
+        {/* {props.directionTop ? <MaterialCommunityIcons
           onPress={() => props.navigation.openDrawer()}
           style={styles.hambugerContainer}
           name="format-list-bulleted"
           color="black"
-          size={30}
-        /> : null}
+          size={24}
+        /> : null} */}
         <TextInput
           style={{
-            paddingLeft: props.directionTop ? 30 : 0,
+            // paddingLeft: props.directionTop ? 30 : 0,
             fontFamily: Typography.FONT_FAMILY_REGULAR,
-            fontSize: Typography.FONT_SIZE_16,
+            fontSize: Typography.FONT_SIZE_18,
           }}
           onChangeText={(text) => props.setText(text)}
           value={props.text}
           placeholder="내가 좋아하는 유튜버를 검색해보세요"
         />
+        <TouchableOpacity
+          onPress={() => handleClicked()}
+          style={styles.searchContainer}
+          hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }}
+        >
+          <MaterialCommunityIcons name="magnify" size={24} />
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => handleClicked()} style={styles.buttonContainer}>
+      {/* <TouchableOpacity onPress={() => handleClicked()} style={styles.buttonContainer}>
         <MaterialCommunityIcons name="map-search" color="white" size={24} />
         <Text style={styles.buttonText}>검색</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   )
 }
@@ -53,16 +60,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 80,
-    paddingHorizontal: 10,
+    height: 70,
+    paddingHorizontal: 5,
   },
   inputContainer: {
-    borderColor: Colors.GRAY_LIGHT,
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    textTransform: 'uppercase',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 0.5,
+    borderColor: Colors.GRAY_8,
+    borderRadius: 50,
+    padding: 12,
+    marginHorizontal: 10,
+    // textTransform: 'uppercase',
     flex: 1,
     backgroundColor: Colors.WHITE,
     shadowColor: Colors.GRAY_9,
@@ -89,6 +98,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
     top: 14,
-    left: 12,
+    left: 22,
   },
+  searchContainer: {
+    position: 'absolute',
+    top: 14,
+    right: 15,
+  }
 })
