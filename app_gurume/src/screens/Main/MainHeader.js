@@ -17,20 +17,7 @@ import { convertRegionForm } from '@utils'
 
 
 export default function MainHeader(props) {
-  const [locationInfo, setLocationInfo] = useState([])
   const [ModalSelector, visible, setVisible] = useModalSelector()
-
-  useEffect(() => {
-    setLocationInfo([
-      { key: -1, section: true, label: '지역선택' },
-      { key: 0, label: '서울특별시' },
-      { key: 1, label: '인천광역시' },
-      { key: 2, label: '광주광역시' },
-      { key: 3, label: '대구광역시' },
-      { key: 4, label: '울산광역시' },
-      { key: 5, label: '부산광역시' },
-    ])
-  }, [])
 
   const [state, refetch] = useAsync(getAllRegionTags, [])
   const { loading: regionLoading, data: regions, error } = state                     // 메인지도 전체 마커

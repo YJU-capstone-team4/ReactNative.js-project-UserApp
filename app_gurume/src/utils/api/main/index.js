@@ -16,14 +16,14 @@ async function getAllRegionTags() {
 
 //입력받은 지역을 방문한 유튜버 이름, 썸네일
 async function getRegionYoutubers(argRegion) {
-    const response = await instance.get(`/regionYtb/region/${argRegion}`)
+    const response = await instance.get(`regionYtb/region/${argRegion}`)
     console.log('입력받은 지역을 방문한 유튜버 : ', response.data)
     return response.data
 }
 
 // 입력받은 지역이 포함되어 있는 동선
 async function getRegionFlows(argRegion) {
-    const response = await instance.get(`/regionFlow/region/${argRegion}`)
+    const response = await instance.get(`regionFlow/region/${argRegion}`)
     console.log('입력받은 지역이 포함되어 있는 동선 : ', response.data)
     return response.data
 }
