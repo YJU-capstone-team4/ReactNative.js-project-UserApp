@@ -27,21 +27,7 @@ import { Text } from '@styles/CommonStyles'
 
 
 const MapScreen = ({ navigation }) => {
-
-
   // ******** 토글 제어 ********
-
-  // <<-- 유튜버 토글
-  const [youtuberToggle, setYoutuberToggle] = useState(false)
-  const [youtubers, setYoutubers] = useState(mokupYoutuber)
-
-  const handleRemoveYoutuber = (channelName) => {
-    console.log(youtubers, channelName)
-
-    setYoutubers(youtubers.filter((e) => (e.ytbChannel !== channelName)))
-  }
-
-  // -->>
 
   // <<-- 가게 토글
   const [storeIndex, setStoreIndex] = useState(0)
@@ -50,29 +36,29 @@ const MapScreen = ({ navigation }) => {
 
   // <<-- 유튜버 검색 결과 토글
   const [searchToggle, setSearchToggle] = useState(false)
+  const [searchYoutuber, setSearchYoutuber] = useState('')                            // 유튜버 검색 text
+  // -->>
 
   //******** 토글 제어 ********
 
   //******** 지도 제어 ********
   const [state, refetch] = useAsync(getAllMarkers, [])
-  const { loading : markerLoading, data: markers, error } = state                                   // 메인지도 전체 마커
+  const { loading : markerLoading, data: markers, error } = state                     // 메인지도 전체 마커
 
-  // const [youtubeMarkers, setYoutubeMarkers] = useState(mokupMarkers1)             // 지도 메인 마커 데이터 셋
-  const [searchYoutuber, setSearchYoutuber] = useState('')                        // 유튜버 검색 text
   // TODO 유튜버 검색 -> 현재 사용중인 마커 변경 알고리즘 작성.
   //******** 지도 제어 ********
 
-  useEffect(() => {
-    if (youtuberToggle) {
-      setStoreToggle(false)
-    }
-  }, [youtuberToggle])
+  // useEffect(() => {
+  //   if (youtuberToggle) {
+  //     setStoreToggle(false)
+  //   }
+  // }, [youtuberToggle])
 
-  useEffect(() => {
-    if (storeToggle) {
-      setYoutuberToggle(false)
-    }
-  }, [storeToggle])
+  // useEffect(() => {
+  //   if (storeToggle) {
+  //     setYoutuberToggle(false)
+  //   }
+  // }, [storeToggle])
 
   if (markerLoading) return <View><Text>로딩중..</Text></View>
   if (error) return <View><Text>에러가 발생했습니다</Text></View>
@@ -87,12 +73,12 @@ const MapScreen = ({ navigation }) => {
         data={markers}
         setStoreIndex={setStoreIndex}
         setStoreToggle={setStoreToggle}
-        setYoutuberToggle={setYoutuberToggle}
+        // setYoutuberToggle={setYoutuberToggle}
       />
       {/* 새로고침 토글 */}
-      <View style={styles.refreshIconWrapper}>
+      <TouchableOpacity onPress={() => refetch()} style={styles.refreshIconWrapper}>
         <Text weight={"BOLD"} color={Colors.GREEN_3}>🎃  마커 초기화</Text>
-      </View>
+      </TouchableOpacity>
 
       {/* 가게 정보 토글 */}
       <ToggleContainer

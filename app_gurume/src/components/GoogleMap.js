@@ -13,10 +13,10 @@ import clusterColorPicker from '../utils/clusterColorPicker';
 
 const GoogleMap = (props) => {
   const [region, setRegion] = useState({
-    latitude: 35.86990,
-    longitude: 128.59554,
-    latitudeDelta: 0.2, // 0.009
-    longitudeDelta: 0.2,
+    latitude: 36.86990,
+    longitude: 127.89554,
+    latitudeDelta: 3.5, // 0.009
+    longitudeDelta: 3.5,
   })
 
   const initialMapState = {

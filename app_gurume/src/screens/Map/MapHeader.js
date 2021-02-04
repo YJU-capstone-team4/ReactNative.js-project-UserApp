@@ -34,7 +34,7 @@ const MapHeader = (props) => {
     )
 }
 
-export default MapHeader
+export default React.memo(MapHeader)
 
 const styles = StyleSheet.create({
     container: {
