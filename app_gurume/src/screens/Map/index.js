@@ -2,19 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, TouchableOpacity, Image } from 'react-native'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
+// import apis
+import { useAsync } from '../../utils/hooks'
+import { getAllMarkers, getYoutuberMarkers } from '../../utils/api/map'
+
 
 // import dummy data
 import mokupYoutuber from '../../model/mokupYoutuber'
 import { mokupMarkers1, mokupMarkers2 } from '../../model/mokupMap'
 
 // import components
-import SearchInput from '@components/SearchInput'
 import GoogleMap from '@components/GoogleMap'
 
 // import screens
 import MapHeader from './MapHeader'
 import MapStorePreview from './MapStorePreview';
-import SelectedYoutubers from './SelectedYoutubers'
 import MapSideBar from './MapSideBar'
 import ModalYoutuber from './../../components/ModalYoutuber';
 
@@ -22,26 +24,10 @@ import ModalYoutuber from './../../components/ModalYoutuber';
 import { Colors } from '@styles'
 import { Container, ToggleContainer } from './MapStyles'
 import { Text } from '@styles/CommonStyles'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import refreshIcon from '@images/refresh.png'
 
 
 const MapScreen = ({ navigation }) => {
-
-
   // ******** 토글 제어 ********
-
-  // <<-- 유튜버 토글
-  const [youtuberToggle, setYoutuberToggle] = useState(false)
-  const [youtubers, setYoutubers] = useState(mokupYoutuber)
-
-  const handleRemoveYoutuber = (channelName) => {
-    console.log(youtubers, channelName)
-
-    setYoutubers(youtubers.filter((e) => (e.ytbChannel !== channelName)))
-  }
-
-  // -->>
 
   // <<-- 가게 토글
   const [storeIndex, setStoreIndex] = useState(0)
@@ -50,26 +36,33 @@ const MapScreen = ({ navigation }) => {
 
   // <<-- 유튜버 검색 결과 토글
   const [searchToggle, setSearchToggle] = useState(false)
+  const [searchYoutuber, setSearchYoutuber] = useState('')                            // 유튜버 검색 text
+  // -->>
 
   //******** 토글 제어 ********
 
   //******** 지도 제어 ********
-  const [youtubeMarkers, setYoutubeMarkers] = useState(mokupMarkers1)             // 지도 메인 마커 데이터 셋
-  const [searchYoutuber, setSearchYoutuber] = useState('')                        // 유튜버 검색 text
+  const [state, refetch] = useAsync(getAllMarkers, [])
+  const { loading : markerLoading, data: markers, error } = state                     // 메인지도 전체 마커
+
   // TODO 유튜버 검색 -> 현재 사용중인 마커 변경 알고리즘 작성.
   //******** 지도 제어 ********
 
-  useEffect(() => {
-    if (youtuberToggle) {
-      setStoreToggle(false)
-    }
-  }, [youtuberToggle])
+  // useEffect(() => {
+  //   if (youtuberToggle) {
+  //     setStoreToggle(false)
+  //   }
+  // }, [youtuberToggle])
 
-  useEffect(() => {
-    if (storeToggle) {
-      setYoutuberToggle(false)
-    }
-  }, [storeToggle])
+  // useEffect(() => {
+  //   if (storeToggle) {
+  //     setYoutuberToggle(false)
+  //   }
+  // }, [storeToggle])
+
+  if (markerLoading) return <View><Text>로딩중..</Text></View>
+  if (error) return <View><Text>에러가 발생했습니다</Text></View>
+  if (!markers) return null
 
   return (
     <Container>
@@ -77,17 +70,16 @@ const MapScreen = ({ navigation }) => {
       {/* 구글 메인 Map Component */}
       <GoogleMap
         // navigation={navigation}
-        data={youtubeMarkers}
+        data={markers}
         setStoreIndex={setStoreIndex}
         setStoreToggle={setStoreToggle}
-        setYoutuberToggle={setYoutuberToggle}
+        // setYoutuberToggle={setYoutuberToggle}
       />
       {/* 새로고침 토글 */}
-      <View style={styles.refreshIconWrapper}>
-        {/* <Image source={refreshIcon}/> */}
-        <Text weight={"BOLD"}  color={Colors.GREEN_3}>🎃  마커 초기화</Text>
-      </View>
-      
+      <TouchableOpacity onPress={() => refetch()} style={styles.refreshIconWrapper}>
+        <Text weight={"BOLD"} color={Colors.GREEN_3}>🎃  마커 초기화</Text>
+      </TouchableOpacity>
+
       {/* 가게 정보 토글 */}
       <ToggleContainer
         activeOpacity={0.6}

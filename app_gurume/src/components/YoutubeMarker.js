@@ -10,11 +10,9 @@ const YoutubeMarker = (props) => (
     <MarkerContainer>
         <CustomMarker source={markerImage} />
         {
-            // props.region.latitudeDelta < 0.02 ?
-            //   <MarkerTitleContainer>
-            //     <Image source={props.youtuberImage} style={styles.videoConatiner} />
-            //     <Text style={{ lineHeight: 26, paddingLeft: 5 }} size={16} weight={"BOLD"}>{props.title}</Text>
-            //   </MarkerTitleContainer>
+            <MarkerTitleContainer>
+                <Text style={{ lineHeight: 26 }} size={16} weight={"BOLD"}>{props.title}</Text>
+            </MarkerTitleContainer>
             //   : null
         }
     </MarkerContainer>

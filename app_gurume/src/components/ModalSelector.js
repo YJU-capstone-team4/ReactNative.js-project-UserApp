@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dimensions } from 'react-native'
 import Modal from 'react-native-modal-selector'
-import { Typography, Colors, StyleSheet } from '@styles';
+import { Typography } from '@styles';
 
 const ModalSelector = (props) => {
     return (

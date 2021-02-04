@@ -1,7 +1,7 @@
 import defaultAxios from 'axios'
 
 // TODO 배포시 URL 변경
-const API_URL = 'http://localhost:3000/'
+const API_URL = 'http://172.26.3.186:3000/'
 
 // 엑시오스 초기화 함수
 const createInstance = () => {
@@ -42,7 +42,7 @@ function setInterceptors(instance) {
     return instance;
 }
 
-export const instance = createInstance();
-export const afterAuth = createInstanceWithAuth('');
-export const reportAuth = createInstanceWithAuth('user');
-export const reviewAuth = createInstanceWithAuth('review');
+export const instance = createInstance()
+export const afterAuth = createInstanceWithAuth('')
+// export const reportAuth = createInstanceWithAuth('user')
+// export const reviewAuth = createInstanceWithAuth('review')

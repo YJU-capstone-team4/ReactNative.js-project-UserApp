@@ -13,10 +13,10 @@ import clusterColorPicker from '../utils/clusterColorPicker';
 
 const GoogleMap = (props) => {
   const [region, setRegion] = useState({
-    latitude: 35.86990,
-    longitude: 128.59554,
-    latitudeDelta: 0.2, // 0.009
-    longitudeDelta: 0.2,
+    latitude: 36.86990,
+    longitude: 127.89554,
+    latitudeDelta: 3.5, // 0.009
+    longitudeDelta: 3.5,
   })
 
   const initialMapState = {
@@ -33,7 +33,7 @@ const GoogleMap = (props) => {
 
   return (
     <>
-      { props.data ? 
+      { props.data ?
         <MapView
           ref={_map}
           style={styles.container}
@@ -73,8 +73,8 @@ const GoogleMap = (props) => {
         >
           {
             // TODO 커스텀 마커 이미지 적용하기.
-            props.data.map((value, index) => {
-              const { title, youtuberImage } = value
+            props.data.ytbStoreTb.map((value, index) => {
+              const { storeName, location } = value
               console.log('🔥 ' + index + "번째 마커 생성!")
               return (
                 <Marker
@@ -85,10 +85,10 @@ const GoogleMap = (props) => {
                     props.setStoreToggle((prevStatus) => !prevStatus ? true : prevStatus)
                   }, [])}
                   tracksViewChanges={false}
-                  coordinate={value}
+                  coordinate={{ latitude: location.lat, longitude: location.lng }}
                   showCallout={false}
                 >
-                  <YoutubeMarker youtuberImage={youtuberImage} title={title} />
+                  <YoutubeMarker title={storeName} />
                 </Marker>
               )
             })
