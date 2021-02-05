@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { View, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native'
 
 // import screens
@@ -15,6 +15,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import thumb_2 from '@images/thumbnail_2.jpg'
 
 const renderYoutuber = (data) => {
+  const ytbSubscribe = data.ytbSubscribe / 10000
+
   return (
     <View style={{ marginHorizontal: 6 }}>
       <TouchableOpacity activeOpacity={0.8}>
@@ -25,7 +27,7 @@ const renderYoutuber = (data) => {
       </TouchableOpacity>
       {/* 구독자 수 */}
       <View style={styles.subscribeTextWrapper}>
-        <Text size={20} weight={'BOLD'} style={styles.subscribeText}>300K</Text>
+        <Text size={20} weight={'BOLD'} style={styles.subscribeText}>{ytbSubscribe}K</Text>
       </View>
       <View>
         <Text size={20} style={{ marginTop: -10 }}>{data.ytbChannel}</Text>
@@ -86,9 +88,11 @@ const styles = StyleSheet.create({
     bottom: 23
   },
   subscribeText: {
+    minWidth: 45,
     backgroundColor: Colors.RED_4,
     padding: 3,
     color: Colors.WHITE,
-    letterSpacing: -1
+    letterSpacing: -1,
+    textAlign: 'center'
   }
 })

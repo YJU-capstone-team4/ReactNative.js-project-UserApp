@@ -43,7 +43,7 @@ const MapScreen = ({ navigation }) => {
 
   //******** 지도 제어 ********
   const [state, refetch] = useAsync(getAllMarkers, [])
-  const { loading : markerLoading, data: markers, error } = state                     // 메인지도 전체 마커
+  const { loading: markerLoading, data: markers, error } = state                     // 메인지도 전체 마커
 
   // TODO 유튜버 검색 -> 현재 사용중인 마커 변경 알고리즘 작성.
   //******** 지도 제어 ********
@@ -60,21 +60,21 @@ const MapScreen = ({ navigation }) => {
   //   }
   // }, [storeToggle])
 
-  if (markerLoading) return <View><Text>로딩중..</Text></View>
-  if (error) return <View><Text>에러가 발생했습니다</Text></View>
-  if (!markers) return null
+  // if (markerLoading) return <View><Text>로딩중..</Text></View>
+  // if (error) return <View><Text>에러가 발생했습니다</Text></View>
+  // if (!markers) return null
 
   return (
     <Container>
-      {/* Header */}
       {/* 구글 메인 Map Component */}
-      <GoogleMap
-        // navigation={navigation}
-        data={markers}
-        setStoreIndex={setStoreIndex}
-        setStoreToggle={setStoreToggle}
-        // setYoutuberToggle={setYoutuberToggle}
-      />
+      {
+        markers ?
+          <GoogleMap
+            data={markers}
+            setStoreIndex={setStoreIndex}
+            setStoreToggle={setStoreToggle}
+          /> : null
+      }
       {/* 새로고침 토글 */}
       <TouchableOpacity onPress={() => refetch()} style={styles.refreshIconWrapper}>
         <Text weight={"BOLD"} color={Colors.GREEN_3}>🎃  마커 초기화</Text>
@@ -95,14 +95,7 @@ const MapScreen = ({ navigation }) => {
           {storeToggle ? 'ON' : 'OFF'}
         </Text>
       </ToggleContainer>
-      {/* 검색 인풋박스 */}
-      {/* <SearchInput
-        text={searchYoutuber}
-        setText={setSearchYoutuber}
-        onPress={setSearchToggle}
-        directionTop
-        navigation={navigation}
-      /> */}
+      {/* main header */}
       <MapHeader
         navigation={navigation}
         onPress={setSearchToggle}

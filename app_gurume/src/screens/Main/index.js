@@ -27,11 +27,11 @@ export default (props) => {
         {/* <SearchInput /> */}
         <View style={styles.wrapContainer}>
           {/* 🇰🇷  */}
-          <Text style={styles.textContainer} size={20}><Text size={22} weight="BOLD">{region.label}</Text>를 방문한 유튜버</Text>
+          <Text style={styles.textContainer} size={20}><Text size={22} weight="BOLD">🇰🇷 {region.label}</Text>를 방문한 유튜버</Text>
           <YoutuberList region={region.label} />
         </View>
         <View style={[styles.wrapContainer, { marginTop: 10 }]}>
-          <Text style={styles.textContainer} size={20}><Text size={22} weight="BOLD">{region.label}</Text> Top5 인기 동선</Text>
+          <Text style={styles.textContainer} size={20}><Text size={22} weight="BOLD">🇰🇷 {region.label}</Text> Top5 인기 동선</Text>
           <FlowList region={region.label} />
         </View>
       </ScrollView>

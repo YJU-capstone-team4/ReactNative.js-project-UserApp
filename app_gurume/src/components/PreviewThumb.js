@@ -12,7 +12,7 @@ const PREVIEW_WIDTH = width * 0.95
 import flowThumb_1 from '@images/flowThumb_1.jpg'
 import flowThumb_2 from '@images/flowThumb_2.jpg'
 
-export default function PreviewThumb({ data }) {
+export default function PreviewThumb({ data, regionFlow }) {
     return (
         <View style={styles.container}>
             <Image source={data.adminTag.seasonTag === '여름' ? flowThumb_1 : flowThumb_2} style={styles.thumbnailImage} />
@@ -28,10 +28,12 @@ export default function PreviewThumb({ data }) {
             <View
                 style={styles.hashtagContainer}
             >
-                {/* {JSON.stringify(data.userTags)} */}
-                <View style={[styles.tagContainer, { backgroundColor: '#F5839A' }]}>
-                    <Text weight="BOLD" style={styles.buttonText}>{data.adminTag.regionTag[0]}</Text>
-                </View>
+                {
+                    !regionFlow ?
+                        <View style={[styles.tagContainer, { backgroundColor: '#F5839A' }]}>
+                            <Text weight="BOLD" style={styles.buttonText}>{data.adminTag.regionTag[0]}</Text>
+                        </View> : null
+                }
                 <View style={[styles.tagContainer, { backgroundColor: Colors.YELLOW_6 }]}>
                     <Text weight="BOLD" style={styles.buttonText}>{data.adminTag.seasonTag}</Text>
                 </View>
@@ -73,6 +75,7 @@ const styles = StyleSheet.create({
         minWidth: 50,
         backgroundColor: Colors.PRIMARY,
         alignSelf: 'center',
+        overflow: 'hidden'
     },
     thumbnailTitle: {
         position: 'absolute',

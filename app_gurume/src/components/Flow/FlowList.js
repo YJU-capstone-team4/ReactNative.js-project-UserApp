@@ -1,13 +1,15 @@
 import React from 'react'
-import { View, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 
 // import styles
-import { Colors, Typography } from '@styles'
 import { Text } from '@styles/CommonStyles'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 // import components
 import PreviewThumb from '@components/PreviewThumb'
+
+// import apis
+import { getRegionFlows } from '@utils/api/main/index'
+import { useAsync } from '@utils/hooks'
 
 const mokupData = [
   {
@@ -26,26 +28,24 @@ const mokupData = [
     },
     userTags: ['봄', '수성못', '벚꽃']
   },
-  // {
-  //   shareTitle: '공유 동선입니다!!',
-  //   adminTag: {
-  //     regionTag: ['대구광역시'],
-  //     seasonTag: '가을'
-  //   },
-  //   userTags: ['봄', '수성못', '벚꽃']
-  // },
 ]
 
-export default function FlowList({ localShareFlow, navi }) {
+export default function FlowList(props) {
+  const [state] = useAsync(() => getRegionFlows(props.region), [props.region])
+  const { loading, data, error } = state
+
+  if (loading) return <View><Text>로딩로딩!</Text></View>
+  if (error) return <View><Text>에러에러</Text></View>
+
+
   return (
-    <View
-      style={styles.container}
-    >
+    <View style={styles.container}    >
       {/* {
-        localShareFlow ? localShareFlow.map((value => <PreviewThumb data={value} />)) : null
+        mokupData ? mokupData.map(((value, index) => <PreviewThumb key={`thumb-${index}`}  data={value} />)) : null
       } */}
       {
-        mokupData ? mokupData.map(((value, index) => <PreviewThumb key={`thumb-${index}`}  data={value} />)) : null
+        data && data.shareFlowTb ?
+          data.shareFlowTb.map(((value, index) => <PreviewThumb regionFlow={Boolean(props.region)} key={`thumb-${index}`} data={value} />)) : null
       }
     </View>
   )
