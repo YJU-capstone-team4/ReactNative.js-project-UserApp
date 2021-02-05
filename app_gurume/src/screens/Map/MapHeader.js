@@ -19,7 +19,7 @@ const MapHeader = (props) => {
             </TouchableOpacity>
             <View style={styles.titleWrapper} >
                 <MaterialCommunityIcons style={{ right: 3 }} color={Colors.RED_4} name="youtube" size={24} />
-                <Text size={22}>문복희 Eat with Boki</Text>
+                <Text size={22}>{props.youtuber ? props.youtuber : '전체보기'}</Text>
             </View>
             {/* <Text>초기화 버튼</Text> */}
             {/* <MaterialCommunityIcons name="dots-vertical"/> */}

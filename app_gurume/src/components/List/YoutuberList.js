@@ -22,7 +22,10 @@ const renderYoutuber = (data) => {
       <TouchableOpacity activeOpacity={0.8}>
         <Image
           style={{ width: 170, height: 170 }}
-          source={thumb_2}
+          // source={data.ytbProfile ? data.ytbChannel : thumb_2}
+          source={{
+            uri: data.ytbProfile,
+          }}
         />
       </TouchableOpacity>
       {/* 구독자 수 */}
@@ -34,7 +37,7 @@ const renderYoutuber = (data) => {
         {/* 영상 개수 */}
         <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginVertical: 5 }}>
           <MaterialCommunityIcons name="youtube" color={Colors.RED_4} size={16} />
-          <Text style={{ color: Colors.GRAY_8, marginVertical: 3, marginLeft: 3 }}>방문맛집 {data.ytbHits}</Text>
+          <Text style={{ color: Colors.GRAY_8, marginVertical: 3, marginLeft: 3 }}>방문맛집 {data.storeCount}</Text>
         </View>
         {/* <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
           <MaterialCommunityIcons name="star" color={Colors.YELLOW_6} size={16} />
@@ -56,12 +59,7 @@ const YoutuberList = (props) => {
   if (error) return <View><Text>에러에러</Text></View>
 
   return (
-    <View
-      style={{
-        height: 225,
-        marginHorizontal: 5
-      }}
-    >
+    <View style={styles.container}>
       {
         props.region && data && data.ytbChannelTb ?
           <FlatList
@@ -71,8 +69,8 @@ const YoutuberList = (props) => {
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => renderYoutuber(item)}
             keyboardShouldPersistTaps="always"
-          />
-          : null}
+          /> : null
+      }
     </View>
   )
 }
@@ -80,6 +78,10 @@ const YoutuberList = (props) => {
 export default YoutuberList
 
 const styles = StyleSheet.create({
+  container: {
+    height: 225,
+    marginHorizontal: 5
+  },
   subscribeTextWrapper: {
     display: 'flex',
     flexDirection: 'row',
