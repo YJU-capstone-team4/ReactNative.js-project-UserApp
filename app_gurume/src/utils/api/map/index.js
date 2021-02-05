@@ -22,6 +22,4 @@ async function getYoutuberMarkers(ytbChannel_id = DEFAULT_YOUTUBER_ID) {
     return response.data
 }
 
-
-
 export { getAllMarkers, getYoutuberMarkers }

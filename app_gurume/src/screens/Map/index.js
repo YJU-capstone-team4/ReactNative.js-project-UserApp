@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, TouchableOpacity, Image } from 'react-native'
+import { StyleSheet, TouchableOpacity, } from 'react-native'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 // import apis
 import { useAsync } from '../../utils/hooks'
-import { getAllMarkers, getYoutuberMarkers } from '../../utils/api/map'
-
-
-// import dummy data
-import mokupYoutuber from '../../model/mokupYoutuber'
-import { mokupMarkers1, mokupMarkers2 } from '../../model/mokupMap'
+import { getAllMarkers } from '../../utils/api/map'
 
 // import components
 import GoogleMap from '@components/GoogleMap'
@@ -36,45 +31,39 @@ const MapScreen = ({ navigation }) => {
 
   // <<-- 유튜버 검색 결과 토글
   const [searchToggle, setSearchToggle] = useState(false)
-  const [searchYoutuber, setSearchYoutuber] = useState('')                            // 유튜버 검색 text
+  const [searchYoutuber, setSearchYoutuber] = useState('')                              // 유튜버 검색 text
   // -->>
 
   //******** 토글 제어 ********
 
   //******** 지도 제어 ********
+  const [markers, setMarkers] = useState(null)                                          // 메인지도 마커 관리 배열
+
+  // <<-- 모든 마커 불러오기
   const [state, refetch] = useAsync(getAllMarkers, [])
-  const { loading : markerLoading, data: markers, error } = state                     // 메인지도 전체 마커
+  const { loading: markerLoading, data: allMarkers, error } = state
+  // -->>
+
+  useEffect(() => {
+    if (markerLoading === false && allMarkers) {
+      setMarkers(allMarkers)
+    }
+  }, [])
 
   // TODO 유튜버 검색 -> 현재 사용중인 마커 변경 알고리즘 작성.
   //******** 지도 제어 ********
 
-  // useEffect(() => {
-  //   if (youtuberToggle) {
-  //     setStoreToggle(false)
-  //   }
-  // }, [youtuberToggle])
-
-  // useEffect(() => {
-  //   if (storeToggle) {
-  //     setYoutuberToggle(false)
-  //   }
-  // }, [storeToggle])
-
-  if (markerLoading) return <View><Text>로딩중..</Text></View>
-  if (error) return <View><Text>에러가 발생했습니다</Text></View>
-  if (!markers) return null
-
   return (
     <Container>
-      {/* Header */}
       {/* 구글 메인 Map Component */}
-      <GoogleMap
-        // navigation={navigation}
-        data={markers}
-        setStoreIndex={setStoreIndex}
-        setStoreToggle={setStoreToggle}
-        // setYoutuberToggle={setYoutuberToggle}
-      />
+      {
+        markers ?
+          <GoogleMap
+            data={markers}
+            setStoreIndex={setStoreIndex}
+            setStoreToggle={setStoreToggle}
+          /> : null
+      }
       {/* 새로고침 토글 */}
       <TouchableOpacity onPress={() => refetch()} style={styles.refreshIconWrapper}>
         <Text weight={"BOLD"} color={Colors.GREEN_3}>🎃  마커 초기화</Text>
@@ -95,24 +84,22 @@ const MapScreen = ({ navigation }) => {
           {storeToggle ? 'ON' : 'OFF'}
         </Text>
       </ToggleContainer>
-      {/* 검색 인풋박스 */}
-      {/* <SearchInput
-        text={searchYoutuber}
-        setText={setSearchYoutuber}
-        onPress={setSearchToggle}
-        directionTop
-        navigation={navigation}
-      /> */}
+      {/* main header */}
       <MapHeader
         navigation={navigation}
         onPress={setSearchToggle}
+        youtuber={searchYoutuber}
       />
       {/* 가게 정보 미리보기 모달 */}
       {storeToggle ? <MapStorePreview storeIndex={storeIndex} navigation={navigation} /> : null}
-      {/* FIXME ( 제거 ) 유튜버 리스트 모달 */}
-      {/* {youtuberToggle ? <SelectedYoutubers youtubers={youtubers} handleRemoveYoutuber={handleRemoveYoutuber} /> : null} */}
       {/* 유튜버 검색 리스트 모달 */}
-      {searchToggle ? <ModalYoutuber searchYoutuber={searchYoutuber} setVisibleToggle={setSearchToggle} /> : null}
+      {searchToggle ?
+        <ModalYoutuber
+          searchYoutuber={searchYoutuber}
+          setSearchYoutuber={setSearchYoutuber}
+          setVisibleToggle={setSearchToggle}
+          setMarkers={setMarkers}
+        /> : null}
     </Container >
   )
 }
@@ -137,7 +124,6 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   firstToggle: {
-    // right: 135,
     top: 90,
     width: 100
   },
