@@ -70,25 +70,27 @@ const ModalYoutuber = (props) => {
     // 해당 유튜버 마커 조회 후 지도 반환
     const handleYoutuberClick = async (argYoutuberId, argYoutuberName) => {
         console.log(argYoutuberId)
-        props.setSearchYoutuber(argYoutuberName)
         const { YtbChannelTb } = await getYoutuberInfo(argYoutuberId)
         // console.log('서버로 부터 받은 데이터는? ', YtbChannelTb)
-
+        
         let convertedMarkerArray = YtbChannelTb.map(({ ytbStoreTbId }) => {
             let tempObj = new Object()
             tempObj._id = ytbStoreTbId._id
             tempObj.storeName = ytbStoreTbId.storeInfo.storeName
             tempObj.location = ytbStoreTbId.storeInfo.location
-
+            
             return tempObj
         })
         // TODO 서버로 부터 받은 커스텀 데이터 지도에 반환.
         // const youtuberStoreList = docs[0].video
         console.log(convertedMarkerArray)
-        props.setMarkers({
-            count: convertedMarkerArray.length,
-            ytbStoreTb: convertedMarkerArray
-        })
+
+        // FIXME 이걸 수정하자!!!! 얘가 렌더링의 문제다. 진짜 아아오ㅗ오오오오
+        // await props.setMarkers({
+        //     count: convertedMarkerArray.length,
+        //     ytbStoreTb: convertedMarkerArray
+        // })
+        await props.setSearchYoutuber(argYoutuberName)
         toggleBackButton()
     }
 
@@ -98,8 +100,8 @@ const ModalYoutuber = (props) => {
      * 2. Searched Youtuber Name
      * 3. return data function
      */
-
     const toggleBackButton = () => {
+        props.setSearchYoutuber(null)
         props.setVisibleToggle(false)
     }
 

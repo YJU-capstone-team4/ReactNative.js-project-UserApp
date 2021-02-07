@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, TouchableOpacity, } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 // import apis
@@ -41,23 +41,41 @@ const MapScreen = ({ navigation }) => {
 
   // <<-- 모든 마커 불러오기
   const [state, refetch] = useAsync(getAllMarkers, [])
+  const [refreshMarker, setRefreshMarker] = useState(true)
   const { loading: markerLoading, data: allMarkers, error } = state
   // -->>
 
   useEffect(() => {
-    if (markerLoading === false && allMarkers) {
+    if (!markerLoading && allMarkers) {
+      setRefreshMarker(false)
+      console.log("마커 초기화!")
       setMarkers(allMarkers)
     }
-  }, [])
+  }, [allMarkers])
+
+  useEffect(() => {
+    if (!refreshMarker) {
+      console.log("마커 초기화!")
+      setMarkers(allMarkers)
+      setRefreshMarker(true)
+    }
+  }, [refreshMarker])
+
+  const toggleRefreshBtn = () => {
+    refetch()
+    setRefreshMarker(true)
+  }
 
   // TODO 유튜버 검색 -> 현재 사용중인 마커 변경 알고리즘 작성.
   //******** 지도 제어 ********
+
+  // if (markerLoading) return <View><Text>aaa</Text></View>
 
   return (
     <Container>
       {/* 구글 메인 Map Component */}
       {
-        markers ?
+        !markerLoading && markers ?
           <GoogleMap
             data={markers}
             setStoreIndex={setStoreIndex}
@@ -65,7 +83,7 @@ const MapScreen = ({ navigation }) => {
           /> : null
       }
       {/* 새로고침 토글 */}
-      <TouchableOpacity onPress={() => refetch()} style={styles.refreshIconWrapper}>
+      <TouchableOpacity onPress={() => toggleRefreshBtn()} style={styles.refreshIconWrapper}>
         <Text weight={"BOLD"} color={Colors.GREEN_3}>🎃  마커 초기화</Text>
       </TouchableOpacity>
 
@@ -91,9 +109,9 @@ const MapScreen = ({ navigation }) => {
         youtuber={searchYoutuber}
       />
       {/* 가게 정보 미리보기 모달 */}
-      {storeToggle ? <MapStorePreview storeIndex={storeIndex} navigation={navigation} /> : null}
+      {!markerLoading && storeToggle ? <MapStorePreview storeIndex={storeIndex} navigation={navigation} /> : null}
       {/* 유튜버 검색 리스트 모달 */}
-      {searchToggle ?
+      {!markerLoading && searchToggle ?
         <ModalYoutuber
           searchYoutuber={searchYoutuber}
           setSearchYoutuber={setSearchYoutuber}

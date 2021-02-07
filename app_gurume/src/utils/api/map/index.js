@@ -12,7 +12,7 @@ const DEFAULT_YOUTUBER_ID = '5fb73d0e4c2de82830b54834'
 // 처음 로딩시 전체 마커 불러오기
 async function getAllMarkers() {
     const response = await instance.get('map')
-    console.log(response.data)
+    console.log("전체 마커 로딩중!!!!!!!!!!!")
     return response.data
 }
 
