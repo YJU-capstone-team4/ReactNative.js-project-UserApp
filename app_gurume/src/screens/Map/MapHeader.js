@@ -10,6 +10,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const MapHeader = (props) => {
     return (
         <View style={styles.container}>
+            {/* 맵 미니 네비게이션 */}
             <TouchableOpacity
                 onPress={() => props.navigation.openDrawer()}
                 style={styles.menuIconWrapper}
@@ -17,12 +18,12 @@ const MapHeader = (props) => {
             >
                 <MaterialCommunityIcons name="menu" size={24} />
             </TouchableOpacity>
+            {/* 선택된 유튜버 이름 */}
             <View style={styles.titleWrapper} >
                 <MaterialCommunityIcons style={{ right: 3 }} color={Colors.RED_4} name="youtube" size={24} />
-                <Text size={22}>{props.youtuber ? props.youtuber : '전체보기'}</Text>
+                <Text size={22}>{props.searchYoutuber.label ? props.searchYoutuber.label : '전체보기'}</Text>
             </View>
-            {/* <Text>초기화 버튼</Text> */}
-            {/* <MaterialCommunityIcons name="dots-vertical"/> */}
+            {/* 검색 버튼 */}
             <TouchableOpacity
                 onPress={() => props.onPress(true)}
                 style={styles.searchIconWrapper}
@@ -34,7 +35,7 @@ const MapHeader = (props) => {
     )
 }
 
-export default React.memo(MapHeader)
+export default MapHeader
 
 const styles = StyleSheet.create({
     container: {

@@ -4,7 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 // import apis
 import { useAsync } from '../../utils/hooks'
-import { getAllMarkers } from '../../utils/api/map'
+import { getAllMarkers, getYoutuberMarkers } from '../../utils/api/map'
 
 // import components
 import GoogleMap from '@components/GoogleMap'
@@ -31,51 +31,74 @@ const MapScreen = ({ navigation }) => {
 
   // <<-- 유튜버 검색 결과 토글
   const [searchToggle, setSearchToggle] = useState(false)
-  const [searchYoutuber, setSearchYoutuber] = useState('')                              // 유튜버 검색 text
+  const [searchYoutuber, setSearchYoutuber] = useState({ _id: null, label: null })                              // 유튜버 검색 text
   // -->>
 
   //******** 토글 제어 ********
 
   //******** 지도 제어 ********
-  const [markers, setMarkers] = useState(null)                                          // 메인지도 마커 관리 배열
 
-  // <<-- 모든 마커 불러오기
-  const [state, refetch] = useAsync(getAllMarkers, [])
-  const [refreshMarker, setRefreshMarker] = useState(true)
-  const { loading: markerLoading, data: allMarkers, error } = state
-  // -->>
+  // 모든 유튜버가 다녀간 마커 관리 배열
+  const [markers, setMarkers] = useState(null)
+  // const [isMarkerRefresh, setIsMarkerRefresh] = useState(false)
 
+  // 사용자 선택에 따른 마커 라이프사이클 변경 로직
   useEffect(() => {
-    if (!markerLoading && allMarkers) {
-      setRefreshMarker(false)
-      console.log("마커 초기화!")
-      setMarkers(allMarkers)
-    }
-  }, [allMarkers])
+    console.log("start useEffect ....")
+    setMarkers(null)
+    async function init() {
+      try {
+        const data = await getAllMarkers()
 
-  useEffect(() => {
-    if (!refreshMarker) {
-      console.log("마커 초기화!")
-      setMarkers(allMarkers)
-      setRefreshMarker(true)
+        setMarkers(data)
+      } catch (e) {
+        // 전체 마커 refresh 메서드 실행
+      }
     }
-  }, [refreshMarker])
+
+    async function refresh(argYoutuberId) {
+      try {
+        const data = await getYoutuberMarkers(argYoutuberId)
+        // 데이터셋 변환
+        let convertedMarkerArray = await data.map(({ ytbStoreTbId }) => {
+          let tempObj = new Object()
+          tempObj._id = ytbStoreTbId._id
+          tempObj.storeName = ytbStoreTbId.storeInfo.storeName
+          tempObj.location = ytbStoreTbId.storeInfo.location
+
+          return tempObj
+        })
+        
+        setMarkers({ count: convertedMarkerArray.length, ytbStoreTb: convertedMarkerArray })
+      } catch (e) {
+        // 전체 마커 refresh 메서드 실행
+      }
+    }
+
+    if (!searchYoutuber._id || searchYoutuber._id === '') {
+      console.log("초기화 신호 !!!!!!!!!!!!!")
+      init()
+    }
+
+    else if (searchYoutuber._id) {
+      console.log("특정 유튜버만 로딩하는 신호 받음!!!!!!!!!!!!!", searchYoutuber._id)
+      refresh(searchYoutuber._id)
+    }
+  }, [searchYoutuber])
 
   const toggleRefreshBtn = () => {
-    refetch()
-    setRefreshMarker(true)
+    console.log("초기화 버튼 클릭!")
+    setStoreToggle(false)
+    setSearchYoutuber({ _id: '', label: '' })
   }
 
-  // TODO 유튜버 검색 -> 현재 사용중인 마커 변경 알고리즘 작성.
   //******** 지도 제어 ********
-
-  // if (markerLoading) return <View><Text>aaa</Text></View>
 
   return (
     <Container>
       {/* 구글 메인 Map Component */}
       {
-        !markerLoading && markers ?
+        markers ?
           <GoogleMap
             data={markers}
             setStoreIndex={setStoreIndex}
@@ -106,17 +129,16 @@ const MapScreen = ({ navigation }) => {
       <MapHeader
         navigation={navigation}
         onPress={setSearchToggle}
-        youtuber={searchYoutuber}
+        searchYoutuber={searchYoutuber}
       />
       {/* 가게 정보 미리보기 모달 */}
-      {!markerLoading && storeToggle ? <MapStorePreview storeIndex={storeIndex} navigation={navigation} /> : null}
+      {markers && storeToggle ? <MapStorePreview storeIndex={storeIndex} navigation={navigation} /> : null}
       {/* 유튜버 검색 리스트 모달 */}
-      {!markerLoading && searchToggle ?
+      {markers && searchToggle ?
         <ModalYoutuber
           searchYoutuber={searchYoutuber}
           setSearchYoutuber={setSearchYoutuber}
           setVisibleToggle={setSearchToggle}
-          setMarkers={setMarkers}
         /> : null}
     </Container >
   )

@@ -1,30 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, ScrollView, TouchableOpacity, Image, Dimensions, TextInput } from 'react-native'
-const Hangul = require('hangul-js');
+
+// import modules
+const Hangul = require('hangul-js')                                                     // 한글 초성으로 검색 지원 라이브러리.
 
 // import styles
-import { Colors, Typography } from '@styles';
-import { getStatusBarHeight } from "react-native-status-bar-height";
-import { Text } from './../styles/CommonStyles';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-const { width, height } = Dimensions.get("window");
+import { Colors, Typography } from '@styles'
+import { getStatusBarHeight } from "react-native-status-bar-height"
+import { Text } from './../styles/CommonStyles'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+const { width, height } = Dimensions.get("window")
 
 // import apis
 import { useAsync } from '../utils/hooks'
 import { getAllYoutubersInfo, getYoutuberInfo } from '../utils/api/youtuber/index'
 
-// import dummy Data
-import thumb from '@images/thumbnail_7.jpg'
-
 const YoutuberContainer = ({ item, onClick }) => (
-    <TouchableOpacity onPress={() => onClick(item._id, item.ytbChannel)} key={item._id} style={styles.wrapperContainer}>
+    <TouchableOpacity onPress={() => onClick(item._id, item.ytbChannel)} style={styles.wrapperContainer}>
         <Image style={styles.youtuberImage} source={{ uri: item.ytbProfile }} />
         <View style={{ paddingLeft: 20 }}>
             <Text style={{ paddingTop: 30 }} size={22}>{item.ytbChannel}</Text>
-            <Text style={{ paddingVertical: 10 }}>구독자 200K</Text>
+            <Text style={{ paddingVertical: 10 }}>구독자 {item.ytbSubscribe / 10000}K</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text>다녀간 맛집 정보 </Text>
-                <Text color={Colors.RED_4} size={20}>30</Text>
+                <Text color={Colors.RED_4} size={20}>{item.storeCount}</Text>
                 <Text> 건</Text>
             </View>
         </View>
@@ -38,70 +37,53 @@ const ModalYoutuber = (props) => {
     const { loading: youtubersLoading, data: allYoutubers, error: youtubersError } = state
     const [youtubers, setYoutubers] = useState(null)
 
-    // 검색 유튜버 리스트 로딩
-    // const [a, b] = useAsync(getYoutuberInfo(props.searchYoutuber), [props.searchYoutuber], true)
-    // const { loading: searchYoutuberLoading, data: searchedYoutuber, error: searchedYoutuberError } = a
-
-    // 검색 초기화시 리로딩 로직
-    useEffect(() => {
-        if (props.searchYoutuber === '') {
-            refetch()
-        }
-    }, [props.searchYoutuber])
+    // 유튜버 input text
+    const [youtuberName, setYoutuberName] = useState(null)
 
     // 리로딩 신호 받아 들인 후 값 저장
     useEffect(() => {
-        if (youtubersLoading === false && allYoutubers) {
+        if (youtubersLoading === false && allYoutubers && !youtubers) {
+            console.log("유튜버 목록 새로 받아옴@!!!")
             setYoutubers(allYoutubers)
         }
     }, [youtubersLoading])
 
     // 검색 결과 찾기
     const handleOnChangeText = async (text) => {
-        props.setSearchYoutuber(text)
-        if (text.length !== 0) {
+        setYoutuberName(text)
+
+        console.log(text)
+
+        if (text && text.length > 0) {
             let tempYoutuberList =
-                await allYoutubers.ytbChannelTb.filter(youtuber => !Hangul.search(youtuber.ytbChannel, props.searchYoutuber))
+                await allYoutubers.ytbChannelTb.filter(youtuber => !Hangul.search(youtuber.ytbChannel, text))
             setYoutubers({ count: tempYoutuberList.length, ytbChannelTb: tempYoutuberList })
-            console.log(`${text} 검색 시작됨`, tempYoutuberList)
+        } else {
+            console.log("초기화 로직 발동!")
+            setYoutubers(null)
+            setYoutuberName(null)
+            refetch()
         }
     }
 
     // 해당 유튜버 마커 조회 후 지도 반환
     const handleYoutuberClick = async (argYoutuberId, argYoutuberName) => {
-        console.log(argYoutuberId)
-        const { YtbChannelTb } = await getYoutuberInfo(argYoutuberId)
-        // console.log('서버로 부터 받은 데이터는? ', YtbChannelTb)
-        
-        let convertedMarkerArray = YtbChannelTb.map(({ ytbStoreTbId }) => {
-            let tempObj = new Object()
-            tempObj._id = ytbStoreTbId._id
-            tempObj.storeName = ytbStoreTbId.storeInfo.storeName
-            tempObj.location = ytbStoreTbId.storeInfo.location
-            
-            return tempObj
-        })
-        // TODO 서버로 부터 받은 커스텀 데이터 지도에 반환.
-        // const youtuberStoreList = docs[0].video
-        console.log(convertedMarkerArray)
+        try {
+            console.log(argYoutuberId, argYoutuberName)
 
-        // FIXME 이걸 수정하자!!!! 얘가 렌더링의 문제다. 진짜 아아오ㅗ오오오오
-        // await props.setMarkers({
-        //     count: convertedMarkerArray.length,
-        //     ytbStoreTb: convertedMarkerArray
-        // })
-        await props.setSearchYoutuber(argYoutuberName)
-        toggleBackButton()
+            // 유저가 선택한 유튜버  마커 정보, 이름 반환과 동시에 모달 종료.
+            props.setSearchYoutuber({
+                _id: argYoutuberId,
+                label: argYoutuberName
+            })
+
+            toggleBackButton()
+        } catch (e) {
+            console.log(e)
+        }
     }
 
-    /**
-     * props lists
-     * 1. Modal Visible
-     * 2. Searched Youtuber Name
-     * 3. return data function
-     */
     const toggleBackButton = () => {
-        props.setSearchYoutuber(null)
         props.setVisibleToggle(false)
     }
 
@@ -127,7 +109,7 @@ const ModalYoutuber = (props) => {
                         style={styles.searchText}
                         placeholder="유튜버 정보가 궁금해?"
                         onChangeText={(text) => handleOnChangeText(text)}
-                        value={props.searchYoutuber}
+                        value={youtuberName}
                     />
                     {/* 검색 아이콘 */}
                     <TouchableOpacity
@@ -142,21 +124,26 @@ const ModalYoutuber = (props) => {
                 <View>
                     <View style={[styles.wrapperContainer, styles.stickyWrapper]}>
                         {
-                            props.searchYoutuber === '' ?
-                                <Text>전체 유튜버 데이터가 {!youtubersLoading && youtubers ? youtubers.count : 0}건 있습니다.</Text> :
+                            !youtuberName ?
+                                <Text>전체 유튜버 데이터가 {!youtubersLoading && youtubers ? youtubers.count : 0}건 있습니다.</Text>
+                                :
                                 <>
-                                    <Text weight="BOLD">{props.searchYoutuber}</Text>
+                                    <Text weight="BOLD">{youtuberName}</Text>
                                     <Text> 관련 데이터가 {!youtubersLoading && youtubers ? youtubers.count : 0}건 있습니다.</Text>
                                 </>
-
                         }
                     </View>
                 </View>
                 {/* 유튜버 리스트 나열 */}
                 {
-                    !youtubersLoading && youtubers ? youtubers.ytbChannelTb.map(item =>
-                        <YoutuberContainer item={item} onClick={handleYoutuberClick} />
-                    ) : null
+                    !youtubersLoading && youtubers && youtubers.ytbChannelTb
+                        ? youtubers.ytbChannelTb.map((item, index) =>
+                            <YoutuberContainer
+                                key={`youtuber-${item._id}-${index}`}
+                                item={item}
+                                onClick={handleYoutuberClick}
+                            />
+                        ) : null
                 }
             </ScrollView>
         </View>
