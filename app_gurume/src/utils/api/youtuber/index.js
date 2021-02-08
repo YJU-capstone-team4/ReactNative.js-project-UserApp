@@ -12,7 +12,7 @@ const DEFAULT_YOUTUBER_ID = '5fb73d0e4c2de82830b54834'
 // 전체 유튜버 목록
 async function getAllYoutubersInfo() {
     const response = await instance.get('map/youtuber')
-    console.log('받아온 데이터는?', response.data)
+    // console.log('받아온 데이터는?', response.data)
     return response.data
 }
 

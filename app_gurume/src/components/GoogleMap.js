@@ -9,7 +9,7 @@ import YoutubeMarker from './YoutubeMarker';
 // import styles
 import { Colors } from '@styles'
 import { Text } from '../styles/CommonStyles'
-import clusterColorPicker from '../utils/clusterColorPicker';
+import { clusterColorPicker } from '../utils';
 
 const GoogleMap = (props) => {
   const [region, setRegion] = useState({
@@ -73,13 +73,16 @@ const GoogleMap = (props) => {
         {
           // 마커 생성
           props.data ? props.data.ytbStoreTb.map((value, index) => {
-            const { storeName, location } = value
-            console.log('🔥 ' + index + "번째 마커 생성!")
+            console.log(value)
+            const { _id, storeName, location } = value
+            if (index === 0) {
+              console.log('🔥 ' + "데이터 인식 후 지도에 마커 그려지는 중.")
+            }
             return (
               <Marker
                 key={`marker-${index}`}
                 onPress={React.useCallback(() => {
-                  props.setStoreIndex(index)
+                  props.setStoreIndex(_id)
                   props.setStoreToggle((prevStatus) => !prevStatus ? true : prevStatus)
                 }, [])}
                 tracksViewChanges={false}
