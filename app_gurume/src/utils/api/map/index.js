@@ -37,4 +37,18 @@ async function getStoreYoutubers(argStoreId) {
     return data
 }
 
-export { getAllMarkers, getYoutuberMarkers, getStoreInfo, getStoreYoutubers }
+// 맛집 인근의 주면 명소 추천
+async function getStoreAttraction(argLocation) {
+    const { lat, lng } = argLocation
+
+    const { data } = await instance.get(`storeDetail/attraction/${lat}&${lng}`)
+    return data
+}
+
+export {
+    getAllMarkers,
+    getYoutuberMarkers,
+    getStoreInfo,
+    getStoreYoutubers,
+    getStoreAttraction
+}

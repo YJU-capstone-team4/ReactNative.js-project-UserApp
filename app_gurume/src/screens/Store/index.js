@@ -15,13 +15,14 @@ import YoutubePlayer from '../../components/YoutubePlayer'
 
 // import mokup data
 import mokupTrips from '../../model/mokupTrips'
-import { getStoreYoutubers, getStoreInfo } from '../../utils/api/map'
+import { getStoreYoutubers, getStoreInfo, getStoreAttraction } from '../../utils/api/map'
 
 export default (props) => {
   const { route } = props
   console.log(route.params)
 
   const [store, setStore] = useState(null)
+  const [attraction, setAttraction] = useState(null)
   const [youtubers, setYoutubers] = useState(null)
 
   // 페이지 전체 정보 로딩.
@@ -41,8 +42,11 @@ export default (props) => {
 
         // 3. Top3 동선 불러오기
         console.log("받아온 데이터는 : ", storeInfo, youtuberInfo)
-
         // 4. 주면 명소 불러오기
+        const attractionInfo = await getStoreAttraction(storeInfo.location)
+        setAttraction(attractionInfo)
+        console.log(attractionInfo)
+
       } catch (e) {
         // err 발생
 

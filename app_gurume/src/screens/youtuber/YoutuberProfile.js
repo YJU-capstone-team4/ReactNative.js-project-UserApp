@@ -23,7 +23,7 @@ export default function youtuberProfile() {
 
 const styles = StyleSheet.create({
   container: {
-    // // backgroundColor: '#FFBEFF',
+    backgroundColor: Colors.WHITE,
     // height: 200,
     flex: 1,
     justifyContent: 'center',

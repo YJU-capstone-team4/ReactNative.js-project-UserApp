@@ -10,6 +10,12 @@ import { Text } from '@styles/CommonStyles'
 // import screens
 import mokupViedo from '../../model/mokupViedo'
 
+/**
+ * 비디오 렌더링 컴포넌트
+ * @param { video info } data 
+ * @param { argIndex } index 
+ * @param { youtubePlayModal } setIsVisible 
+ */
 const renderVideo = (data, index, setIsVisible) => {
   return (
     <TouchableOpacity onPress={() => { setIsVisible(true) }} activeOpacity={0.8} style={styles.container}>
