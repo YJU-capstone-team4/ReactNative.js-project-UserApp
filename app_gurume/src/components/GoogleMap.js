@@ -84,7 +84,7 @@ const GoogleMap = (props) => {
                 onPress={React.useCallback(() => {
                   props.setStoreIndex(_id)
                   props.setStoreToggle((prevStatus) => !prevStatus ? true : prevStatus)
-                }, [])}
+                }, [_id])}
                 tracksViewChanges={false}
                 coordinate={{ latitude: location.lat, longitude: location.lng }}
                 showCallout={false}

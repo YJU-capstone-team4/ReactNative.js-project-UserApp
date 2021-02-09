@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, SafeAreaView, FlatList } from 'react-native'
 
 // import styles
@@ -15,9 +15,43 @@ import YoutubePlayer from '../../components/YoutubePlayer'
 
 // import mokup data
 import mokupTrips from '../../model/mokupTrips'
+import { getStoreYoutubers, getStoreInfo } from '../../utils/api/map'
 
 export default (props) => {
   const { route } = props
+  console.log(route.params)
+
+  const [store, setStore] = useState(null)
+  const [youtubers, setYoutubers] = useState(null)
+
+  // 페이지 전체 정보 로딩.
+  useEffect(() => {
+    // route.parms => storeId, storeName
+    const { storeId, storeName } = route.params
+
+    async function init(argStoreId) {
+      try {
+        // 1. 가게 정보 불러오기
+        const storeInfo = await getStoreInfo(argStoreId)
+        setStore(storeInfo)
+
+        // 2. 관련 유튜버 && 썸네일 불러오기
+        const youtuberInfo = await getStoreYoutubers(argStoreId)
+        setYoutubers(youtuberInfo)
+
+        // 3. Top3 동선 불러오기
+        console.log("받아온 데이터는 : ", storeInfo, youtuberInfo)
+
+        // 4. 주면 명소 불러오기
+      } catch (e) {
+        // err 발생
+
+      }
+    }
+
+    init(storeId)
+  }, [route.params])
+
   const [isVisible, setIsVisible] = useState(false)
   const [videoId, setVideoId] = useState('r-LNSGSCDJg')
   return (
@@ -25,21 +59,21 @@ export default (props) => {
       {/* TODO ScrollView 안에 FlatList가 들어가있으면 안되는 이슈로, ScrollView를 지우고, FlatList의 LisHeaderComponent를 이용하여 ScrollView 기능 대체 */}
       <FlatList
         ListHeaderComponent={
-          <>
+          store ? <>
             {/* 가게 정보 */}
-            <StoreHeader route={route} />
+            <StoreHeader store={store} />
             {/* 유튜버 정보 */}
             <View style={[styles.contentWrapper, { marginHorizontal: 0 }]}>
-              <Text weight={"BOLD"} style={{ marginTop: 10, marginLeft: 13 }} size={22}>🌝 {route.params.storeName} 를 방문한 유튜버 정보</Text>
+              <Text weight={"BOLD"} style={{ marginTop: 10, marginLeft: 13 }} size={22}>🌝 {store.storeName} 를 방문한 유튜버 정보</Text>
               <View style={[styles.videoWrapper, { paddingBottom: 10 }]}>
-                <YoutuberList />
+                <YoutuberList data={youtubers} />
               </View>
             </View>
             {/* 관련 영상 */}
             <View style={[styles.contentWrapper, { marginHorizontal: 0 }]}>
-              <Text weight={"BOLD"} style={{ marginTop: 10, marginLeft: 13 }} size={22}>📺 {route.params.storeName} 관련 영상</Text>
+              <Text weight={"BOLD"} style={{ marginTop: 10, marginLeft: 13 }} size={22}>📺 {store.storeName} 관련 영상</Text>
               <View style={styles.videoWrapper}>
-                <VideoList setIsVisible={setIsVisible} />
+                <VideoList youtubers={youtubers} setIsVisible={setIsVisible} />
               </View>
             </View>
             {/* Top 순위 동선 추천 */}
@@ -48,7 +82,7 @@ export default (props) => {
             <View style={[styles.contentWrapper, { marginHorizontal: 7 }]}>
               <Text weight={"BOLD"} style={{ marginTop: 10, marginLeft: 7 }} size={22}># 주변 명소 추천</Text>
             </View>
-          </>
+          </> : null
         }
         data={mokupTrips}
         keyExtractor={(item, index) => `${item.storeId}-${index}`}

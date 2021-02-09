@@ -12,8 +12,15 @@ import { Text } from '../../styles/CommonStyles'
 import MainHeader from './MainHeader'
 import NoticeContainer from './NoticeContainer'
 
+// import apis
+import { getRegionYoutubers } from '@utils/api/main/index'
+import { useAsync } from '@utils/hooks'
+
 export default (props) => {
   const [region, setRegion] = useState({ key: 0, label: '서울특별시' })
+
+  const [state] = useAsync(() => getRegionYoutubers(region.label), [region.label])
+  const { loading, data: youtuberData, error } = state
 
   const lat = 33.364805
   const lng = 126.542671
@@ -28,7 +35,7 @@ export default (props) => {
         <View style={styles.wrapContainer}>
           {/* 🇰🇷  */}
           <Text style={styles.textContainer} size={20}><Text size={22} weight="BOLD">🇰🇷 {region.label}</Text>를 방문한 유튜버</Text>
-          <YoutuberList region={region.label} />
+          {!loading ? <YoutuberList data={youtuberData} /> : null}
         </View>
         <View style={[styles.wrapContainer, { marginTop: 10 }]}>
           <Text style={styles.textContainer} size={20}><Text size={22} weight="BOLD">🇰🇷 {region.label}</Text> Top5 인기 동선</Text>
