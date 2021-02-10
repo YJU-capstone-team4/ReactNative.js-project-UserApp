@@ -246,6 +246,37 @@ export const sub_markers = [
     },
 ];
 
+export const tempMarkers = [
+    {
+        "latitude": 37.27943075229118,
+        "longitude": 127.01763998406159
+    },
+    {
+        "latitude": 37.55915668706214,
+        "longitude": 126.92536526611102
+    },
+    // {
+    //     "latitude": 37.55518388656961,
+    //     "longitude": 126.92926237742505
+    // },
+    // {
+    //     "latitude": 37.561110808242056,
+    //     "longitude": 126.9831268386891
+    // },
+    // {
+    //     "latitude": 37.86187129655063,
+    //     "longitude": 127.7410250820423
+    // },
+    {
+        "latitude": 37.47160156778542,
+        "longitude": 126.62818064142286
+    },
+    {
+        "latitude": 37.520412849636,
+        "longitude": 126.9742764161581
+    },
+]
+
 export const mokupMarkers1 =
     [
         {

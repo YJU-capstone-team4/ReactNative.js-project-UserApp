@@ -8,12 +8,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 
 // import components
-import FlowList from '@components/Flow/FlowList'
+import PolygonMap from '@components/PolygonMap'
 import SelectBox from '@components/SelectBox'
 import FlowMap from '@components/Flow/FlowMap'
 
 // import screens
-import DraggableFlowList from './DraggableFlowList';
+import DraggableFlowList from './DraggableFlowList'
 
 export default function index(props) {
   const EMPTY_ARRAY = []              // ScrollView + FlatList 충돌로 빈 배열 선언
@@ -37,7 +37,7 @@ export default function index(props) {
             <FontAwesome name="share-square" color={Colors.GRAY_9} size={20} />
             <Text style={styles.textContainer}> 공유 동선 조회</Text>
           </View> */}
-          <FlowMap />
+          <PolygonMap />
           <DraggableFlowList />
         </>
       }
