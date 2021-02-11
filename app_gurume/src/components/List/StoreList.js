@@ -17,7 +17,7 @@ export default function StoreList({ data }) {
                 }}
             />
             <View style={[styles.infoContainer, { flex: 1, justifyContent: 'space-between', paddingTop: 10 }]}>
-                <Text weight={"BOLD"} size={18}>{data.ytbVideoName}</Text>
+                <Text weight={"BOLD"} size={18}>{data.storeName}</Text>
                 <TouchableOpacity
                     hitSlop={{ top: 32, bottom: 32, left: 32, right: 32 }} //터치영역을 확장
                     activeOpacity={0.5}
@@ -27,7 +27,7 @@ export default function StoreList({ data }) {
             </View>
             <View style={styles.infoContainer}>
                 <MaterialCommunityIcons style={styles.markerIconWarp} name="map-marker" />
-                <Text style={styles.distanceText}>11.55km</Text>
+                <Text style={styles.distanceText}>{data.distance}km</Text>
             </View>
         </View>
     )
@@ -41,9 +41,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10
     },
     InfoImageContainer: {
-        width: deviceWidth * 0.48, 
-        height: 130, 
-        alignSelf: 'center', 
+        width: deviceWidth * 0.48,
+        height: 130,
+        alignSelf: 'center',
         borderRadius: 10
     },
     distanceText: {

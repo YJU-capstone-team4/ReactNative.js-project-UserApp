@@ -26,10 +26,17 @@ export default () => {
   return (
     <ScrollView style={styles.container}>
       <SearchInput />
-      <View style={{ alignItems: 'flex-end', paddingRight: 20, top: 20 }}>
+      <View style={styles.thumbsUpWrapper}>
         <ThumbsUp />
       </View>
       <YoutuberProfile />
+      {/* TODO shadow Z-index issue 해결하기 stickyHeaderIndices={[3]} */}
+      {/* <View style={styles.hiddenHeader}>
+        <Text weight="BOLD" size={22}>문복희 Eat with Boki</Text>
+        <View style={styles.hiddenThumbsUpWrapper}>
+          <ThumbsUp />
+        </View>
+      </View> */}
       <YoutuberRank />
       <HashTagList />
       <View style={styles.wrapper}>
@@ -57,5 +64,22 @@ const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: Colors.GRAY_1 + "90",
     paddingVertical: 10
+  },
+  thumbsUpWrapper: {
+    alignItems: 'flex-end',
+    paddingRight: 20,
+    top: 20
+  },
+  hiddenHeader: {
+    backgroundColor: '#DFF7F7',
+    paddingTop: getStatusBarHeight() + 10,
+    paddingVertical: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  hiddenThumbsUpWrapper: {
+    position: 'absolute',
+    right: -20,
+    bottom: 7
   }
 })
