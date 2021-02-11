@@ -1,55 +1,73 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import { Text } from './../styles/CommonStyles';
 import PropTypes from "prop-types"
 
 // import modules
 import MapView, { Marker, Polyline } from 'react-native-maps'
-import { markers, tempMarkers } from '../model/mokupMap'
+import { Colors } from '@styles';
 
-const PolygonMap = () => {
+
+const PolygonMap = (props) => {
     const [region, setRegion] = useState({
         latitude: 36.86990,
         longitude: 127.89554,
         latitudeDelta: 3.5, // 0.009
         longitudeDelta: 3.5,
     })
+    const [mapReady, setMapReady] = useState(false)
 
     const mapRef = React.useRef()
 
     useEffect(() => {
         if (mapRef.current) {
-            mapRef.current.fitToSuppliedMarkers(tempMarkers.map(({ _id }) => _id))
+            mapRef.current.fitToSuppliedMarkers(props.data.map(({ _id }) => _id), { edgePadding: { top: 70, right: 70, bottom: 70, left: 70 } })
         }
-    }, [tempMarkers])
+    }, [mapReady, props.data])
 
     return (
         <View>
             <MapView
                 style={styles.mapContainer}
                 initialRegion={region}
-                minZoomLevel={6}
+                minZoomLevel={5}
                 showsCompass={false}
-                // moveOnMarkerPress={false}   // 마커 클릭 이벤트 제어
-                // scrollEnabled={false}
+                moveOnMarkerPress={false}   // 마커 클릭 이벤트 제어
+                scrollEnabled={false}
+                zoomTapEnabled={false}
                 ref={mapRef}
+                onMapReady={() => setMapReady(true)}
             >
                 {
-                    tempMarkers.map((marker, index) => {
-                        console.log(marker)
-                        return <Marker key={`marker-${index}`} coordinate={marker} />
-                    })
+                    props.data ? props.data.map((marker, index) =>
+                        <Marker
+                            key={`marker-${index}`}
+                            coordinate={marker}
+                            tracksViewChanges={false}
+                            anchor={{
+                                x: 0.5,
+                                y: 0.5
+                            }}
+                        >
+                            <View style={styles.markerWrapper}>
+                                <Text weight="BOLD" size={22}>{index + 1}</Text>
+                            </View>
+                        </Marker>
+                    ) : null
                 }
-                <Polyline
-                    coordinates={tempMarkers}
-                    strokeWidth={5}
-                    lineCap="round"
-                    lineDashPhase={10}
-                    strokeColor="#000"
-                    fillColor="rgba(255,0,0,0.5)"
-                    lineDashPattern={[20, 20]}
-                />
+                {
+                    props.data ? <Polyline
+                        coordinates={props.data}
+                        strokeWidth={5}
+                        lineCap="round"
+                        lineDashPhase={10}
+                        strokeColor="#000"
+                        fillColor="rgba(255,0,0,0.5)"
+                        lineDashPattern={[20, 20]}
+                    /> : null
+                }
             </MapView>
-        </View>
+        </View >
     )
 }
 
@@ -73,5 +91,15 @@ const styles = StyleSheet.create({
     mapContainer: {
         flex: 1,
         height: 300
+    },
+    markerWrapper: {
+        backgroundColor: Colors.YELLOW_5,
+        borderRadius: 50,
+        width: 40,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: Colors.GRAY_8,
+        borderWidth: 2
     }
 })
