@@ -10,9 +10,15 @@ import { Text } from '@styles/CommonStyles'
 // import screens
 import mokupViedo from '../../model/mokupViedo'
 
-const renderVideo = (data, index) => {
+/**
+ * 비디오 렌더링 컴포넌트
+ * @param { video info } data 
+ * @param { argIndex } index 
+ * @param { youtubePlayModal } setIsVisible 
+ */
+const renderVideo = (data, index, setIsVisible) => {
   return (
-    <TouchableOpacity activeOpacity={0.8} style={styles.container}>
+    <TouchableOpacity onPress={() => { setIsVisible(true) }} activeOpacity={0.8} style={styles.container}>
       {
         index < 3 ?
           <Image style={styles.medalContainer} source={data.medal} /> : null
@@ -27,7 +33,7 @@ const renderVideo = (data, index) => {
   )
 }
 
-export default function VideoList() {
+export default function VideoList(props) {
   return (
     <View
       style={{
@@ -40,7 +46,7 @@ export default function VideoList() {
         keyExtractor={(item, index) => `${item.storeId}-${index}`}
         horizontal
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item, index }) => renderVideo(item, index)}
+        renderItem={({ item, index }) => renderVideo(item, index, props.setIsVisible)}
         keyboardShouldPersistTaps="always"
         contentInset={{
           top: 0, left: SPACING_FOR_CARD_INSET,

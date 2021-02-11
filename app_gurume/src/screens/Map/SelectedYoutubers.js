@@ -47,7 +47,7 @@ const renderYoutuber = (item, handelRemoveYoutuber) => {
           source={item.ytbProfile}
         />
       </TouchableOpacity>
-      <Text style={styles.textType}>{item.ytbChannel}</Text>
+      <Text numberOfLines={1} style={[styles.textType, {width: 60}]}>{item.ytbChannel}</Text>
     </View>
   )
 }
@@ -58,6 +58,7 @@ export default function SelectedYoutubers(props) {
       style={[
         styles.inputContainer,
         {
+          flex: 1,
           position: 'absolute',
           bottom: 0,
           height: 145,
@@ -80,7 +81,9 @@ export default function SelectedYoutubers(props) {
         keyExtractor={(item) => item.ytbChannel}
         horizontal
         showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => renderYoutuber(item, props.handelRemoveYoutuber)}
+        renderItem={({ item }) => renderYoutuber(item, props.handleRemoveYoutuber)}
+        windowSize={5}
+        initialNumToRender={5}
         // keyboardShouldPersistTaps="always"
       />
     </View>

@@ -44,9 +44,9 @@ function MarkerSet(props) {
     )
 }
 
-//TODO 1. 해당 좌표 받아 온 후 가게 마커 로딩
-//TODO 2  해당 좌표 반경으로 polyline circle 반경 X 미터로 설정
-//TODO 3  마커 깜빡이는 문제 수정하기
+//FIXME 1. 해당 좌표 받아 온 후 가게 마커 로딩
+//FIXME 2  해당 좌표 반경으로 polyline circle 반경 X 미터로 설정
+//FIXME 3  마커 깜빡이는 문제 수정하기
 
 export default function GoogleMiniMap(props) {
     const [region, setRegion] = useState({

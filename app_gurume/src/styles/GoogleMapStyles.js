@@ -5,7 +5,7 @@ import { Colors } from './index'
 
 export const MarkerTitleContainer = styled.View`
         margin-top: 5px;
-        padding: 3px 10px;
+        padding: 1px 7px;
         background-color: ${Colors.WHITE};
         border-color: ${Colors.RED_3};
         border-width: 2px;

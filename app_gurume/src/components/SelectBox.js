@@ -1,55 +1,84 @@
 import React, { useState, useEffect } from 'react'
-import { View } from 'react-native'
-import DropDownPicker from 'react-native-dropdown-picker'
-import Icon from 'react-native-vector-icons/Feather'
+import { View, StyleSheet } from 'react-native'
+
+// import components
+import useModalSelector from '@utils/hooks/useModalSelector';
 
 // import styles
+import FeatherIcons from 'react-native-vector-icons/Feather'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Colors, Typography } from '@styles'
-
-const convertFolderList = (data) => {
-  const items = []
-  // 타이틀, id 만 가져오기
-  data.map(v => {
-    items.push(
-      {
-        label: v.folderTitle,
-        value: v._id,
-        icon: () => <Icon name="hash" size={18} color="#900" />,
-      }
-    )
-  })
-
-  console.log(items)
-  return items;
-}
+import { Text } from '@styles/CommonStyles'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const SelectBox = (props) => {
-  const [userFlow, setUserFlow] = useState(props.userFlow)
+  const [userFlows, setUserFlows] = useState(null)
   const [itemValue, setItemValue] = useState(null)
-  // console.log('test💚',userFlow)
+  const [ModalSelector, visible, setVisible] = useModalSelector()
+
+  // 초기 유저 폴더 세팅
+  useEffect(() => {
+    setUserFlows([
+      { key: -1, section: true, label: '폴더선택' },
+      { key: 0, label: 'YJU 여름 여행' },
+      { key: 1, label: '제주도 여행' },
+      { key: 2, label: '국밥팸 서울나들이' },
+      { key: 3, label: '부산여행' },
+    ])
+  }, [])
+
+  // 폴더 변경 감지
+  // useEffect(() => {
+  //   console.log("폴더가 변경되었습니다!")
+  // }, [itemValue])
 
   return (
     <>
       {
-        props.userFlow ?
-            <DropDownPicker
-              items={convertFolderList(userFlow)}
-              containerStyle={{ height: 50 }}
-              zIndex={50000}
-              max={4}
-              style={{ backgroundColor: Colors.WHITE, borderColor: Colors.GRAY_LIGHT }}
-              itemStyle={{
-                justifyContent: 'flex-start',
-                paddingVertical: 15,
-              }}
-              labelStyle={{ fontFamily: Typography.FONT_FAMILY_REGULAR }}
-              dropDownStyle={{ backgroundColor: Colors.WHITE }}
-              onChangeItem={(item) => setItemValue(item.value)}
-              defaultValue={userFlow[0].value}
-            /> : null
+        userFlows ?
+          <View style={styles.folderWrap}>
+            <TouchableOpacity
+              style={styles.downIcon}
+              onPress={() => setVisible(!visible)}
+              hitSlop={{ top: 60, right: 60, bottom: 60, left: 60 }}
+            >
+              <MaterialCommunityIcons size={16} color={Colors.RED_3} style={{ paddingRight: 3 }} name="map-marker" />
+              <Text size={20}> {itemValue ? itemValue.label : userFlows[1].label}</Text>
+              <FeatherIcons name="chevron-down" size={22} color={Colors.GRAY_8} />
+            </TouchableOpacity>
+          </View>
+          : null
+      }
+      {
+        visible ?
+          <ModalSelector
+            data={userFlows}
+            onChange={setItemValue}
+          />
+          : null
       }
     </>
   )
 }
 
 export default SelectBox
+
+const styles = StyleSheet.create({
+  folderWrap: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.GRAY_1 + '80',
+    padding: 15,
+    paddingLeft: 20,
+    marginVertical: 10,
+    borderRadius: 10,
+    borderColor: Colors.GRAY_4,
+    borderWidth: 0.4
+  },
+  downIcon: {
+    marginLeft: 10,
+    flexDirection: 'row',
+    alignItems: 'center'
+  }
+})

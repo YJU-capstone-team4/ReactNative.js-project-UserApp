@@ -1,60 +1,121 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import mokupYoutuber from '../../model/mokupYoutuber'
+// import apis
+import { useAsync } from '../../utils/hooks'
+import { getAllMarkers, getYoutuberMarkers } from '../../utils/api/map'
 
 // import components
-import SearchInput from '@components/SearchInput'
 import GoogleMap from '@components/GoogleMap'
 
 // import screens
-import SelectedYoutubers from './SelectedYoutubers'
+import MapHeader from './MapHeader'
+import MapStorePreview from './MapStorePreview';
 import MapSideBar from './MapSideBar'
+import ModalYoutuber from './../../components/ModalYoutuber';
 
 // import styles
 import { Colors } from '@styles'
 import { Container, ToggleContainer } from './MapStyles'
 import { Text } from '@styles/CommonStyles'
 
+
 const MapScreen = ({ navigation }) => {
-  const [youtubers, setYoutubers] = useState(mokupYoutuber)
+  // ******** 토글 제어 ********
 
-  const handelRemoveYoutuber = (channelName) => {
-    console.log(youtubers, channelName)
+  // <<-- 가게 토글
+  const [storeIndex, setStoreIndex] = useState(0)
+  const [storeToggle, setStoreToggle] = useState(false)
+  // -->>
 
-    setYoutubers(youtubers.filter((e) => (e.ytbChannel !== channelName)))
+  // <<-- 유튜버 검색 결과 토글
+  const [searchToggle, setSearchToggle] = useState(false)
+  const [searchYoutuber, setSearchYoutuber] = useState({ _id: null, label: null })                              // 유튜버 검색 text
+  // -->>
+
+  //******** 토글 제어 ********
+
+  //******** 지도 제어 ********
+
+  // 모든 유튜버가 다녀간 마커 관리 배열
+  const [markers, setMarkers] = useState(null)
+  // const [isMarkerRefresh, setIsMarkerRefresh] = useState(false)
+
+  // 사용자 선택에 따른 마커 라이프사이클 변경 로직
+  useEffect(() => {
+    console.log("start useEffect ....")
+    setMarkers(null)
+    async function init() {
+      try {
+        const data = await getAllMarkers()
+
+        setMarkers(data)
+      } catch (e) {
+        // 전체 마커 refresh 메서드 실행
+      }
+    }
+
+    async function refresh(argYoutuberId) {
+      try {
+        const data = await getYoutuberMarkers(argYoutuberId)
+        // 데이터셋 변환
+        let convertedMarkerArray = await data.map(({ ytbStoreTbId }) => {
+          let tempObj = new Object()
+          tempObj._id = ytbStoreTbId._id
+          tempObj.storeName = ytbStoreTbId.storeInfo.storeName
+          tempObj.location = ytbStoreTbId.storeInfo.location
+
+          return tempObj
+        })
+        
+        setMarkers({ count: convertedMarkerArray.length, ytbStoreTb: convertedMarkerArray })
+      } catch (e) {
+        // 전체 마커 refresh 메서드 실행
+      }
+    }
+
+    if (!searchYoutuber._id || searchYoutuber._id === '') {
+      console.log("초기화 신호 !!!!!!!!!!!!!")
+      init()
+    }
+
+    else if (searchYoutuber._id) {
+      console.log("특정 유튜버만 로딩하는 신호 받음!!!!!!!!!!!!!", searchYoutuber._id)
+      refresh(searchYoutuber._id)
+    }
+  }, [searchYoutuber])
+
+  const toggleRefreshBtn = () => {
+    console.log("초기화 버튼 클릭!")
+    setStoreToggle(false)
+    setSearchYoutuber({ _id: '', label: '' })
   }
 
-  const [youtuberToggle, setYoutuberToggle] = useState(false)
-  const [storeToggle, setStoreToggle] = useState(false)
-
-  useEffect(() => {
-    if (youtuberToggle) {
-      setStoreToggle(false)
-    }
-  }, [youtuberToggle])
-
-  useEffect(() => {
-    if (storeToggle) {
-      setYoutuberToggle(false)
-    }
-  }, [storeToggle])
+  //******** 지도 제어 ********
 
   return (
     <Container>
-      <GoogleMap navigation={navigation} storeToggle={storeToggle} setStoreToggle={setStoreToggle} setYoutuberToggle={setYoutuberToggle} />
-      <ToggleContainer activeOpacity={0.6} onPress={() => setYoutuberToggle(!youtuberToggle)}>
-        <Text weight={"BOLD"} style={styles.textTitle}>유튜버 리스트</Text>
-        <Text weight={"EXTRA_BOLD"} style={{
-          color: youtuberToggle ? Colors.GREEN_3 : Colors.RED_3,
-          width: 33.5,
-          textAlign: 'left'
-        }}>
-          {youtuberToggle ? 'ON' : 'OFF'}
-        </Text>
-      </ToggleContainer>
-      <ToggleContainer activeOpacity={0.6} style={styles.firstToggle} onPress={() => setStoreToggle(!storeToggle)}>
+      {/* 구글 메인 Map Component */}
+      {
+        markers ?
+          <GoogleMap
+            data={markers}
+            setStoreIndex={setStoreIndex}
+            setStoreToggle={setStoreToggle}
+          /> : null
+      }
+      {/* 새로고침 토글 */}
+      <TouchableOpacity onPress={() => toggleRefreshBtn()} style={styles.refreshIconWrapper}>
+        <Text weight={"BOLD"} color={Colors.GREEN_3}>🎃  마커 초기화</Text>
+      </TouchableOpacity>
+
+      {/* 가게 정보 토글 */}
+      <ToggleContainer
+        activeOpacity={0.6}
+        style={styles.firstToggle}
+        onPress={() => setStoreToggle(!storeToggle)}
+      >
         <Text weight={"BOLD"} style={styles.textTitle}>가게정보</Text>
         <Text weight={"EXTRA_BOLD"} style={{
           color: storeToggle ? Colors.GREEN_3 : Colors.RED_3,
@@ -64,13 +125,21 @@ const MapScreen = ({ navigation }) => {
           {storeToggle ? 'ON' : 'OFF'}
         </Text>
       </ToggleContainer>
-      <SearchInput directionTop navigation={navigation} />
-      {
-        youtuberToggle ? <SelectedYoutubers
-          youtubers={youtubers}
-          handelRemoveYoutuber={handelRemoveYoutuber}
-        /> : null
-      }
+      {/* main header */}
+      <MapHeader
+        navigation={navigation}
+        onPress={setSearchToggle}
+        searchYoutuber={searchYoutuber}
+      />
+      {/* 가게 정보 미리보기 모달 */}
+      {markers && storeToggle ? <MapStorePreview storeIndex={storeIndex} navigation={navigation} /> : null}
+      {/* 유튜버 검색 리스트 모달 */}
+      {markers && searchToggle ?
+        <ModalYoutuber
+          searchYoutuber={searchYoutuber}
+          setSearchYoutuber={setSearchYoutuber}
+          setVisibleToggle={setSearchToggle}
+        /> : null}
     </Container >
   )
 }
@@ -95,7 +164,16 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   firstToggle: {
-    right: 135,
+    top: 90,
     width: 100
   },
+  refreshIconWrapper: {
+    position: 'absolute',
+    top: 90,
+    right: 115,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 20,
+    backgroundColor: Colors.BLACK,
+  }
 })
