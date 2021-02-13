@@ -4,7 +4,6 @@ import * as Google from 'expo-google-app-auth'
 
 import { Typography, Colors } from '../../styles';
 import { Text } from '../../styles/CommonStyles';
-import { GRAY_1 } from './../../styles/color';
 
 export default function SignIn() {
     const [userInfo, setUserInfo] = useState(null)

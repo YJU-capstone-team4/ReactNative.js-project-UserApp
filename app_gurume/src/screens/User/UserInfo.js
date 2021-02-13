@@ -1,10 +1,63 @@
-import React, {useEffect} from 'react'
-import { View, Text } from 'react-native'
+import React, { useEffect } from 'react'
+import { View, StyleSheet, Image } from 'react-native'
+
+// import styles
+import { Text } from '../../styles/CommonStyles'
+import user_profile from '@images/user_profile.png'
+import { Colors } from '@styles'
+
 
 export default function UserInfo() {
     return (
-        <View>
-            <Text>유저 정보가 들어갈 페이지입니다</Text>
+        <View style={styles.container}>
+            <Image style={styles.imageProfile} source={user_profile} />
+            <Text weight="BOLD" style={{ marginTop: 10 }}>Kokohaseyo</Text>
+            {/* <Text>닉네임 변경 아이콘</Text> */}
+            <Text>c0305sh@naver.com</Text>
+            <View style={styles.selectItemWrapper}>
+                <Text style={styles.itemWrapper} size={18}>Kokohaseyo님의 공유 동선은 <Text weight="BOLD" size={22}>8개</Text> 입니다.</Text>
+                <Text style={styles.itemWrapper} size={18}>즐겨찾기 추가된 유튜버 <Text weight="BOLD" size={22}>10명</Text> 입니다.</Text>
+                <Text style={styles.itemWrapper} size={18}>유튜버 데이터 신청 내역은 <Text weight="BOLD" size={22}>3건</Text> 입니다.</Text>
+            </View>
+            <View style={styles.folderWrapper}>
+                <Text color={Colors.WHITE} size={18}>닉네임 변경하기</Text>
+            </View>
+            <View style={styles.folderWrapper}>
+                <Text color={Colors.WHITE} size={18}>새로운 동선 폴더 만들기</Text>
+            </View>
+            {/* <View style={styles.folderWrapper}>
+                <Text color={Colors.WHITE} size={18}>회원탈퇴</Text>
+            </View> */}
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        // justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 45
+    }, imageProfile: {
+        width: 100,
+        height: 100,
+        borderRadius: 80,
+    }, selectItemWrapper: {
+        width: "90%",
+        marginVertical: 30,
+        paddingHorizontal: 20,
+        alignItems: 'center',
+    }, folderWrapper: {
+        backgroundColor: Colors.BLACK,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 20,
+        marginVertical: 5,
+        width: "83%",
+    },
+    itemWrapper: {
+        paddingHorizontal: 10,
+        marginBottom: 30
+    }
+})
