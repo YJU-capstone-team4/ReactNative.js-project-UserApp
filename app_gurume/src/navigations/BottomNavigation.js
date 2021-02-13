@@ -17,7 +17,6 @@ import YoutuberScreen from '@screens/Youtuber'
 import StoreScreen from '@screens/Store'
 import UserScreen from '@screens/User'
 import SignInScreen from '@screens/User/SignIn'
-import SignUpScreen from '@screens/User/SignUp';
 
 const Tab = createBottomTabNavigator()
 const MapStack = createStackNavigator()
@@ -117,13 +116,6 @@ const MainStackScreen = ({ navigation }) => {
           title: '로그인',
         }}
         component={SignInScreen}
-      />
-      <MapStack.Screen
-        name="signUp"
-        options={{
-          title: '회원가입',
-        }}
-        component={SignUpScreen}
       />
       <MapStack.Screen
         name="userInfo"
