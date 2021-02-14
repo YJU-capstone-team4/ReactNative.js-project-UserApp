@@ -14,9 +14,9 @@ export const mokupSideRoute = [
         icon: 'account-box',
         url: ''
     },
-    {
-        routeName: '이름을 무엇으로할까요',
-        icon: 'lock-question',
-        url: ''
-    },
+    // {
+    //     routeName: '이름을 무엇으로할까요',
+    //     icon: 'lock-question',
+    //     url: ''
+    // },
 ]

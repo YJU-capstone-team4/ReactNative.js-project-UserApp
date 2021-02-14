@@ -1,36 +1,17 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, SafeAreaView, TouchableOpacity, Image } from 'react-native';
-import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
+import DraggableFlatList from 'react-native-draggable-flatlist';
 
 // import styles
 import { Text } from '@styles/CommonStyles';
 import markerImage from '@images/delivery_128.png'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Colors } from '@styles';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { Colors } from '@styles'
 
 
 const NUM_ITEMS = 10
 
-function getColor(i) {
-    const multiplier = 255 / (NUM_ITEMS - 1)
-    const colorVal = i * multiplier
-    return `rgb(${colorVal}, ${Math.abs(128 - colorVal)}, ${255 - colorVal})`
-}
-
-const exampleData = [...Array(5)].map((d, index) => {
-    const backgroundColor = getColor(index)
-    return {
-        key: `item-${backgroundColor}`,
-        label: String(index),
-        backgroundColor,
-    }
-})
-
-
-function DraggableFlowList() {
-    const [data, setData] = useState(exampleData);
-    const [numItems, setNumItems] = useState(5)
-
+function DraggableFlowList(props) {
     const renderItem = useCallback(({ item, index, drag, isActive }) => {
         /**
          * 1. 아이템의 종류에 따라서 기본 마커가 달라진다 ( 맛집, 관광지, 카페 )
@@ -44,10 +25,10 @@ function DraggableFlowList() {
             >
                 <Image style={styles.iconWrapper} source={markerImage} />
                 <MaterialCommunityIcons style={styles.horizontalDots} color={
-                    index === 0 || index === numItems - 1 ? Colors.YELLOW_6 : Colors.GRAY_2
+                    index === 0 || index === props.data.length - 1 ? Colors.YELLOW_6 : Colors.GRAY_2
                 } name='dots-horizontal-circle' />
-                <Text style={styles.textContainer}>대구광역시청 동부도서관 {item.label}</Text>
-                { index !== numItems - 1 ?
+                <Text style={styles.textContainer}>대구광역시청 동부도서관</Text>
+                { index !== props.data.length - 1 ?
                     <MaterialCommunityIcons style={styles.verticalDots} color={Colors.GRAY_7} size={20} name='dots-vertical' /> : null
                 }
             </TouchableOpacity>
@@ -61,17 +42,17 @@ function DraggableFlowList() {
         if (to === from) {
             return;
         }
-        setData(e.data)
+        // TODO 순서 변경 API
+        props.setMarkers(data)
     }
 
     return (
         <SafeAreaView style={styles.container}>
             <DraggableFlatList
-                data={data}
+                data={props.data}
                 renderItem={renderItem}
-                keyExtractor={(item, index) => `draggable-item-${item.key}`}
+                keyExtractor={(item, index) => `draggable-item-${index}`}
                 onDragEnd={(e) => handleDragEnd(e)}
-            // onDragEnd={(data) => console.log(data)}
             />
         </SafeAreaView>
     );

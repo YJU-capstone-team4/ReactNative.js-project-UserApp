@@ -25,7 +25,7 @@ export default function MainHeader(props) {
   const handleInfoNavi = (navigation) => {
     // TODO 자연스러운 화면 이동 로직 
     // 여기서 'userInfo' or 'signIn' 페이지로 이동할지 결정해야 함.
-    navigation.navigate('signIn', {})
+    navigation.navigate('userInfo', {})
   }
 
   return (

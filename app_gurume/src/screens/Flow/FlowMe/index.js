@@ -1,44 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 
 // import styles
 import { Colors, Typography } from '@styles'
 import { Text } from '@styles/CommonStyles'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5'
+import { tempMarkers } from '../../../model/mokupMap'
 
 // import components
 import PolygonMap from '@components/PolygonMap'
 import SelectBox from '@components/SelectBox'
-import FlowMap from '@components/Flow/FlowMap'
 
 // import screens
 import DraggableFlowList from './DraggableFlowList'
 
 export default function index(props) {
   const EMPTY_ARRAY = []              // ScrollView + FlatList 충돌로 빈 배열 선언
+  const [markers, setMarkers] = useState(tempMarkers)
+
   return (
     <FlatList
       data={EMPTY_ARRAY}
       style={styles.container}
       ListFooterComponent={
         <>
-          {/* <FlowList navi={props.navigation} /> */}
-          {/* <Text>추가한 동선 리스트</Text> */}
+          {/* Header */}
           <View style={styles.textWrapper}>
             <FontAwesome name="rss-square" color={Colors.GRAY_9} size={18} />
             <Text style={styles.textContainer}> 내가 추가한 동선 폴더</Text>
           </View>
+          {/* 공유 동선 폴더 */}
           <View style={{ paddingHorizontal: 6 }}>
             <SelectBox />
           </View>
-          {/* FIXME 공유 동선 조회는 동선 관리 페이지 보다는 공유하기 페이지가 더 잘어울리는듯. */}
-          {/* <View style={styles.textWrapper}>
-            <FontAwesome name="share-square" color={Colors.GRAY_9} size={20} />
-            <Text style={styles.textContainer}> 공유 동선 조회</Text>
-          </View> */}
-          <PolygonMap />
-          <DraggableFlowList />
+          <PolygonMap data={markers} />
+          <DraggableFlowList data={markers} setMarkers={setMarkers} />
         </>
       }
     />

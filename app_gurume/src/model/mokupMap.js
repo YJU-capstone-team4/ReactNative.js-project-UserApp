@@ -275,6 +275,10 @@ export const tempMarkers = [
         "latitude": 37.520412849636,
         "longitude": 126.9742764161581
     },
+    {
+        "latitude": 37.37227862908755,
+        "longitude": 126.82280546294998
+    },
 ]
 
 export const mokupMarkers1 =

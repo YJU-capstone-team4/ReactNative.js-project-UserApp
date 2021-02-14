@@ -17,7 +17,6 @@ import YoutuberScreen from '@screens/Youtuber'
 import StoreScreen from '@screens/Store'
 import UserScreen from '@screens/User'
 import SignInScreen from '@screens/User/SignIn'
-import SignUpScreen from '@screens/User/SignUp';
 
 const Tab = createBottomTabNavigator()
 const MapStack = createStackNavigator()
@@ -62,7 +61,7 @@ export default function BottomNavigation() {
         name="Flow"
         component={FlowScreen}
         options={{
-          tabBarLabel: '루트',
+          tabBarLabel: '동선',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="map-marker-path" color={color} size={26} />
           ),
@@ -117,13 +116,6 @@ const MainStackScreen = ({ navigation }) => {
           title: '로그인',
         }}
         component={SignInScreen}
-      />
-      <MapStack.Screen
-        name="signUp"
-        options={{
-          title: '회원가입',
-        }}
-        component={SignUpScreen}
       />
       <MapStack.Screen
         name="userInfo"

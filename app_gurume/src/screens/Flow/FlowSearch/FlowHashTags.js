@@ -16,12 +16,22 @@ const exampleData = mokupRegion.map((item, index) => {
   return {
     key: `region-${index}`,
     label: String(convertRegion(item)),
+    originalLabel: item,
     onPress: Boolean(Math.round(Math.random()))
+  }
+})
+
+const mokupSeasonTags = ["봄", "여름", "가을", "겨울"].map((item, index) => {
+  return {
+    key: `season-${index}`,
+    label: item,
+    onPress: false
   }
 })
 
 export default function FlowHashTags(props) {
   const [regionTags, setRegionTags] = useState(exampleData)
+  const [seasonTags, setSeasonTag] = useState(mokupSeasonTags)
   const [userHashTags, setUserHashTags] = useState(['야식이 입맛', '고기맛집'])
 
   useEffect(() => {
@@ -34,52 +44,71 @@ export default function FlowHashTags(props) {
 
   }, [props.signalOnPress])
 
+  // 해시태그 클릭 시 변경되는 UI
+  const hashTagOnPress = (argHastTagType, argItem, argIndex) => {
+    // 두 종류로 나뉘어진다.
+    // 1. 지역별 해시태그
+    // 2. 계절별 해시태그
+    // 나머지 로직은 동일.
+    argItem.onPress = !argItem.onPress
+
+    let copyArr = argHastTagType === 'region' ? regionTags : seasonTags
+
+    let newArr = [...copyArr] // copying the old datas array
+    newArr[argIndex] = argItem
+
+    argHastTagType === 'region' ? setRegionTags(newArr) : setSeasonTag(newArr)
+  }
+
   return (
     <View style={styles.container}    >
       <View style={styles.headerContainer}>
         <Text weight="BOLD" size={20} style={styles.titleWrapper}># 지역별 해시태그</Text>
-        {/* 해시태그 */}
+        {/* 지역별 해시태그 */}
         <View style={styles.hashtagContainerWrapper}>
-          {/* <View style={styles.hashtagContainer}>
-            <Text color={Colors.WHITE} weight="BOLD" size={16}>서울</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
-            <Text color={Colors.GRAY_5} weight="BOLD" size={16}>인천</Text>
-          </View> */}
-          {regionTags.map(item =>
-            <View key={item.key} style={[styles.hashtagContainer, item.onPress ? null : { backgroundColor: Colors.GRAY_2 }]}>
+          {regionTags.map((item, index) =>
+            <TouchableOpacity
+              onPress={() => hashTagOnPress('region', item, index)}
+              key={item.key}
+              style={[styles.hashtagContainer, item.onPress ? null : { backgroundColor: Colors.GRAY_2 }]}
+            >
               <Text color={item.onPress ? Colors.WHITE : Colors.GRAY_5} weight="BOLD" size={16}>{item.label}</Text>
-            </View>
+            </TouchableOpacity>
           )}
         </View>
       </View>
       <View style={styles.headerContainer}>
         <Text weight="BOLD" size={20} style={styles.titleWrapper}># 계절별 해시태그</Text>
-        {/* 해시태그 */}
+        {/* 계절별 해시태그 */}
         <View style={styles.hashtagContainerWrapper}>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.YELLOW_6 }]}>
-            <Text color={Colors.WHITE} weight="BOLD" size={16}>봄</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
-            <Text color={Colors.GRAY_5} weight="BOLD" size={16}>여름</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
-            <Text color={Colors.GRAY_5} weight="BOLD" size={16}>가을</Text>
-          </View>
-          <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_2 }]}>
-            <Text color={Colors.GRAY_5} weight="BOLD" size={16}>겨울</Text>
-          </View>
+          {
+            seasonTags.map((item, index) =>
+              <TouchableOpacity
+                onPress={() => hashTagOnPress('season', item, index)}
+                key={item.key}
+                style={[styles.hashtagContainer, { backgroundColor: item.onPress ? Colors.YELLOW_6 : Colors.GRAY_2 }]}
+              >
+                <Text
+                  color={item.onPress ? Colors.WHITE : Colors.GRAY_5}
+                  weight="BOLD"
+                  size={16}
+                >
+                  {item.label}
+                </Text>
+              </TouchableOpacity>
+            )
+          }
         </View>
       </View>
       <View style={styles.headerContainer}>
         <Text weight="BOLD" size={20} style={styles.titleWrapper}># 사용자가 추가한 해시태그</Text>
-        {/* 해시태그 */}
+        {/* 사용자 해시태그 */}
         <View style={styles.userHashTagContainer}>
           {
             userHashTags.map((item, index) =>
-              <View key={`user-${index}`} style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
+              <TouchableOpacity key={`user-${index}`} style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
                 <Text color={Colors.WHITE} weight="BOLD" size={16}># {item}</Text>
-              </View>
+              </TouchableOpacity>
             )
           }
         </View>
