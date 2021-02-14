@@ -11,11 +11,35 @@ const MapFlows = (props) => {
         <View style={styles.container}>
             <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>기사식당 돼지불백</Text>
             <View style={styles.arrowContainer}>
-                <Icon name="chevrons-down" size={16} color={Colors.GRAY_9} />
+                <Icon name="chevrons-down" size={20} color={Colors.RED_3} />
             </View>
             <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>퍼즈 X 베이커리</Text>
             <View style={styles.arrowContainer}>
-                <Icon name="chevrons-down" size={16} color={Colors.GRAY_9} />
+                <Icon name="chevrons-down" size={20} color={Colors.RED_3} />
+            </View>
+            <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>퍼즈 X 베이커리</Text>
+            <View style={styles.arrowContainer}>
+                <Icon name="chevrons-down" size={20} color={Colors.RED_3} />
+            </View>
+            <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>퍼즈 X 베이커리</Text>
+            <View style={styles.arrowContainer}>
+                <Icon name="chevrons-down" size={20} color={Colors.RED_3} />
+            </View>
+            <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>퍼즈 X 베이커리</Text>
+            <View style={styles.arrowContainer}>
+                <Icon name="chevrons-down" size={20} color={Colors.RED_3} />
+            </View>
+            <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>퍼즈 X 베이커리</Text>
+            <View style={styles.arrowContainer}>
+                <Icon name="chevrons-down" size={20} color={Colors.RED_3} />
+            </View>
+            <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>퍼즈 X 베이커리</Text>
+            <View style={styles.arrowContainer}>
+                <Icon name="chevrons-down" size={20} color={Colors.RED_3} />
+            </View>
+            <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>퍼즈 X 베이커리</Text>
+            <View style={styles.arrowContainer}>
+                <Icon name="chevrons-down" size={20} color={Colors.RED_3} />
             </View>
             <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>퍼즈 X 베이커리</Text>
             <Button
@@ -41,15 +65,14 @@ const styles = StyleSheet.create({
     },
     arrowContainer: {
         alignItems: 'center',
-        marginVertical: 10,
+        marginVertical: 5,
     },
     textContainer: {
         paddingVertical: 18,
-        // backgroundColor: Colors.PINK_2 + "40",
         textAlign: 'center',
-        borderColor: Colors.RED_3,
+        borderColor: Colors.GRAY_9,
         borderWidth: 0.6,
-        borderRadius: 5,
+        borderRadius: 50,
     },
     flowBtnContainer: {
         borderRadius: 6,

@@ -49,7 +49,7 @@ export default (props) => {
       const youtuberInfo = await getStoreYoutubers(argStoreId)
       setYoutubers(youtuberInfo)
 
-      // 3. Top3 동선 불러오기
+      //TODO 3. Top3 동선 불러오기
       // console.log("받아온 데이터는 : ", storeInfo, youtuberInfo)
       // 4. 주면 명소 불러오기
       let { attractionTb } = await getStoreAttraction(storeInfo.location)
@@ -60,22 +60,30 @@ export default (props) => {
         // convert location < -- > distance
         const distance = convertLocationDistance(storeInfo.location, tempArr.location)
         tempArr.distance = distance
-        console.log('추가된 데이터', tempArr)
         // add distance and return values
         return tempArr
       })
+
+      attractionTb.sort(function (a, b) {
+        let DISTANCE_A = parseInt(a.distance)
+        let DISTANCE_B = parseInt(b.distance)
+        return DISTANCE_A < DISTANCE_B ? -1 : DISTANCE_A > DISTANCE_B ? 1 : 0
+      })
+
       setAttraction(attractionTb)
-      console.log('변환된 데이터', attraction)
 
     } catch (e) {
       // err 발생
-
+      console.log(e)
     }
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* TODO ScrollView 안에 FlatList가 들어가있으면 안되는 이슈로, ScrollView를 지우고, FlatList의 LisHeaderComponent를 이용하여 ScrollView 기능 대체 */}
+      {/* 
+        ScrollView 안에 FlatList가 들어가있으면 안되는 이슈로, 
+        ScrollView를 지운 뒤 FlatList의 LisHeaderComponent를 이용하여 기능 대체
+       */}
       <FlatList
         ListHeaderComponent={
           store ? <>
@@ -109,7 +117,6 @@ export default (props) => {
         columnWrapperStyle={{ flexWrap: 'wrap', alignItems: 'center' }}
         renderItem={({ item }) => <StoreList data={item} />}
         ListFooterComponent={
-          // TODO 푸터가 필요한가 ?
           <YoutubePlayer isVisible={isVisible} setIsVisible={setIsVisible} videoId={videoId} />
         }
       />
