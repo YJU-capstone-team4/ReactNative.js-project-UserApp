@@ -1,8 +1,10 @@
-import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 // import styles
-import { Colors, Typography } from '@styles'
+import { Colors } from '@styles'
+import { Text } from '@styles/CommonStyles'
+import FeatherIcons from 'react-native-vector-icons/Feather'
 
 // import components
 import YoutuberList from '@components/List/YoutuberList'
@@ -10,62 +12,66 @@ import YoutuberList from '@components/List/YoutuberList'
 
 // import screens
 import YoutuberChart from './YoutuberChart'
+import SubHeader from './SubHeader'
 
 export default function index() {
+  const [visibleChart, setVisibleChart] = useState(false)
+  const [menuInfo, setMenuInfo] = useState([
+    { label: '인기 유튜버', onPress: true },
+    { label: '급상승 유튜버', onPress: false },
+    { label: '금상승 동영상', onPress: false },
+  ])
+
   return (
     <View style={styles.selectContainer}>
-      {/* <Text style={{ alignSelf: 'center', padding: 10 }}>유튜버</Text> */}
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          marginBottom: 5,
-          marginTop: 10,
-          paddingHorizontal: 10,
-        }}
-      >
-        <TouchableOpacity style={[styles.buttonContainer, { backgroundColor: Colors.BLUE_8, }]}>
-          <Text style={[styles.buttonText, { color: Colors.WHITE }]}>인기 유튜버</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.buttonContainer, {}]}>
-          <Text style={styles.buttonText}>급상승 유튜버</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.buttonContainer, {}]}>
-          <Text style={styles.buttonText}>급상승 동영상</Text>
-        </TouchableOpacity>
+      <SubHeader menuInfo={menuInfo} setMenuInfo={setMenuInfo} />
+      <View style={styles.itemWrapper}>
+        {/*TODO menuInfo의 onPress 에 따라서 메뉴 리스트 달리 보여줘야 함. */}
+        {/* 
+            ['인기 유튜버', '급상승 유튜버', '급상승 동영상'] 컴포넌트 불러오기
+        */}
       </View>
-      {/* Tab 선택에 따라 아래 컴포넌트 유동적으로 변경 */}
-      <YoutuberList />
-      {/* <MovieList /> */}
-      <Text style={{ alignSelf: 'center', padding: 10 }}>구독자 & 조회수 비교</Text>
-      <YoutuberChart />
+      <View style={{ marginBottom: 10 }}>
+        <View style={styles.miniMenuWrapper}>
+          <Text weight="BOLD" size={20}>🏆 구독자 + 조회수 비교</Text>
+          <FeatherIcons
+            name={visibleChart ? "chevron-up" : "chevron-down"}
+            size={22}
+            color={Colors.GRAY_5}
+            onPress={() => { setVisibleChart(!visibleChart) }}
+          />
+        </View>
+        {
+          visibleChart ?
+            <View style={styles.miniMenuContainer}>
+              <YoutuberChart />
+            </View> : null
+        }
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   selectContainer: {
-    // backgroundColor: Colors.PRIMARY,
-    marginBottom: 10,
+    // marginBottom: 10,
+    backgroundColor: Colors.GRAY_2 + '80',
   },
-  buttonContainer: {
-    elevation: 3,
-    // width: 100,
-    margin: 2,
-    flex: 1,
-    paddingVertical: 15,
+  itemWrapper: {
+    borderTopWidth: 1.5,
+    borderTopColor: Colors.GRAY_3,
+    height: 300
+  },
+  miniMenuWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 18,
     backgroundColor: Colors.WHITE,
-    borderColor: Colors.BLUE_8,
-    borderWidth: 1,
-    borderRadius: 5,
-    // borderBottomWidth: 0,
-    alignSelf: 'center',
   },
-  buttonText: {
-    color: Colors.BLACK,
-    alignSelf: 'center',
-    textTransform: 'uppercase',
-    fontFamily: Typography.FONT_FAMILY_BOLD,
-  },
+  miniMenuContainer: {
+    backgroundColor: Colors.WHITE,
+    paddingHorizontal: 10,
+  }
 })
