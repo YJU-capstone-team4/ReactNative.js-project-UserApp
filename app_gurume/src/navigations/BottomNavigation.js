@@ -61,7 +61,7 @@ export default function BottomNavigation() {
         name="Flow"
         component={FlowScreen}
         options={{
-          tabBarLabel: '루트',
+          tabBarLabel: '동선',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="map-marker-path" color={color} size={26} />
           ),

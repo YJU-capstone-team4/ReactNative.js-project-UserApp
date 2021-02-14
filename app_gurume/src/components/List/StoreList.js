@@ -13,11 +13,11 @@ export default function StoreList({ data }) {
             <Image
                 style={styles.InfoImageContainer}
                 source={{
-                    uri: data.ytbThumbnail,
+                    uri: 'https://t1.gstatic.com/images?q=tbn:ANd9GcS2LCv0y3avML167ZypYzNvEJrLnFQTtUKLD7IxnTXxMPn8KqyJPvO_0WOpQM47mjDH2Q_Yi7QqzJnJwAW2YSxEkQ',
                 }}
             />
             <View style={[styles.infoContainer, { flex: 1, justifyContent: 'space-between', paddingTop: 10 }]}>
-                <Text weight={"BOLD"} size={18}>{data.storeName}</Text>
+                <Text weight={"BOLD"} size={18}>{data.attractionName}</Text>
                 <TouchableOpacity
                     hitSlop={{ top: 32, bottom: 32, left: 32, right: 32 }} //터치영역을 확장
                     activeOpacity={0.5}
