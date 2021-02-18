@@ -67,7 +67,7 @@ export default function BottomNavigation() {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="statistic"
         component={StatisticScreen}
         options={{
@@ -76,7 +76,7 @@ export default function BottomNavigation() {
             <MaterialCommunityIcons name="chart-bubble" color={color} size={26} />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Youtuber"
         component={YoutuberScreen}

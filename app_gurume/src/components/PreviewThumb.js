@@ -1,10 +1,11 @@
-import React from 'react'
-import { View, StyleSheet, Image, Dimensions } from 'react-native'
+import React, { useState } from 'react'
+import { View, StyleSheet, Image, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
 
 // import styles
 import { Colors, Typography } from '@styles'
 import { Text } from './../styles/CommonStyles';
 const { width, height } = Dimensions.get("window");
+import AntIcons from 'react-native-vector-icons/AntDesign';
 
 const PREVIEW_WIDTH = width * 0.95
 
@@ -13,8 +14,13 @@ import flowThumb_1 from '@images/flowThumb_1.jpg'
 import flowThumb_2 from '@images/flowThumb_2.jpg'
 
 export default function PreviewThumb({ data, regionFlow }) {
+    const [isActivity, setIsActivity] = useState(false)
+
     return (
         <View style={styles.container}>
+            <TouchableOpacity onPress={() => setIsActivity(!isActivity)} style={styles.likeContainer}>
+                <AntIcons name="heart" size={20} color={isActivity ? Colors.RED_4 : Colors.GRAY_4} />
+            </TouchableOpacity>
             <Image source={data.adminTag.seasonTag === '여름' ? flowThumb_1 : flowThumb_2} style={styles.thumbnailImage} />
             {/* 불투명 Black 배경 */}
             <View style={styles.thumbnailBackground} />
@@ -25,7 +31,8 @@ export default function PreviewThumb({ data, regionFlow }) {
                 </Text>
             </View>
             {/* 썸네일 관련 태그 */}
-            <View
+            <ScrollView
+                horizontal={true}
                 style={styles.hashtagContainer}
             >
                 {
@@ -42,7 +49,7 @@ export default function PreviewThumb({ data, regionFlow }) {
                         <Text weight="BOLD" style={styles.buttonText}># {tag}</Text>
                     </View>
                 )}
-            </View>
+            </ScrollView>
         </View>
     )
 }
@@ -64,7 +71,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 10,
         flexWrap: 'nowrap',
-        maxWidth: 350,
+        maxWidth: 330,
     },
     tagContainer: {
         elevation: 2,
@@ -107,4 +114,25 @@ const styles = StyleSheet.create({
         opacity: 0.5,
         borderRadius: 10,
     },
+    likeContainer: {
+        position: 'absolute',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 33,
+        height: 33,
+        borderRadius: 50,
+        padding: 6,
+        backgroundColor: Colors.WHITE,
+        shadowColor: Colors.BLACK,
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
+        right: 15,
+        top: 15,
+        zIndex: 1000000
+    }
 })
