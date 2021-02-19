@@ -17,6 +17,7 @@ const FlowMeStack = createStackNavigator()
 export default function FlowTopNavigation() {
   return (
     <Tab.Navigator
+      swipeEnabled={false}
       screenOptions={{
         headerStyle: {
           elevation: 0,
@@ -88,9 +89,6 @@ const FlowMeStackScreen = ({ navigation }) => {
       />
       <FlowMeStack.Screen
         name="sharedFlow"
-        // options={{
-        //   title: '내가 공유한 동선 리스트',
-        // }}
         options={{ headerMode: 'none', headerShown: false }}
         component={SharedFlowList}
       />

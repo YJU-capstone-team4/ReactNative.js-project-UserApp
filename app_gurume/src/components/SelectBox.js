@@ -19,18 +19,21 @@ const SelectBox = (props) => {
   // 초기 유저 폴더 세팅
   useEffect(() => {
     setUserFlows([
-      { key: -1, section: true, label: '폴더선택' },
+      { key: -1, section: true, label: '-- 공유한 동선 --' },
       { key: 0, label: 'YJU 여름 여행' },
       { key: 1, label: '제주도 여행' },
       { key: 2, label: '국밥팸 서울나들이' },
       { key: 3, label: '부산여행' },
+      { key: 11, label: '국밥팸 서울나들이' },
+      { key: 8, label: '부산여행' },
+      { key: 9, label: '국밥팸 서울나들이' },
+      { key: 10, label: '부산여행' },
+      { key: -2, section: true, label: '-- 개인 동선 --' },
+      { key: 5, label: '제주도 여행' },
+      { key: 6, label: '국밥팸 서울나들이' },
+      { key: 7, label: '부산여행' },
     ])
   }, [])
-
-  // 폴더 변경 감지
-  // useEffect(() => {
-  //   console.log("폴더가 변경되었습니다!")
-  // }, [itemValue])
 
   return (
     <>

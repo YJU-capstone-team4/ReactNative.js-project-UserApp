@@ -31,11 +31,17 @@ export default function BottomNavigation() {
         labelStyle: {
           fontSize: 12,
           fontFamily: Typography.FONT_FAMILY_BOLD,
-          marginBottom: 3
+          marginBottom: 8,
         },
+        style: {
+          paddingVertical: 4,
+          height: 58,
+          borderBottomWidth: 0.5,
+          borderBottomColor: Colors.GRAY_3
+        }
       }}
       initialRouteName="Main"
-      barStyle={{ backgroundColor: Colors.WHITE }}
+      sceneContainerStyle={{ backgroundColor: Colors.WHITE }}
     >
       <Tab.Screen
         name="Main"

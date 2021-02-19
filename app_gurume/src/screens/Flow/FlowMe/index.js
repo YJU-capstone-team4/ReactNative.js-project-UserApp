@@ -33,7 +33,9 @@ export default function index(props) {
           <View style={{ paddingHorizontal: 6 }}>
             <SelectBox />
           </View>
-          <PolygonMap data={markers} />
+          <View style={{ borderColor: Colors.GRAY_2, borderWidth: 2, marginHorizontal: 6 }}>
+            <PolygonMap data={markers} />
+          </View>
           <DraggableFlowList data={markers} setMarkers={setMarkers} />
         </>
       }

@@ -10,8 +10,8 @@ const plusInput = (props) => {
     const items = [
         { key: -1, section: true, label: '검색 옵션' },
         { key: 0, label: '해시태그' },
-        { key: 1, label: '유튜버' },
-        { key: 2, label: '타이틀' },
+        { key: 1, label: '닉네임' },
+        { key: 2, label: '제목' },
     ]
     const [ModalSelector, visible, setVisible] = useModalSelector()
 
@@ -27,7 +27,7 @@ const plusInput = (props) => {
             </TouchableOpacity>
             <TextInput
                 style={styles.textContainer}
-                placeholder={`원하는 ${props.itemValue.label}를 입력해보세요 !`}
+                placeholder={`궁금한 ${props.itemValue.label}${props.itemValue.label === '해시태그' ? '를' : '을'} 입력해보세요 !`}
                 onChangeText={(text) => props.onChangeText(text)}
                 value={props.text}
             />
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 0.5,
         borderColor: Colors.GRAY_8,
-        borderRadius: 10,
+        borderRadius: 50,
     },
     textContainer: {
         textAlign: 'center',

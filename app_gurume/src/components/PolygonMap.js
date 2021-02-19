@@ -35,6 +35,7 @@ const PolygonMap = (props) => {
                 moveOnMarkerPress={false}   // 마커 클릭 이벤트 제어
                 scrollEnabled={false}
                 zoomTapEnabled={false}
+                liteMode={true}
                 ref={mapRef}
                 onMapReady={() => setMapReady(true)}
             >

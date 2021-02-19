@@ -145,7 +145,7 @@ export default function FlowInput() {
   }
 
   return (
-    <View>
+    <View style={{paddingVertical: 15}}>
       <Text style={styles.inputText}>제목</Text>
       <TextInput
         style={styles.inputContainer}

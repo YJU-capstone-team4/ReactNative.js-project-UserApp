@@ -41,6 +41,9 @@ function DraggableFlowList(props) {
         // 같은 자리에 놓을때는 이벤트 종료
         if (to === from) {
             return;
+        } else {
+            const tempArr = data.map(v => v.latitude)
+            console.log("바뀐데이터는? ", tempArr)
         }
         // TODO 순서 변경 API
         props.setMarkers(data)
