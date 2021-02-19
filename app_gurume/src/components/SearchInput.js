@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -7,7 +7,14 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { Colors, Typography } from '@styles'
 
 export default function SearchInput(props) {
+  const [tempValue, setTempValue] = useState(null)
+
   const handleClicked = () => {
+    if (!tempValue) {
+      console.log("검색어를 입력해주세요!!!")
+    } else {
+      // const 
+    }
     console.log("클릭!")
     props.onPress(true)
     // 1. 검색 버튼이 눌렸다는 신호를 상위 컴포넌트에 넘겨준다.
@@ -20,21 +27,12 @@ export default function SearchInput(props) {
   return (
     <View style={[styles.container, { marginTop: props.directionTop ? 80 : null }]}    >
       <View style={styles.inputContainer}>
-        {/* TODO Screen :: 지도 - 로그인 전에는 내 정보 버튼 비활성화 !!! */}
-        {/* {props.directionTop ? <MaterialCommunityIcons
-          onPress={() => props.navigation.openDrawer()}
-          style={styles.hambugerContainer}
-          name="format-list-bulleted"
-          color="black"
-          size={24}
-        /> : null} */}
         <TextInput
           style={{
-            // paddingLeft: props.directionTop ? 30 : 0,
             fontFamily: Typography.FONT_FAMILY_REGULAR,
-            fontSize: Typography.FONT_SIZE_18,
+            fontSize: Typography.FONT_SIZE_16,
           }}
-          onChangeText={(text) => props.setText(text)}
+          onChangeText={(text) => setTempValue(text)}
           value={props.text}
           placeholder="내가 좋아하는 유튜버를 검색해보세요"
         />
@@ -46,10 +44,6 @@ export default function SearchInput(props) {
           <MaterialCommunityIcons name="magnify" size={24} />
         </TouchableOpacity>
       </View>
-      {/* <TouchableOpacity onPress={() => handleClicked()} style={styles.buttonContainer}>
-        <MaterialCommunityIcons name="map-search" color="white" size={24} />
-        <Text style={styles.buttonText}>검색</Text>
-      </TouchableOpacity> */}
     </View>
   )
 }

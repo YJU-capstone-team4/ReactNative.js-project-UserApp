@@ -10,6 +10,7 @@ import { Text } from '@styles/CommonStyles'
 import SearchInput from '@components/SearchInput'
 import VideoList from '@components/List/VideoList'
 import YoutubePlayer from '@components/YoutubePlayer'
+import ModalYoutuber from '@components/ModalYoutuber';
 
 // import screens
 import YoutuberProfile from './YoutuberProfile'
@@ -38,6 +39,11 @@ export default () => {
   // useThumbs 데이터
   const [ThumbsUp, isActivity, setIsActivity] = useThumbsUp()
 
+  // <<-- 유튜버 검색 결과 토글
+  const [searchToggle, setSearchToggle] = useState(false)
+  const [searchYoutuber, setSearchYoutuber] = useState({ _id: null, label: null })                              // 유튜버 검색 text
+  // -->>
+
   // youtuber data
   const [youtuber, setYoutuber] = useState(null)
   const [regionTags, setRegionTags] = useState(null)
@@ -46,22 +52,21 @@ export default () => {
   useEffect(() => {
     async function init(argStoreId) {
       // * 유튜버 정보 로딩
-      const getYoutuberInfo = await getFindOneYoutuberInfo(YOUTUBER_ID)
+      const getYoutuberInfo = await getFindOneYoutuberInfo(argStoreId ? argStoreId : YOUTUBER_ID)
       setYoutuber(getYoutuberInfo)
       setIsActivity(getYoutuberInfo.youtuberLike)
-      console.log(getYoutuberInfo)
 
       // * 데이터 로딩 ( 비디오, 지역태그 )
-      const getVideoInfos = await getYoutuberVideoInfo(YOUTUBER_ID)
-      const getRegionTags = await getYoutuberRegionInfo(YOUTUBER_ID)
+      const getVideoInfos = await getYoutuberVideoInfo(argStoreId ? argStoreId : YOUTUBER_ID)
+      const getRegionTags = await getYoutuberRegionInfo(argStoreId ? argStoreId : YOUTUBER_ID)
 
       // * 데이터 바인딩
       setRegionTags(getRegionTags)
       setVideos(getVideoInfos.video)
     }
 
-    init()
-  }, [])
+    init(searchYoutuber._id)
+  }, [searchYoutuber])
 
   const handleChangeLikeValue = async () => {
     // 유튜버 좋아요 결과 반영 API 실행
@@ -93,7 +98,7 @@ export default () => {
           setIsOverScroll(customOverScrollSignal)
         }}
       >
-        <SearchInput />
+        <SearchInput onPress={setSearchToggle} />
         <View style={styles.thumbsUpWrapper}>
           <ThumbsUp onPress={handleChangeLikeValue} />
         </View>
@@ -112,6 +117,14 @@ export default () => {
         <YoutuberMovieInfo data={regionTags} />
         <YoutubePlayer isVisible={isVisible} setIsVisible={setIsVisible} videoId={videoId} />
       </ScrollView>
+
+      {/* 유튜버 검색 리스트 모달 */}
+      {searchToggle ?
+        <ModalYoutuber
+          searchYoutuber={searchYoutuber}
+          setSearchYoutuber={setSearchYoutuber}
+          setVisibleToggle={setSearchToggle}
+        /> : null}
     </>
   )
 }

@@ -76,18 +76,16 @@ const MapScreen = ({ navigation }) => {
     }
 
     if (!searchYoutuber._id || searchYoutuber._id === '') {
-      console.log("초기화 신호 !!!!!!!!!!!!!")
       init()
     }
 
     else if (searchYoutuber._id) {
-      console.log("특정 유튜버만 로딩하는 신호 받음!!!!!!!!!!!!!", searchYoutuber._id)
       refresh(searchYoutuber._id)
     }
   }, [searchYoutuber])
 
+  // 수동적 초기화 로직 실행
   const toggleRefreshBtn = () => {
-    console.log("초기화 버튼 클릭!")
     setStoreToggle(false)
     setSearchYoutuber({ _id: '', label: '' })
   }

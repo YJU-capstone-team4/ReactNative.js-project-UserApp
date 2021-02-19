@@ -23,15 +23,19 @@ const MapStorePreview = ({ navigation, storeIndex }) => {
     useEffect(() => {
         console.log("정보가 들어왔어요!", storeIndex)
 
-        // 특정 맛집 id, name, address
-        getStoreInfo(storeIndex)
-            .then((data) => setStore(data))
-            .catch(e => console.log(e))
+        async function init(argStoreIndex) {
+            // TODO 특정 맛집 id, name, address
+            // const storeData = await getStoreInfo(argStoreIndex)
+            // console.log(storeData)
+            // setStore(storeData)
 
-        // 맛집 방문한 유튜버, 맛집이 나온 영상 썸네일
-        getStoreYoutubers(storeIndex)
-            .then(({ ytbChannelTb }) => setYoutube(ytbChannelTb))
-            .catch(e => console.log(e))
+            // 맛집 방문한 유튜버, 맛집이 나온 영상 썸네일
+            const { ytbChannelTb } = await getStoreYoutubers(argStoreIndex)
+            console.log(ytbChannelTb)
+            setYoutube(ytbChannelTb)
+        }
+
+        init(storeIndex)
     }, [storeIndex])
 
     const [store, setStore] = useState(null)
