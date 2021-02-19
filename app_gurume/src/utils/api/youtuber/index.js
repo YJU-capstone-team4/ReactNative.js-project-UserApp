@@ -40,10 +40,31 @@ async function getYoutuberRegionVideo(argYoutuberId = DEFAULT_YOUTUBER_ID) {
     return data
 }
 
+// 유튜버 정보 가져오기
+async function getFindOneYoutuberInfo(argYoutuberId = DEFAULT_YOUTUBER_ID) {
+    const { data } = await instance.get(`youtuber/${argYoutuberId}`)
+    return data
+}
+
+// 유튜버 좋아요 활성화
+async function setYoutuberLike(argLikeType, argYoutuberId = DEFAULT_YOUTUBER_ID) {
+    let data = null
+
+    if (argLikeType) {
+        data = await instance.post(`youtuber/like`, { ytb_id: argYoutuberId })
+    } else {
+        data = await instance.delete(`youtuber/like`, { ytb_id: argYoutuberId })
+    }
+
+    return data
+}
+
+
 export {
     getAllYoutubersInfo,
     getYoutuberInfo,
     getYoutuberVideoInfo,
     getYoutuberRegionInfo,
-
+    getFindOneYoutuberInfo,
+    setYoutuberLike
 }
