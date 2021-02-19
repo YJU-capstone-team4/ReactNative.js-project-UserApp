@@ -29,6 +29,7 @@ export default (props) => {
   const [store, setStore] = useState(null)
   const [attraction, setAttraction] = useState(null)
   const [youtubers, setYoutubers] = useState(null)
+  const [videos, setVideos] = useState(null)
   const [videoId, setVideoId] = useState('r-LNSGSCDJg')
 
   // 페이지 전체 정보 로딩.

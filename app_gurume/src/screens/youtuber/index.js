@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, StyleSheet, ScrollView } from 'react-native'
 
 // import styles
@@ -18,13 +18,34 @@ import YoutuberMovieInfo from './YoutuberMovieInfo'
 import HashTagList from './HashTagList'
 import useThumbsUp from './ThumbsUp'
 
+// import apis
+import { getYoutuberVideoInfo, getYoutuberRegionInfo } from '../../utils/api/youtuber'
+
 export default () => {
   const [isVisible, setIsVisible] = useState(false)
   const [videoId, setVideoId] = useState('r-LNSGSCDJg')
   const [isOverScroll, setIsOverScroll] = useState(false)
   const [youtuber, setYoutuber] = useState('문복희 Eat With Boki')
-  
+
   const [ThumbsUp, isActivity, setIsActivity] = useThumbsUp()
+
+  // youtuber data
+  const [regionTags, setRegionTags] = useState(null)
+  const [videos, setVideos] = useState(null)
+
+  useEffect(() => {
+    async function init(argStoreId) {
+      // * 데이터 로딩 ( 비디오, 지역태그 )
+      const getVideoInfos = await getYoutuberVideoInfo('5fb73d0e4c2de82830b54834')
+      const getRegionTags = await getYoutuberRegionInfo('5fb73d0e4c2de82830b54834')
+
+      // * 데이터 바인딩
+      setRegionTags(getRegionTags)
+      setVideos(getVideoInfos.video)
+    }
+
+    init()
+  }, [])
 
   return (
     <>
@@ -62,10 +83,10 @@ export default () => {
           <Text weight="BOLD" size={22} color={Colors.RED_4}> Top 5 </Text>
           영상
          </Text>
-          <VideoList setIsVisible={setIsVisible} />
+          <VideoList data={videos} setIsVisible={setIsVisible} />
         </View>
         <Text size={18} style={{ padding: 10 }}>해시태그로 보는 지역별 영상</Text>
-        <YoutuberMovieInfo />
+        <YoutuberMovieInfo data={regionTags} />
         <YoutubePlayer isVisible={isVisible} setIsVisible={setIsVisible} videoId={videoId} />
       </ScrollView>
     </>
