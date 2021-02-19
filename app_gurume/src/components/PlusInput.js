@@ -1,15 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native'
+import useModalSelector from '@utils/hooks/useModalSelector'
 
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Colors, Typography } from '@styles';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { Colors, Typography } from '@styles'
+import { Text } from '@styles/CommonStyles'
 
 const plusInput = (props) => {
+    const items = [
+        { key: -1, section: true, label: '검색 옵션' },
+        { key: 0, label: '해시태그' },
+        { key: 1, label: '유튜버' },
+        { key: 2, label: '타이틀' },
+    ]
+    const [ModalSelector, visible, setVisible] = useModalSelector()
+
     return (
         <View style={styles.container}>
+            {/* 메뉴선택 아이콘 */}
+            <TouchableOpacity
+                onPress={() => setVisible(true)}
+                style={{ position: 'absolute', left: 20, backgroundColor: Colors.GRAY_8, justifyContent: 'center', alignItems: 'center', padding: 4, borderRadius: 50 }}
+                hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }}
+            >
+                <MaterialCommunityIcons name="menu" size={24} color={Colors.WHITE} />
+            </TouchableOpacity>
             <TextInput
                 style={styles.textContainer}
-                placeholder="해시태그를 추가해보세요 !"
+                placeholder={`원하는 ${props.itemValue.label}를 입력해보세요 !`}
                 onChangeText={(text) => props.onChangeText(text)}
                 value={props.text}
             />
@@ -21,6 +39,14 @@ const plusInput = (props) => {
             >
                 <MaterialCommunityIcons name="magnify-plus-outline" size={24} />
             </TouchableOpacity>
+            {
+                visible ?
+                    <ModalSelector
+                        data={items}
+                        onChange={props.setItemValue}
+                    />
+                    : null
+            }
         </View>
     )
 }
@@ -37,7 +63,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 0.5,
         borderColor: Colors.GRAY_8,
-        borderRadius: 50,
+        borderRadius: 10,
     },
     textContainer: {
         textAlign: 'center',

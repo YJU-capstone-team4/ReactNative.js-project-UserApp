@@ -13,7 +13,7 @@ import MainHeader from './MainHeader'
 import NoticeContainer from './NoticeContainer'
 
 // import apis
-import { getRegionYoutubers } from '@utils/api/main/index'
+import { getRegionYoutubers, getRegionFlows } from '@utils/api/main/index'
 import { useAsync } from '@utils/hooks'
 
 export default (props) => {
@@ -21,6 +21,10 @@ export default (props) => {
 
   const [state] = useAsync(() => getRegionYoutubers(region.label), [region.label])
   const { loading, data: youtuberData, error } = state
+
+  const [regionFlowsState] = useAsync(() => getRegionFlows(region.label), [region.label])
+  const { loading: flowLoading, data: flowData, error: flowError } = regionFlowsState
+
 
   const lat = 33.364805
   const lng = 126.542671
@@ -39,7 +43,7 @@ export default (props) => {
         </View>
         <View style={[styles.wrapContainer, { marginTop: 10 }]}>
           <Text style={styles.textContainer} size={20}><Text size={22} weight="BOLD">🇰🇷 {region.label}</Text> Top5 인기 동선</Text>
-          <FlowList region={region.label} />
+          <FlowList data={flowData} />
         </View>
       </ScrollView>
     </View>

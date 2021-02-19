@@ -19,7 +19,7 @@ export default function FlowTopNavigation() {
     <Tab.Navigator
       screenOptions={{
         headerStyle: {
-          elevation: 0
+          elevation: 0,
         }
       }}
       tabBarOptions={{
@@ -27,16 +27,18 @@ export default function FlowTopNavigation() {
         labelStyle: {
           fontSize: 16,
           fontFamily: Typography.FONT_FAMILY_BOLD,
+          
         },
         style: {
           backgroundColor: Colors.WHITE, elevation: 0, borderBottomWidth: 3,
-          borderBottomColor: Colors.RED_3 + "10", marginTop: 3
+          borderBottomColor: Colors.GRAY_8 + "10", marginTop: 3,
+          marginHorizontal: 18
         },
         indicatorStyle: {
           borderBottomWidth: 3,
-          borderBottomColor: Colors.RED_3,
+          borderBottomColor: Colors.GRAY_8,
           position: 'relative',
-          top: 48
+          top: 48,
         }
       }}
     >

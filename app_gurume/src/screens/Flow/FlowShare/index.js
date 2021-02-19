@@ -3,8 +3,9 @@ import { ScrollView, StyleSheet, View, TouchableOpacity } from 'react-native'
 
 // import styles
 import { Colors } from '@styles'
-import { Text } from '@styles/CommonStyles';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Text } from '@styles/CommonStyles'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 
 // import components
 import SelectBox from '@components/SelectBox'
@@ -18,9 +19,8 @@ export default function index() {
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       {/* Header... */}
       <View style={styles.textWrapper}>
-        <MaterialCommunityIcons name="youtube" color={Colors.RED_4} size={20} />
-        {/* TODO 헤더 네이밍 다시하자. */}
-        <Text style={styles.textContainer}> 공유하지 않은 동선 리스트</Text>
+        <FontAwesome name="rss-square" color={Colors.GRAY_9} size={18} />
+        <Text style={styles.textContainer}> 내가 추가한 동선 폴더</Text>
       </View>
       <View style={{ paddingHorizontal: 6 }}>
         <SelectBox />

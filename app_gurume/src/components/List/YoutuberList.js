@@ -43,7 +43,7 @@ const YoutuberList = (props) => {
   return (
     <View style={styles.container}>
       {
-        props.data && props.data.ytbChannelTb ?
+        props.data && props.data.ytbChannelTb && props.data.ytbChannelTb.length !== 0 ?
           <FlatList
             data={props.data.ytbChannelTb}
             keyExtractor={(item, index) => `${item.ytbChannel}-${index}`}
@@ -51,7 +51,7 @@ const YoutuberList = (props) => {
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => renderYoutuber(item)}
             keyboardShouldPersistTaps="always"
-          /> : null
+          /> : <Text style={{ alignSelf: 'center' }}>검색 데이터가 없습니다</Text>
       }
     </View>
   )
@@ -62,7 +62,9 @@ export default YoutuberList
 const styles = StyleSheet.create({
   container: {
     height: 225,
-    marginHorizontal: 5
+    marginHorizontal: 5,
+    justifyContent: 'center',
+    // alignItems: 'center'
   },
   subscribeTextWrapper: {
     display: 'flex',

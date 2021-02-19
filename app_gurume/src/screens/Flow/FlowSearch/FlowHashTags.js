@@ -5,7 +5,7 @@ import { Text } from '@styles/CommonStyles'
 import { Colors } from '@styles'
 
 // import utils
-import { convertRegion } from '@utils'
+import { convertRegion, convertFullRegion } from '@utils'
 
 // import mokup
 import mokupRegion from '../../../model/mokupRegion'
@@ -39,6 +39,20 @@ export default function FlowHashTags(props) {
       setUserHashTags([...userHashTags, props.hashTagText])
       props.setSignalOnPress(false)
       props.setHashTagText('')
+
+      // const data = {
+      //   regionTag: [
+      //     "서울특별시"
+      //   ],
+      //   seasonTag: [
+      //     "겨울"
+      //   ],
+      //   userTag: [
+      //     "맛있는"
+      //   ]
+      // }
+
+
       // TODO 여기서 검색결과 반영 로직 주는게 좋겠다.
     }
 
@@ -57,6 +71,21 @@ export default function FlowHashTags(props) {
     let newArr = [...copyArr] // copying the old datas array
     newArr[argIndex] = argItem
 
+    let selectedRegionTags = []
+    let selectedSeasonTags = []
+
+    regionTags.map(item => {
+      if (item.onPress) {
+        selectedRegionTags.push(item.originalLabel)
+      }
+    })
+
+    seasonTags.map(item => item.onPress ? selectedSeasonTags.push(item.label) : null)
+
+
+    console.log('결과는!?', selectedRegionTags)
+    console.log('결과는!?', selectedSeasonTags)
+
     argHastTagType === 'region' ? setRegionTags(newArr) : setSeasonTag(newArr)
   }
 
@@ -72,7 +101,7 @@ export default function FlowHashTags(props) {
               key={item.key}
               style={[styles.hashtagContainer, item.onPress ? null : { backgroundColor: Colors.GRAY_2 }]}
             >
-              <Text color={item.onPress ? Colors.WHITE : Colors.GRAY_5} weight="BOLD" size={16}>{item.label}</Text>
+              <Text color={item.onPress ? Colors.WHITE : Colors.GRAY_5} weight="BOLD" size={16}># {item.label}</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -93,14 +122,14 @@ export default function FlowHashTags(props) {
                   weight="BOLD"
                   size={16}
                 >
-                  {item.label}
+                  # {item.label}
                 </Text>
               </TouchableOpacity>
             )
           }
         </View>
       </View>
-      <View style={styles.headerContainer}>
+      <View style={[styles.headerContainer, { marginBottom: -15 }]}>
         <Text weight="BOLD" size={20} style={styles.titleWrapper}># 사용자가 추가한 해시태그</Text>
         {/* 사용자 해시태그 */}
         <View style={styles.userHashTagContainer}>
@@ -135,7 +164,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     borderBottomWidth: 1,
     borderBottomColor: Colors.GRAY_2,
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     paddingTop: 6,
     paddingBottom: 15
   },
@@ -157,7 +186,7 @@ const styles = StyleSheet.create({
   },
   userHashTagContainer: {
     flexDirection: 'row',
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     flexWrap: 'wrap',
   }
 })
