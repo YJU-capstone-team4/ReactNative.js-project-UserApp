@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
     shadowColor: Colors.GRAY_9,
   },
   buttonContainer: {
-    // elevation: 10, // FIXME position absoulate 로 걸어준 컴포넌트도 그림자 속성이 걸려있으면 튀어 나오는 이슈...
     marginLeft: 12,
     width: 60,
     height: 60,

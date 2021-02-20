@@ -9,7 +9,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 
 // import components
-import SelectBox from '@components/SelectBox'
+import useSelectBox from '@components/SelectBox'
 import PolygonMap from '@components/PolygonMap'
 
 // import screens
@@ -17,7 +17,8 @@ import FlowInput from './FlowInput'
 
 export default function index() {
   const [markers, setMarkers] = useState(tempMarkers)
-
+  const [SelectBox, itemValue, setItemValue] = useSelectBox()
+  
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       {/* Header... */}

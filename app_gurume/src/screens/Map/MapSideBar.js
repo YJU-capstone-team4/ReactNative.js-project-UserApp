@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { getStatusBarHeight } from "react-native-status-bar-height";
 
 // components
-import SelectBox from '@components/SelectBox'
+import useSelectBox from '@components/SelectBox'
 import { Text } from '../../styles/CommonStyles'
 import { mokupSideRoute } from '../../model/mokupSideRoute'
 import { mokupUser, mokupFolder } from '../../model/mokupUser'
@@ -20,13 +20,7 @@ import MapFlows from './MapFlows';
 export default function MapSideBar(props) {
     const [userFlow, setUserFlow] = useState(mokupUser[0].folders)
     const [showFlows, setShowFlows] = useState(false)
-
-    // const setNextPage = (argName) => {
-    //     let navi = 
-
-    //     return props.navigation.navigate(, {})
-    // }
-    // console.log(userFlow)
+    const [SelectBox, itemValue, setItemValue] = useSelectBox()
 
     const UserSet = (data) => {
         return <View style={[styles.container, {

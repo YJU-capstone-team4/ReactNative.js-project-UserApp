@@ -9,7 +9,7 @@ import { tempMarkers } from '../../../model/mokupMap'
 
 // import components
 import PolygonMap from '@components/PolygonMap'
-import SelectBox from '@components/SelectBox'
+import useSelectBox from '@components/SelectBox'
 
 // import screens
 import DraggableFlowList from './DraggableFlowList'
@@ -17,6 +17,7 @@ import DraggableFlowList from './DraggableFlowList'
 export default function index(props) {
   const EMPTY_ARRAY = []              // ScrollView + FlatList 충돌로 빈 배열 선언
   const [markers, setMarkers] = useState(tempMarkers)
+  const [SelectBox, itemValue, setItemValue] = useSelectBox()
 
   return (
     <FlatList

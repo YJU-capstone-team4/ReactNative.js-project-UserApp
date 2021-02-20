@@ -33,5 +33,3 @@ export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
-
-// TODO redux 재설치.
