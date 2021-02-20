@@ -12,7 +12,7 @@ import { Text } from '@styles/CommonStyles'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 // import apis
-import { getFlowList } from '../utils/api/flow'
+import { getUserFolders } from '../utils/api/folder'
 
 const useSelectBox = (props) => {
   const [userFlows, setUserFlows] = useState(null)
@@ -22,7 +22,7 @@ const useSelectBox = (props) => {
   // 초기 유저 폴더 세팅
   useEffect(() => {
     async function init() {
-      const data = await getFlowList()
+      const data = await getUserFolders()
       console.log(data)
       let temp = [{ key: -1, section: true, label: '-- 공유한 동선 --' }]
       data.shareFlow.map(item => (
@@ -33,10 +33,11 @@ const useSelectBox = (props) => {
       ))
 
       setUserFlows(temp)
+      setItemValue(temp[1])
     }
     init()
   }, [])
-  
+
   const SelectBox = () => {
 
     return (
@@ -69,10 +70,6 @@ const useSelectBox = (props) => {
   }
 
   return [SelectBox, itemValue, setItemValue]
-
-
-
-
 }
 
 export default useSelectBox

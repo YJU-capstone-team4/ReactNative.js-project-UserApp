@@ -13,7 +13,7 @@ const useModalSelector = (props) => {
             visible={visible}
             cancelText={props.calcelText ? props.calcelText : "닫기"}
             touchableStyle={{ display: 'none' }}
-            optionContainerStyle={{ height: 380 }}
+            optionContainerStyle={{ maxHeight: 380 }}
             optionTextStyle={{ fontFamily: Typography.FONT_FAMILY_REGULAR, paddingVertical: 10 }}
             cancelTextStyle={{ fontFamily: Typography.FONT_FAMILY_REGULAR, paddingVertical: 10 }}
             onChange={(option) => {

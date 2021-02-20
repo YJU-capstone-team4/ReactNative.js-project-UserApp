@@ -7,20 +7,19 @@ import { instance, afterAuth } from '../index'
 
 // 🎃 API 리스트 🎃
 
-// adminTag-regionTag 반환
-// async function getAllRegionTags() {
-//     const response = await instance.get('region')
-//     console.log('adminTag-regionTag 반환 : ', response.data.adminTagTbs[0].adminTag)
-//     return response.data.adminTagTbs[0].adminTag
-// }
-
-// 유저가 추가한 동선 리스트
-async function getFlowList() {
-    const { data } = await instance.get('userFlow')
+// 유저가 추가한 동선 폴더 상세조회
+async function getFlowListItems(argFolderId) {
+    const { data } = await instance.get(`userFlow/folder/${argFolderId}`)
 
     return data
 }
 
+// 유저 동선 폴더에 있는 가게 순서 변경
+async function setRefreshFlowIndex(argData) {
+    const { data } = await instance.put('/userFlow/folder', argData)
+
+    return data
+}
 
 // 동선 좋아요 추가 / 삭제
 async function setFlowLike(argType, argFlowId) {
@@ -34,6 +33,6 @@ async function setFlowLike(argType, argFlowId) {
     return data
 }
 
-export { setFlowLike, getFlowList }
+export { setFlowLike, getFlowListItems, setRefreshFlowIndex }
 
 
