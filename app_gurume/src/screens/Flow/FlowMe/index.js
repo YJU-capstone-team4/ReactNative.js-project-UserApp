@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 
 // import styles
@@ -9,14 +9,32 @@ import { tempMarkers } from '../../../model/mokupMap'
 
 // import components
 import PolygonMap from '@components/PolygonMap'
-import SelectBox from '@components/SelectBox'
+import useSelectBox from '@components/SelectBox'
 
 // import screens
 import DraggableFlowList from './DraggableFlowList'
 
+// import apis
+import { getFlowListItems } from '../../../utils/api/flow'
+
 export default function index(props) {
   const EMPTY_ARRAY = []              // ScrollView + FlatList 충돌로 빈 배열 선언
   const [markers, setMarkers] = useState(tempMarkers)
+  const [tempMarker, setTempMarker] = useState(null)
+  const [SelectBox, itemValue, setItemValue] = useSelectBox()
+
+  useEffect(() => {
+    if (!itemValue) return
+
+    console.log("사용자가 폴더 변경을 요청하였습니다.")
+    async function init(argFolderId) {
+      const { stores } = await getFlowListItems(argFolderId)
+      console.log(stores)
+      setTempMarker(stores)
+
+    }
+    init(itemValue.key)
+  }, [itemValue])
 
   return (
     <FlatList
@@ -33,8 +51,12 @@ export default function index(props) {
           <View style={{ paddingHorizontal: 6 }}>
             <SelectBox />
           </View>
-          <PolygonMap data={markers} />
-          <DraggableFlowList data={markers} setMarkers={setMarkers} />
+          <View style={{ borderColor: Colors.GRAY_2, borderWidth: 2, marginHorizontal: 6 }}>
+            <PolygonMap data={markers} />
+          </View>
+          {
+            tempMarker && <DraggableFlowList data={markers} setMarkers={setMarkers} tempData={tempMarker} setTempData={setTempMarker} folderValue={itemValue} />
+          }
         </>
       }
     />

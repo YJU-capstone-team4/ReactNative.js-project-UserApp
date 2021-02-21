@@ -19,16 +19,16 @@ import mokupViedo from '../../model/mokupViedo'
 const renderVideo = (data, index, setIsVisible) => {
   return (
     <TouchableOpacity onPress={() => { setIsVisible(true) }} activeOpacity={0.8} style={styles.container}>
-      {
+      {/* {
         index < 3 ?
           <Image style={styles.medalContainer} source={data.medal} /> : null
-      }
+      } */}
       {/* 유튜버 이미지 */}
-      <Image style={styles.youtuberImage} source={data.ytbThumbnail} />
+      <Image style={styles.youtuberImage} source={{ uri: String(data.ytbThumbnail) }} />
       {/* 제목  */}
-      <Text weight={"BOLD"} style={styles.youtubeTitle}>{data.ytbVideoName}</Text>
+      <Text weight={"BOLD"} numberOfLines={1} style={styles.youtubeTitle}>{data.ytbVideoName}</Text>
       {/* 조회수  */}
-      <Text weight={"BOLD"} style={styles.youtubeHits}>조회수 {data.hits}만회</Text>
+      <Text weight={"BOLD"} style={styles.youtubeHits}>조회수 {parseInt(data.hits / 10000)} 만회</Text>
     </TouchableOpacity>
   )
 }
@@ -42,7 +42,7 @@ export default function VideoList(props) {
     >
       {/* 유튜버 조회수 Top 5 영상 위치 */}
       <FlatList
-        data={mokupViedo}
+        data={props.data ? props.data : mokupViedo}
         keyExtractor={(item, index) => `${item.storeId}-${index}`}
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'white',
     elevation: 3,
+    width: 200
   },
   medalContainer: {
     position: 'absolute',
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
   },
   youtubeTitle: {
     paddingTop: 9,
-    paddingLeft: 15
+    paddingLeft: 13
   },
   youtubeHits: {
     paddingTop: 5,

@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ScrollView, StyleSheet, View, TouchableOpacity } from 'react-native'
+import { tempMarkers } from '../../../model/mokupMap'
 
 // import styles
 import { Colors } from '@styles'
@@ -8,13 +9,16 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 
 // import components
-import SelectBox from '@components/SelectBox'
-import FlowMap from '@components/Flow/FlowMap'
+import useSelectBox from '@components/SelectBox'
+import PolygonMap from '@components/PolygonMap'
 
 // import screens
 import FlowInput from './FlowInput'
 
 export default function index() {
+  const [markers, setMarkers] = useState(tempMarkers)
+  const [SelectBox, itemValue, setItemValue] = useSelectBox()
+  
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       {/* Header... */}
@@ -22,10 +26,11 @@ export default function index() {
         <FontAwesome name="rss-square" color={Colors.GRAY_9} size={18} />
         <Text style={styles.textContainer}> 내가 추가한 동선 폴더</Text>
       </View>
-      <View style={{ paddingHorizontal: 6 }}>
-        <SelectBox />
+      <SelectBox />
+      {/* <FlowMap /> */}
+      <View style={{ borderColor:Colors.GRAY_2, borderWidth: 2 }}>
+        <PolygonMap data={markers} />
       </View>
-      <FlowMap />
       <FlowInput />
     </ScrollView>
   )
@@ -36,7 +41,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     paddingTop: 10,
     paddingHorizontal: 10,
-    backgroundColor: Colors.WHITE
+    backgroundColor: Colors.WHITE,
+    paddingBottom: 30
   },
   textWrapper: {
     flexDirection: 'row',

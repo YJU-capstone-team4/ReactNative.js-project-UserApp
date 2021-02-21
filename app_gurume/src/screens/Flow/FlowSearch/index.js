@@ -9,9 +9,9 @@ import FeatherIcons from 'react-native-vector-icons/Feather'
 
 // import components
 import FlowList from '@components/Flow/FlowList'
-import PlusInput from '@components/PlusInput'
 
 // import screens
+import PlusInput from './PlusInput'
 import FlowHashTags from './FlowHashTags'
 
 const shareFlowTb = {
@@ -138,13 +138,9 @@ export default function index() {
         <View style={styles.textHighlighter}>
           <Text size={22} >{itemValue.label}</Text>
         </View>
-        <Text style={styles.textContainer}>를 통해 검색해보세요!</Text>
+        <Text style={styles.textContainer}>{itemValue.label === '해시태그' ? '를' : '을'} 통해 검색해보세요!</Text>
       </View>
-      {/* 해시태그 추가 컴포넌트 */}
-      {/* <View style={{ flexDirection: 'row', paddingVertical: 10, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ paddingHorizontal: 10 }}>태그</Text>
-        <FeatherIcons name="chevron-down" size={22} color={Colors.GRAY_8} />
-      </View> */}
+      {/* 검색 컴포넌트 */}
       <PlusInput
         style={{ flex: 1 }}
         text={hashTagText}

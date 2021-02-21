@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { Text } from '@styles/CommonStyles'
 import { Colors } from '@styles'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 // import utils
 import { convertRegion, convertFullRegion } from '@utils'
@@ -32,7 +33,7 @@ const mokupSeasonTags = ["봄", "여름", "가을", "겨울"].map((item, index) 
 export default function FlowHashTags(props) {
   const [regionTags, setRegionTags] = useState(exampleData)
   const [seasonTags, setSeasonTag] = useState(mokupSeasonTags)
-  const [userHashTags, setUserHashTags] = useState(['야식이 입맛', '고기맛집'])
+  const [userHashTags, setUserHashTags] = useState([])
 
   useEffect(() => {
     if (props.signalOnPress === true) {
@@ -40,23 +41,14 @@ export default function FlowHashTags(props) {
       props.setSignalOnPress(false)
       props.setHashTagText('')
 
-      // const data = {
-      //   regionTag: [
-      //     "서울특별시"
-      //   ],
-      //   seasonTag: [
-      //     "겨울"
-      //   ],
-      //   userTag: [
-      //     "맛있는"
-      //   ]
-      // }
-
-
       // TODO 여기서 검색결과 반영 로직 주는게 좋겠다.
     }
 
   }, [props.signalOnPress])
+
+  const deleteUserHashtag = (item) => {
+
+  }
 
   // 해시태그 클릭 시 변경되는 UI
   const hashTagOnPress = (argHastTagType, argItem, argIndex) => {
@@ -90,7 +82,7 @@ export default function FlowHashTags(props) {
   }
 
   return (
-    <View style={styles.container}    >
+    <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text weight="BOLD" size={20} style={styles.titleWrapper}># 지역별 해시태그</Text>
         {/* 지역별 해시태그 */}
@@ -134,11 +126,18 @@ export default function FlowHashTags(props) {
         {/* 사용자 해시태그 */}
         <View style={styles.userHashTagContainer}>
           {
-            userHashTags.map((item, index) =>
-              <TouchableOpacity key={`user-${index}`} style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
+            userHashTags.length > 0 ? userHashTags.map((item, index) =>
+              <View key={`user-${index}`} style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
+                <TouchableOpacity hitSlop={{ top: 20, right: 50, bottom: 20, left: 20 }} style={styles.deleteHashtagBtn} >
+                  <MaterialCommunityIcons
+                    name="close-circle"
+                    color="black"
+                    size={22}
+                  />
+                </TouchableOpacity>
                 <Text color={Colors.WHITE} weight="BOLD" size={16}># {item}</Text>
-              </TouchableOpacity>
-            )
+              </View>
+            ) : <Text style={{ paddingVertical: 10 }}>추가된 해시태그가 없습니다...</Text>
           }
         </View>
       </View>
@@ -180,13 +179,18 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginVertical: 6,
     elevation: 1.5,
-    minWidth: 60,
+    minWidth: 62,
     alignItems: 'center',
-    marginRight: 4
+    marginHorizontal: 2
   },
   userHashTagContainer: {
     flexDirection: 'row',
     paddingHorizontal: 5,
     flexWrap: 'wrap',
+  },
+  deleteHashtagBtn: {
+    position: 'absolute',
+    right: -8,
+    top: -13,
   }
 })

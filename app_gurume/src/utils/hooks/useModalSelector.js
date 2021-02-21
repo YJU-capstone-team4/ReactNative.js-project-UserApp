@@ -13,14 +13,16 @@ const useModalSelector = (props) => {
             visible={visible}
             cancelText={props.calcelText ? props.calcelText : "닫기"}
             touchableStyle={{ display: 'none' }}
+            optionContainerStyle={{ maxHeight: 380 }}
             optionTextStyle={{ fontFamily: Typography.FONT_FAMILY_REGULAR, paddingVertical: 10 }}
             cancelTextStyle={{ fontFamily: Typography.FONT_FAMILY_REGULAR, paddingVertical: 10 }}
-            onChange={(option) => { 
+            onChange={(option) => {
                 props.onChange(option)
                 setVisible(false)
             }}
             onModalClose={() => setVisible(false)}
-            overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.85)', height: Dimensions.get('window').height }}
+            overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', height: Dimensions.get('window').height }}
+            touchableActiveOpacity={0.5}
         />
     }
 

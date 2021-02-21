@@ -8,6 +8,9 @@ import markerImage from '@images/delivery_128.png'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Colors } from '@styles'
 
+// import apis
+import { setRefreshFlowIndex } from '../../../utils/api/flow'
+
 
 const NUM_ITEMS = 10
 
@@ -25,31 +28,40 @@ function DraggableFlowList(props) {
             >
                 <Image style={styles.iconWrapper} source={markerImage} />
                 <MaterialCommunityIcons style={styles.horizontalDots} color={
-                    index === 0 || index === props.data.length - 1 ? Colors.YELLOW_6 : Colors.GRAY_2
+                    index === 0 || index === props.tempData.length - 1 ? Colors.YELLOW_6 : Colors.GRAY_2
                 } name='dots-horizontal-circle' />
-                <Text style={styles.textContainer}>대구광역시청 동부도서관</Text>
-                { index !== props.data.length - 1 ?
+                <Text style={styles.textContainer}>{item.ytbStoreTbId.storeInfo.storeName}</Text>
+                { index !== props.tempData.length - 1 ?
                     <MaterialCommunityIcons style={styles.verticalDots} color={Colors.GRAY_7} size={20} name='dots-vertical' /> : null
                 }
             </TouchableOpacity>
         );
     }, [])
 
-    const handleDragEnd = (e) => {
-        const { to, from, data } = e
+    const handleDragEnd = async (e) => {
+        const { to, from, data } = await e
         console.log('Index to :', to, '=> from :', from)
         // 같은 자리에 놓을때는 이벤트 종료
         if (to === from) {
             return;
+        } else {
+            const storeIds = data.map(v => v.storeId)
+
+            let arrayChangedIndexes = {
+                folderId: props.folderValue.key,
+                storeIds
+            }
+
+            props.setTempData(data)
+            const result = await setRefreshFlowIndex(arrayChangedIndexes)
+            console.log('스토어 순서 변경 결과는?', result)
         }
-        // TODO 순서 변경 API
-        props.setMarkers(data)
     }
 
     return (
         <SafeAreaView style={styles.container}>
             <DraggableFlatList
-                data={props.data}
+                data={props.tempData}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => `draggable-item-${index}`}
                 onDragEnd={(e) => handleDragEnd(e)}

@@ -1,12 +1,16 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useState } from 'react'
+import { View } from 'react-native'
 
+import { Text } from '@styles/CommonStyles';
 import HashTagList from './HashTagList'
 
-export default function youtuberMovieInfo() {
+export default function youtuberMovieInfo(props) {
+  const [selectedRegionTag, setSelectedRegionTag] = useState(props.data && props.data[0])
+
   return (
     <>
-      <HashTagList />
+      <HashTagList data={props.data} onPress={setSelectedRegionTag} />
+      <Text>{selectedRegionTag}</Text>
       <View
         style={{
           backgroundColor: '#FFF978',

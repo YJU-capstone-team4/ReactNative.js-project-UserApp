@@ -17,6 +17,8 @@ import YoutuberScreen from '@screens/Youtuber'
 import StoreScreen from '@screens/Store'
 import UserScreen from '@screens/User'
 import SignInScreen from '@screens/User/SignIn'
+import ModifyFolder from '@screens/User/ModifyFolder'
+import ModifyName from '@screens/User/ModifyName'
 
 const Tab = createBottomTabNavigator()
 const MapStack = createStackNavigator()
@@ -31,11 +33,17 @@ export default function BottomNavigation() {
         labelStyle: {
           fontSize: 12,
           fontFamily: Typography.FONT_FAMILY_BOLD,
-          marginBottom: 3
+          marginBottom: 8,
         },
+        style: {
+          paddingVertical: 4,
+          height: 58,
+          borderBottomWidth: 0.5,
+          borderBottomColor: Colors.GRAY_3
+        }
       }}
       initialRouteName="Main"
-      barStyle={{ backgroundColor: Colors.WHITE }}
+      sceneContainerStyle={{ backgroundColor: Colors.WHITE }}
     >
       <Tab.Screen
         name="Main"
@@ -123,6 +131,20 @@ const MainStackScreen = ({ navigation }) => {
           title: '내 정보',
         }}
         component={UserScreen}
+      />
+      <MapStack.Screen
+        name="ModifyFolder"
+        options={{
+          title: '동선 폴더 관리',
+        }}
+        component={ModifyFolder}
+      />
+      <MapStack.Screen
+        name="ModifyName"
+        options={{
+          title: '닉네임 변경',
+        }}
+        component={ModifyName}
       />
     </MainStack.Navigator>
   )

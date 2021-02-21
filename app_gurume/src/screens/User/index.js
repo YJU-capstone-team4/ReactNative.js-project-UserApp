@@ -21,7 +21,7 @@ export default function index(props) {
             {/* TODO Redux 전역 State 확인 후 로그인 로직 처리 */}
             {/* IF) 로그인 상태가 아닐 경우 props.navitagion -> page 이동 로직 작성. */}
             {isLogin ?
-                <UserInfo /> : null}
+                <UserInfo navi={props.navigation} /> : null}
         </View>
     )
 }

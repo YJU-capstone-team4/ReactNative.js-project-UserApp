@@ -9,14 +9,15 @@ const { width, height } = Dimensions.get("window");
 // import dummy Data
 import thumb from '@images/thumbnail_1.jpg'
 
-export default function youtuberProfile() {
+export default function youtuberProfile({ data }) {
   return (
+    data &&
     <View
       style={styles.container}
     >
-      <Image style={styles.youtuberImage} source={thumb} />
-      <Text style={styles.titleContainer} weight="BOLD" size={20}>문복희 Eat with Boki</Text>
-      <Text>구독자 501만명</Text>
+      <Image style={styles.youtuberImage} source={{ uri: data.ytbProfile }} />
+      <Text style={styles.titleContainer} weight="BOLD" size={20}>{data.ytbChannel}</Text>
+      <Text>구독자 {parseInt(data.ytbSubscribe / 1000)}만명</Text>
     </View>
   )
 }

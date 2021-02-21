@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView, View } from 'react-native'
 import { getStatusBarHeight } from "react-native-status-bar-height"
 
 // import components
-import SelectBox from '@components/SelectBox'
+import useSelectBox from '@components/SelectBox'
 
 // import screens
 import Youtuber from './Youtuber'
@@ -16,6 +16,8 @@ import { Text } from '@styles/CommonStyles'
 import FeatherIcons from 'react-native-vector-icons/Feather'
 
 export default () => {
+  const [SelectBox, itemValue, setItemValue] = useSelectBox()
+  
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.statusBar}>
