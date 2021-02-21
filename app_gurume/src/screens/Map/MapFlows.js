@@ -9,23 +9,19 @@ import Icon from 'react-native-vector-icons/Feather'
 const MapFlows = (props) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>기사식당 돼지불백</Text>
-            <View style={styles.arrowContainer}>
-                <Icon name="chevrons-down" size={20} color={Colors.RED_3} />
-            </View>
-            <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>퍼즈 X 베이커리</Text>
-            <View style={styles.arrowContainer}>
-                <Icon name="chevrons-down" size={20} color={Colors.RED_3} />
-            </View>
-            <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>퍼즈 X 베이커리</Text>
-            <View style={styles.arrowContainer}>
-                <Icon name="chevrons-down" size={20} color={Colors.RED_3} />
-            </View>
-            <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>퍼즈 X 베이커리</Text>
-            <View style={styles.arrowContainer}>
-                <Icon name="chevrons-down" size={20} color={Colors.RED_3} />
-            </View>
-            <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>퍼즈 X 베이커리</Text>
+            {
+                props.data.length !== 0 && props.data.map((item, index) =>
+                    <>
+                        <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>{item.ytbStoreTbId.storeInfo.storeName}</Text>
+                        {
+                            props.data.length - 1 !== index &&
+                            <View style={styles.arrowContainer}>
+                                <Icon name="chevrons-down" size={20} color={Colors.RED_3} />
+                            </View>
+                        }
+                    </>
+                )
+            }
             <Button
                 activeOpacity={0.8}
                 style={[styles.flowBtnContainer, { marginVertical: 20 }]}

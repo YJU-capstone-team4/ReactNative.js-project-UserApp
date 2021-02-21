@@ -28,7 +28,7 @@ export default function index(props) {
 
     console.log("사용자가 폴더 변경을 요청하였습니다.")
     async function init(argFolderId) {
-      const { stores} = await getFlowListItems(argFolderId)
+      const { stores } = await getFlowListItems(argFolderId)
       console.log(stores)
       setTempMarker(stores)
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -15,12 +15,29 @@ import { Colors } from '@styles'
 import user_profile from '@images/user_profile.png'
 import MapFlows from './MapFlows';
 
+
+// import apis
+import { getFlowListItems } from '../../utils/api/flow';
+
+
 // navigation.goBack()
 
 export default function MapSideBar(props) {
     const [userFlow, setUserFlow] = useState(mokupUser[0].folders)
     const [showFlows, setShowFlows] = useState(false)
     const [SelectBox, itemValue, setItemValue] = useSelectBox()
+
+    useEffect(() => {
+        if (!itemValue) return
+
+        console.log("사용자가 폴더 변경을 요청하였습니다.")
+        async function init(argFolderId) {
+            const { stores } = await getFlowListItems(argFolderId)
+            console.log(stores)
+            setUserFlow(stores)
+        }
+        init(itemValue.key)
+    }, [itemValue])
 
     const UserSet = (data) => {
         return <View style={[styles.container, {
@@ -45,17 +62,17 @@ export default function MapSideBar(props) {
     return (
         <View style={{ flex: 1 }}>
             {/* 동선 페이지로 이동했는가 ? */}
-            { showFlows ? <SubHeader /> : null }
+            { showFlows ? <SubHeader /> : null}
             {/* 메뉴 리스트 나열 */}
             <DrawerContentScrollView {...props}>
-                {showFlows ?
+                {showFlows && userFlow ?
                     // *** 동선 폴더 접근 ***
                     (
                         <View style={[styles.folderWrapper, { marginTop: -40 }]}>
                             <View style={{ flex: 1, zIndex: 100 }}>
                                 <SelectBox userFlow={mokupFolder} />
                             </View>
-                            <MapFlows navi={props.navigation} />
+                            <MapFlows data={userFlow} navi={props.navigation} />
                         </View>
                     ) :
                     // *** 일반 매뉴 접근 ***
