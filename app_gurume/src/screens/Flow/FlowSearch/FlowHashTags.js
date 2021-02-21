@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { Text } from '@styles/CommonStyles'
 import { Colors } from '@styles'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 // import utils
 import { convertRegion, convertFullRegion } from '@utils'
@@ -126,10 +127,16 @@ export default function FlowHashTags(props) {
         <View style={styles.userHashTagContainer}>
           {
             userHashTags.length > 0 ? userHashTags.map((item, index) =>
-              <TouchableOpacity key={`user-${index}`} style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
-                <TouchableOpacity style={styles.deleteHashtagBtn} />
+              <View key={`user-${index}`} style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
+                <TouchableOpacity hitSlop={{ top: 20, right: 50, bottom: 20, left: 20 }} style={styles.deleteHashtagBtn} >
+                  <MaterialCommunityIcons
+                    name="close-circle"
+                    color="black"
+                    size={22}
+                  />
+                </TouchableOpacity>
                 <Text color={Colors.WHITE} weight="BOLD" size={16}># {item}</Text>
-              </TouchableOpacity>
+              </View>
             ) : <Text style={{ paddingVertical: 10 }}>추가된 해시태그가 없습니다...</Text>
           }
         </View>
@@ -182,6 +189,8 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   deleteHashtagBtn: {
-    position: 'absolute'
+    position: 'absolute',
+    right: -8,
+    top: -13,
   }
 })

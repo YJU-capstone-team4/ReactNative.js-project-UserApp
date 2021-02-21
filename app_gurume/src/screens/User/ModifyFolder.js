@@ -1,25 +1,39 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { Colors, Typography } from '@styles'
 import { Text } from '@styles/CommonStyles'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 // import apis
-import { getUserFolders } from '@utils/api/folder'
+import { getUserFolders, setUserFolder, deleteUserFolder } from '@utils/api/folder'
 
 const ModifyFolder = () => {
     const [folders, setFolders] = useState(null)
     const [folderName, setFolderName] = useState('')
 
     useEffect(() => {
-        async function init() {
-            const data = await getUserFolders()
-            console.log(data.shareFlow)
-            setFolders(data.shareFlow)
+        initFolder()
+    }, [])
+
+    const initFolder = async () => {
+        const data = await getUserFolders()
+        console.log(data.shareFlow)
+        setFolders(data.shareFlow)
+    }
+
+    const setNewFolder = async () => {
+        if (folderName.length === 0) {
+            Alert.alert("폴더 이름을 입력해주세요!!!")
         }
 
-        init()
-    }, [])
+        await setUserFolder(folderName)
+        initFolder()
+    }
+
+    const deleteFolder = async (argFolderId) => {
+        await deleteUserFolder(argFolderId)
+        initFolder()
+    }
 
     return (
         <View style={styles.container}>
@@ -31,7 +45,7 @@ const ModifyFolder = () => {
                     onChangeText={(text) => setFolderName(text)}
                     value={folderName}
                 />
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => setNewFolder()}>
                     <FontAwesome size={20} name="plus-square" />
                 </TouchableOpacity>
             </View>
@@ -44,10 +58,10 @@ const ModifyFolder = () => {
                     <View key={item._id} style={styles.folderWrapper}>
                         <Text size={18}>{item.shareTitle}</Text>
                         <View style={{ flexDirection: 'row' }}>
-                            <TouchableOpacity style={styles.btnWrapper}>
+                            <TouchableOpacity>
                                 <FontAwesome size={20} name="pencil" />
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.btnWrapper}>
+                            <TouchableOpacity deleteFolder={() => deleteFolder(item.folderId)} style={styles.btnWrapper}>
                                 <FontAwesome size={20} name="trash" />
                             </TouchableOpacity>
                         </View>
@@ -74,7 +88,7 @@ const styles = StyleSheet.create({
     },
     btnWrapper: {
         // padding: 5
-        paddingLeft: 10
+        paddingLeft: 15
     },
     searchText: {
         // textAlign: 'center',

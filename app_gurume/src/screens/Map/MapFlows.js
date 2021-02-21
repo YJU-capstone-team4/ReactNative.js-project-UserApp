@@ -10,9 +10,9 @@ const MapFlows = (props) => {
     return (
         <View style={styles.container}>
             {
-                props.data.length !== 0 && props.data.map((item, index) =>
+                props.data && props.data.length !== 0 && props.data.map((item, index) =>
                     <>
-                        <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>{item.ytbStoreTbId.storeInfo.storeName}</Text>
+                        <Text key={index} style={styles.textContainer} size={18} color={Colors.GRAY_9}>{item.ytbStoreTbId.storeInfo.storeName}</Text>
                         {
                             props.data.length - 1 !== index &&
                             <View style={styles.arrowContainer}>
@@ -27,7 +27,7 @@ const MapFlows = (props) => {
                 style={[styles.flowBtnContainer, { marginVertical: 20 }]}
                 backgroundColor={Colors.GRAY_7}
                 borderColor={Colors.BLACK}
-                onPress={() => props.navi.navigate('flowMe', {})}
+                onPress={() => props.navi.navigate('Flow', { screen: 'flowMe' })}
             // TODO 네비게이션에 해당 폴더 index 번호 넘겨줘서 루프테이지 - 내 동선 - 해당 인덱스 번호까지 연결해줘야 함.
             >
                 <Text style={{ paddingVertical: 15 }} size={18} color={Colors.WHITE}>🌸 동선 관리 페이지로 이동하기</Text>

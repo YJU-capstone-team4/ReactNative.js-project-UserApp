@@ -24,8 +24,13 @@ async function getYoutuberMarkers(argYtbChannelId = DEFAULT_YOUTUBER_ID) {
 }
 
 // 특정 맛집 id, name, address
-async function getStoreInfo(argStoreId) {
-    const { data } = await instance.get(`/map/store/${argStoreId}`)
+async function getStoreInfo(argStoreId, argFolderId = null) {
+    const { data } = await instance.get(`/map/store`, {
+        params: {
+            storeId: argStoreId,
+            folderId: argFolderId
+        }
+    })
     // console.log(data.ytbStoreTb)
     return data
 }

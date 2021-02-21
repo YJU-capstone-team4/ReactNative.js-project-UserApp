@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, Image, ScrollView } from 'react-native'
 import { Camera } from 'expo-camera'
 import * as ImagePicker from 'expo-image-picker'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -59,8 +59,8 @@ export default function FlowInput() {
       setHashTagList([
         ...hashTagList,
         {
-          color: '#ff99cc',
-          name: hashTag,
+          color: Colors.GRAY_7,
+          name: '# ' + hashTag,
         },
       ])
       setHashTag('')
@@ -83,6 +83,7 @@ export default function FlowInput() {
 
     // 이미지 최종 저장
     if (!result.cancelled) {
+      console.log(result)
       setImage(result.uri)
     }
   }
@@ -111,7 +112,7 @@ export default function FlowInput() {
     }
   }
 
-  const thumbnail = () => {
+  const ThumbnailPreview = () => {
     return (
       <View style={{ marginVertical: 5 }}>
         <Image source={{ uri: image }} style={{ flex: 1, height: 200, borderRadius: 10 }} />
@@ -119,33 +120,35 @@ export default function FlowInput() {
         <View style={styles.thumbnailBackground} />
         {/* 썸네일 제목 */}
         <View style={styles.thumbnailTitle}>
-          <Text numberOfLines={1} style={[styles.buttonText, { color: 'white', fontSize: 40 }]}>{title}</Text>
+          <Text numberOfLines={1} style={[styles.buttonText, { color: 'white', fontSize: 36 }]}>{title}</Text>
         </View>
         {/* 썸네일 관련 태그 */}
-        <View
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          horizontal={true}
           style={[
             styles.container,
             { margin: 10, position: 'absolute', bottom: 10, flexWrap: 'nowrap' },
           ]}
         >
           {hashTagList.map((tag, index) =>
-            index > 5 ? (
-              hashTagList.length - 1 === index ? (
-                <Text style={[styles.buttonText, { marginTop: 15 }]}>...</Text>
-              ) : null
-            ) : (
-                <View key={index} style={[styles.tagContainer, { backgroundColor: tag.color }]}>
-                  <Text style={styles.buttonText}>{tag.name}</Text>
-                </View>
-              )
+            <View key={index} style={[styles.tagContainer, { backgroundColor: tag.color }]}>
+              <Text style={styles.buttonText}>{tag.name}</Text>
+            </View>
           )}
-        </View>
+        </ScrollView>
       </View>
     )
   }
 
   return (
-    <View style={{paddingVertical: 15}}>
+    <View style={{ paddingVertical: 15 }}>
+      {image && (
+        <>
+          <Text style={styles.inputText}># 썸네일 미리보기</Text>
+          <ThumbnailPreview />
+        </>
+      )}
       <Text style={styles.inputText}>제목</Text>
       <TextInput
         style={styles.inputContainer}
@@ -172,7 +175,7 @@ export default function FlowInput() {
             styles.inputContainer,
             { flex: 1, backgroundColor: Colors.GRAY_LIGHT, color: Colors.BLACK },
           ]}
-          value="파일 선택"
+          value={image ? image : "파일 선택"}
           editable={false}
         />
         <TouchableOpacity onPress={() => handelPickImage()} style={styles.buttonContainer}>
@@ -186,21 +189,23 @@ export default function FlowInput() {
             key={index.toString()}
             style={[styles.tagContainer, { backgroundColor: tag.color }]}
           >
-            <TouchableOpacity
-              style={{
-                position: 'absolute',
-                right: -6,
-                top: -10,
-              }}
-              hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }}
-              onPress={() => handelRemoveHashTag(index)}
-            >
-              <MaterialCommunityIcons
-                name="close-circle"
-                color="black"
-                size={23}
-              />
-            </TouchableOpacity>
+            {
+              index >= 2 && <TouchableOpacity
+                style={{
+                  position: 'absolute',
+                  right: -6,
+                  top: -13,
+                }}
+                hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }}
+                onPress={() => handelRemoveHashTag(index)}
+              >
+                <MaterialCommunityIcons
+                  name="close-circle"
+                  color="black"
+                  size={23}
+                />
+              </TouchableOpacity>
+            }
             <Text style={styles.buttonText}>{tag.name}</Text>
           </View>
         ))}
@@ -211,12 +216,6 @@ export default function FlowInput() {
       >
         <Text style={styles.buttonText}>공유하기</Text>
       </TouchableOpacity>
-      {image && (
-        <>
-          <Text style={styles.inputText}># 썸네일 미리보기</Text>
-          {thumbnail()}
-        </>
-      )}
     </View>
   )
 }

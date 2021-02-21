@@ -24,7 +24,7 @@ const useSelectBox = (props) => {
     async function init() {
       const data = await getUserFolders()
       console.log(data)
-      let temp = [{ key: -1, section: true, label: '-- 공유한 동선 --' }]
+      let temp = [{ key: -1, section: true, label: '코코님의 동선 폴더' }]
       data.shareFlow.map(item => (
         temp.push({
           key: item.folderId,

@@ -35,6 +35,14 @@ const MapScreen = ({ navigation }) => {
   // -->>
 
   //******** 토글 제어 ********
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('drawerClose', (e) => {
+  //     console.log("사이드바 종료")
+  //     // setShowFlows(false)
+  //   });
+
+  //   return unsubscribe
+  // }, [navigation])
 
   //******** 지도 제어 ********
 

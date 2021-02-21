@@ -23,7 +23,7 @@ import { getFlowListItems } from '../../utils/api/flow';
 // navigation.goBack()
 
 export default function MapSideBar(props) {
-    const [userFlow, setUserFlow] = useState(mokupUser[0].folders)
+    const [userFlow, setUserFlow] = useState(null)
     const [showFlows, setShowFlows] = useState(false)
     const [SelectBox, itemValue, setItemValue] = useSelectBox()
 
