@@ -11,15 +11,17 @@ const MapFlows = (props) => {
         <View style={styles.container}>
             {
                 props.data && props.data.length !== 0 && props.data.map((item, index) =>
-                    <>
-                        <Text key={index} style={styles.textContainer} size={18} color={Colors.GRAY_9}>{item.ytbStoreTbId.storeInfo.storeName}</Text>
+                    <View key={item._id}>
+                        <Text style={styles.textContainer} size={18} color={Colors.GRAY_9}>
+                            {item.ytbStoreTbId.storeInfo.storeName}
+                        </Text>
                         {
                             props.data.length - 1 !== index &&
-                            <View style={styles.arrowContainer}>
+                            <View key={item._id} style={styles.arrowContainer}>
                                 <Icon name="chevrons-down" size={20} color={Colors.RED_3} />
                             </View>
                         }
-                    </>
+                    </View>
                 )
             }
             <Button
@@ -32,7 +34,7 @@ const MapFlows = (props) => {
             >
                 <Text style={{ paddingVertical: 15 }} size={18} color={Colors.WHITE}>🌸 동선 관리 페이지로 이동하기</Text>
             </Button>
-        </View>
+        </View >
     )
 }
 

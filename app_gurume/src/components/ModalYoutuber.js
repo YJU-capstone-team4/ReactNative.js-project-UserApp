@@ -13,7 +13,7 @@ const { width, height } = Dimensions.get("window")
 
 // import apis
 import { useAsync } from '../utils/hooks'
-import { getAllYoutubersInfo, getYoutuberInfo } from '../utils/api/youtuber/index'
+import { getAllYoutubersInfo, searchYoutuberByName } from '../utils/api/youtuber/index'
 
 const YoutuberContainer = ({ item, onClick }) => (
     <TouchableOpacity onPress={() => onClick(item._id, item.ytbChannel)} style={styles.wrapperContainer}>
@@ -23,13 +23,12 @@ const YoutuberContainer = ({ item, onClick }) => (
             <Text style={{ paddingVertical: 10 }}>구독자 {item.ytbSubscribe / 10000}K</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text>다녀간 맛집 정보 </Text>
-                <Text color={Colors.RED_4} size={20}>{item.storeCount}</Text>
-                <Text> 건</Text>
+                <Text color={Colors.RED_4} size={20}>{item.storeCount ? item.storeCount : item.video}</Text>
+                <Text>건</Text>
             </View>
         </View>
     </TouchableOpacity>
 )
-
 
 const ModalYoutuber = (props) => {
     // 전체 유튜버 리스트 로딩
@@ -55,9 +54,15 @@ const ModalYoutuber = (props) => {
         console.log(text)
 
         if (text && text.length > 0) {
-            let tempYoutuberList =
-                await allYoutubers.ytbChannelTb.filter(youtuber => !Hangul.search(youtuber.ytbChannel, text))
-            setYoutubers({ count: tempYoutuberList.length, ytbChannelTb: tempYoutuberList })
+            const searchedYoutubers = await searchYoutuberByName(text)
+            console.log(searchedYoutubers)
+            setYoutubers({
+                count: searchedYoutubers.YtbChannelTb.length,
+                ytbChannelTb: searchedYoutubers.YtbChannelTb
+            })
+            // let tempYoutuberList =
+            //     await allYoutubers.ytbChannelTb.filter(youtuber => !Hangul.search(youtuber.ytbChannel, text))
+            // setYoutubers({ count: tempYoutuberList.length, ytbChannelTb: tempYoutuberList })
         } else {
             console.log("초기화 로직 발동!")
             setYoutubers(null)
@@ -143,7 +148,7 @@ const ModalYoutuber = (props) => {
                                 item={item}
                                 onClick={handleYoutuberClick}
                             />
-                        ) : null
+                        ) : <Text weight="BOLD" style={{ alignSelf: 'center', paddingVertical: 20 }}>유튜버 데이터 로딩중...</Text>
                 }
             </ScrollView>
         </View>

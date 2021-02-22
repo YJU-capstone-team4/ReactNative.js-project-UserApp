@@ -53,6 +53,7 @@ export default () => {
     async function init(argStoreId) {
       // * 유튜버 정보 로딩
       const getYoutuberInfo = await getFindOneYoutuberInfo(argStoreId ? argStoreId : YOUTUBER_ID)
+      console.log('유튜버 정보 로딩', getYoutuberInfo)
       setYoutuber(getYoutuberInfo)
       setIsActivity(getYoutuberInfo.youtuberLike)
 

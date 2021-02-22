@@ -8,17 +8,14 @@ import { getStatusBarHeight } from "react-native-status-bar-height";
 import useSelectBox from '@components/SelectBox'
 import { Text } from '../../styles/CommonStyles'
 import { mokupSideRoute } from '../../model/mokupSideRoute'
-import { mokupUser, mokupFolder } from '../../model/mokupUser'
 
 // styles
 import { Colors } from '@styles'
 import user_profile from '@images/user_profile.png'
 import MapFlows from './MapFlows';
 
-
 // import apis
 import { getFlowListItems } from '../../utils/api/flow';
-
 
 // navigation.goBack()
 
@@ -30,10 +27,10 @@ export default function MapSideBar(props) {
     useEffect(() => {
         if (!itemValue) return
 
-        console.log("사용자가 폴더 변경을 요청하였습니다.")
         async function init(argFolderId) {
             const { stores } = await getFlowListItems(argFolderId)
-            console.log(stores)
+            // console.log("사용자가 폴더 변경을 요청하였습니다.")
+            // console.log(stores)
             setUserFlow(stores)
         }
         init(itemValue.key)
@@ -70,7 +67,7 @@ export default function MapSideBar(props) {
                     (
                         <View style={[styles.folderWrapper, { marginTop: -40 }]}>
                             <View style={{ flex: 1, zIndex: 100 }}>
-                                <SelectBox userFlow={mokupFolder} />
+                                <SelectBox />
                             </View>
                             <MapFlows data={userFlow} navi={props.navigation} />
                         </View>

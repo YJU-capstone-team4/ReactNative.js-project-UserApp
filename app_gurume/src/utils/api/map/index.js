@@ -31,7 +31,6 @@ async function getStoreInfo(argStoreId, argFolderId = null) {
             folderId: argFolderId
         }
     })
-    // console.log(data.ytbStoreTb)
     return data
 }
 
@@ -44,10 +43,20 @@ async function getStoreYoutubers(argStoreId) {
 
 // 맛집 인근의 주면 명소 추천
 async function getStoreAttraction(argLocation) {
-    const { lat, lng } = argLocation
+    try {
+        console.log('맛집 인근의 주면 명소 추천')
+        const { data } = await instance.get(`storeDetail/attraction`, {
+            params: {
+                lat: parseInt(argLocation.lat),
+                lng: parseInt(argLocation.lng)
+            }
+        })
+        console.log('testest1', data)
+        return data
 
-    const { data } = await instance.get(`storeDetail/attraction/${lat}&${lng}`)
-    return data
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 export {

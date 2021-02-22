@@ -5,7 +5,7 @@ import { Text } from '@styles/CommonStyles';
 import HashTagList from './HashTagList'
 
 export default function youtuberMovieInfo(props) {
-  const [selectedRegionTag, setSelectedRegionTag] = useState(props.data && props.data[0])
+  const [selectedRegionTag, setSelectedRegionTag] = useState(props.data)
 
   return (
     <>

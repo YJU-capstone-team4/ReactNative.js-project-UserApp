@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, StyleSheet, SafeAreaView, FlatList } from 'react-native'
 
 // import styles
@@ -13,12 +13,10 @@ import StoreRecommend from './StoreRecommend'
 import StoreHeader from './StoreHeader'
 import YoutubePlayer from '../../components/YoutubePlayer'
 
-// import mokup data
-import mokupTrips from '../../model/mokupTrips'
-
 // import api
 import { getStoreYoutubers, getStoreInfo, getStoreAttraction } from '../../utils/api/map'
 import { convertLocationDistance } from '../../utils'
+import TestContext from "../../context/TestContext";
 
 export default (props) => {
   const { route } = props
@@ -32,28 +30,32 @@ export default (props) => {
   const [videos, setVideos] = useState(null)
   const [videoId, setVideoId] = useState('r-LNSGSCDJg')
 
+  const { state } = useContext(TestContext)
+
   // 페이지 전체 정보 로딩.
   useEffect(() => {
     // route.parms => storeId, storeName
     const { storeId, storeName } = route.params
 
-    init(storeId)
+    init(storeId, state.initValue.selectedFolderId)
   }, [route.params])
 
-  async function init(argStoreId) {
+  async function init(argStoreId, argFolderId) {
     try {
       // 1. 가게 정보 불러오기
-      const storeInfo = await getStoreInfo(argStoreId)
+      const storeInfo = await getStoreInfo(argStoreId, argFolderId)
       setStore(storeInfo)
 
       // 2. 관련 유튜버 && 썸네일 불러오기
-      const youtuberInfo = await getStoreYoutubers(argStoreId)
-      setYoutubers(youtuberInfo)
+      const { video } = await getStoreYoutubers(argStoreId)
+      setYoutubers(video)
+      console.log('관련 유튜버 && 썸네일 불러오기', video)
 
       //TODO 3. Top3 동선 불러오기
-      // console.log("받아온 데이터는 : ", storeInfo, youtuberInfo)
+      console.log("받아온 데이터는 : ", storeInfo)
       // 4. 주면 명소 불러오기
       let { attractionTb } = await getStoreAttraction(storeInfo.location)
+      console.log("받아온 주변 명소", attractionTb)
       attractionTb = await attractionTb.map(item => {
         // copy array
         let tempArr = item

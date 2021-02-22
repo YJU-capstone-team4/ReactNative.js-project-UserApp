@@ -43,9 +43,9 @@ const YoutuberList = (props) => {
   return (
     <View style={styles.container}>
       {
-        props.data && props.data.ytbChannelTb && props.data.ytbChannelTb.length !== 0 ?
+        props.data && props.data.length !== 0 ?
           <FlatList
-            data={props.data.ytbChannelTb}
+            data={props.data}
             keyExtractor={(item, index) => `${item.ytbChannel}-${index}`}
             horizontal
             showsHorizontalScrollIndicator={false}

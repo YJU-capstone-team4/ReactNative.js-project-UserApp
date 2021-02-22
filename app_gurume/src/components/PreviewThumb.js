@@ -14,6 +14,7 @@ import flowThumb_1 from '@images/flowThumb_1.jpg'
 import flowThumb_2 from '@images/flowThumb_2.jpg'
 
 export default function PreviewThumb({ data, regionFlow }) {
+    console.log('PreviewThumb', data)
     const [isActivity, setIsActivity] = useState(false)
 
     return (

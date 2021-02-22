@@ -46,8 +46,11 @@ export default function FlowHashTags(props) {
 
   }, [props.signalOnPress])
 
-  const deleteUserHashtag = (item) => {
 
+  // 선택적 해시태그 삭제
+  const handelRemoveHashTag = (index) => {
+
+    setUserHashTags(userHashTags.filter((e, i) => (i !== index)))
   }
 
   // 해시태그 클릭 시 변경되는 UI
@@ -128,7 +131,11 @@ export default function FlowHashTags(props) {
           {
             userHashTags.length > 0 ? userHashTags.map((item, index) =>
               <View key={`user-${index}`} style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
-                <TouchableOpacity hitSlop={{ top: 20, right: 50, bottom: 20, left: 20 }} style={styles.deleteHashtagBtn} >
+                <TouchableOpacity
+                  onPress={() => handelRemoveHashTag(index)}
+                  hitSlop={{ top: 20, right: 50, bottom: 20, left: 20 }}
+                  style={styles.deleteHashtagBtn}
+                >
                   <MaterialCommunityIcons
                     name="close-circle"
                     color="black"

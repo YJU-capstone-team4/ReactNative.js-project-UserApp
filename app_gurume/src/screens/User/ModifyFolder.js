@@ -17,8 +17,8 @@ const ModifyFolder = () => {
 
     const initFolder = async () => {
         const data = await getUserFolders()
-        console.log(data.shareFlow)
-        setFolders(data.shareFlow)
+        console.log(data)
+        setFolders(data)
     }
 
     const setNewFolder = async () => {
@@ -27,11 +27,13 @@ const ModifyFolder = () => {
         }
 
         await setUserFolder(folderName)
+        setFolderName('')
         initFolder()
     }
 
     const deleteFolder = async (argFolderId) => {
-        await deleteUserFolder(argFolderId)
+        const result = await deleteUserFolder(argFolderId)
+        console.log(result)
         initFolder()
     }
 
@@ -56,12 +58,12 @@ const ModifyFolder = () => {
             {
                 folders && folders.map(item =>
                     <View key={item._id} style={styles.folderWrapper}>
-                        <Text size={18}>{item.shareTitle}</Text>
+                        <Text size={18}>{item.folderTitle}</Text>
                         <View style={{ flexDirection: 'row' }}>
                             <TouchableOpacity>
                                 <FontAwesome size={20} name="pencil" />
                             </TouchableOpacity>
-                            <TouchableOpacity deleteFolder={() => deleteFolder(item.folderId)} style={styles.btnWrapper}>
+                            <TouchableOpacity onPress={() => deleteFolder(item._id)} style={styles.btnWrapper}>
                                 <FontAwesome size={20} name="trash" />
                             </TouchableOpacity>
                         </View>

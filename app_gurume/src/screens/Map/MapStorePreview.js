@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { StyleSheet, View, Image, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
 
 // import dummy data
@@ -18,29 +18,32 @@ import thumb_2 from '@images/thumbnail_2.jpg'
 import youtubeVideoDefault from '@images/youtubeVideoDefault.jpg'
 
 
+import TestContext from "../../context/TestContext";
+
 // TODO 모듈화 마무리하기.
 const MapStorePreview = ({ navigation, storeIndex }) => {
 
     const [store, setStore] = useState(null)
     const [youtube, setYoutube] = useState(null)
 
+    const { state } = useContext(TestContext)
 
     useEffect(() => {
         console.log("정보가 들어왔어요!", storeIndex)
 
-        async function init(argStoreIndex) {
+        async function init(argStoreIndex, argFolderId) {
             // TODO 특정 맛집 id, name, address
-            const storeData = await getStoreInfo(argStoreIndex)
+            const storeData = await getStoreInfo(argStoreIndex, argFolderId)
             console.log(storeData)
-            // setStore(storeData)
+            setStore(storeData)
 
             // 맛집 방문한 유튜버, 맛집이 나온 영상 썸네일
-            const { ytbChannelTb } = await getStoreYoutubers(argStoreIndex)
-            console.log(ytbChannelTb)
-            setYoutube(ytbChannelTb)
+            const { video } = await getStoreYoutubers(argStoreIndex)
+            console.log(video)
+            setYoutube(video)
         }
 
-        init(storeIndex)
+        init(storeIndex, state.initValue.selectedFolderId)
     }, [storeIndex])
 
 

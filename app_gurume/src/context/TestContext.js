@@ -20,7 +20,8 @@ const TestContextProvider = ({ children }) => {
         isLogin: true,
         nickName: 'Kokohaseyo',
         userEmail: 'c0305sh@naver.com',
-        photoUrl: user_profile
+        photoUrl: user_profile,
+        selectedFolderId: '60336db678a46f2a7fa8ccc8'
     })
 
     // 프로바이더에 value 프로퍼티로 삽입해줄 객체를 생성하는데, 여기서는 상태와 셋 함수를 state와 actions로 설정.

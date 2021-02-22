@@ -16,6 +16,12 @@ async function getAllYoutubersInfo() {
     return data
 }
 
+// 유튜버 이름으로 검색
+async function searchYoutuberByName(argYoutuberName) {
+    const { data } = await instance.get(`/youtuberSearch/${argYoutuberName}`)
+    return data
+}
+
 // 사용자가 입력한 유튜버 검색
 async function getYoutuberInfo(argYoutuberId = DEFAULT_YOUTUBER_ID) {
     const { data } = await instance.get(`map/youtuberSearch/youtuber/${argYoutuberId}`)
@@ -66,5 +72,6 @@ export {
     getYoutuberVideoInfo,
     getYoutuberRegionInfo,
     getFindOneYoutuberInfo,
-    setYoutuberLike
+    setYoutuberLike,
+    searchYoutuberByName
 }
