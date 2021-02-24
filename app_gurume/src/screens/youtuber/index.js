@@ -23,6 +23,7 @@ import useThumbsUp from './ThumbsUp'
 import {
   getYoutuberVideoInfo,
   getYoutuberRegionInfo,
+  getYoutuberHashtags,
   getFindOneYoutuberInfo,
   setYoutuberLike
 } from '../../utils/api/youtuber'
@@ -30,38 +31,41 @@ import {
 // 임시 데이터
 const YOUTUBER_ID = `5fb73d0e4c2de82830b54834`
 
-export default () => {
-  const [isVisible, setIsVisible] = useState(false)                       // 유트브 영상 재생 미니 모달 제어
-  const [videoId, setVideoId] = useState('r-LNSGSCDJg')                   // 유튜브 영상 ID ( 현재 클릭한 )
+export default (props) => {
+  const { route } = props                                                             // 라우터 정보
+  const [isVisible, setIsVisible] = useState(false)                                   // 유트브 영상 재생 미니 모달 제어
+  const [videoId, setVideoId] = useState('r-LNSGSCDJg')                               // 유튜브 영상 ID ( 현재 클릭한 )
 
-  const [isOverScroll, setIsOverScroll] = useState(false)                 // 반응형 헤더 제어
+  const [isOverScroll, setIsOverScroll] = useState(false)                             // 반응형 헤더 제어
 
   // useThumbs 데이터
   const [ThumbsUp, isActivity, setIsActivity] = useThumbsUp()
 
   // <<-- 유튜버 검색 결과 토글
   const [searchToggle, setSearchToggle] = useState(false)
-  const [searchYoutuber, setSearchYoutuber] = useState({ _id: null, label: null })                              // 유튜버 검색 text
+  const [searchYoutuber, setSearchYoutuber] = useState({ _id: null, label: null })    // 유튜버 검색 text
   // -->>
 
   // youtuber data
   const [youtuber, setYoutuber] = useState(null)
   const [regionTags, setRegionTags] = useState(null)
+  const [userTags, setUserTags] = useState(null)
   const [videos, setVideos] = useState(null)
 
   useEffect(() => {
-    async function init(argStoreId) {
+    async function init(argYoutuber) {
       // * 유튜버 정보 로딩
-      const getYoutuberInfo = await getFindOneYoutuberInfo(argStoreId ? argStoreId : YOUTUBER_ID)
-      console.log('유튜버 정보 로딩', getYoutuberInfo)
+      const getYoutuberInfo = await getFindOneYoutuberInfo(argYoutuber ? argYoutuber : YOUTUBER_ID)
       setYoutuber(getYoutuberInfo)
       setIsActivity(getYoutuberInfo.youtuberLike)
 
       // * 데이터 로딩 ( 비디오, 지역태그 )
-      const getVideoInfos = await getYoutuberVideoInfo(argStoreId ? argStoreId : YOUTUBER_ID)
-      const getRegionTags = await getYoutuberRegionInfo(argStoreId ? argStoreId : YOUTUBER_ID)
+      const getVideoInfos = await getYoutuberVideoInfo(argYoutuber ? argYoutuber : YOUTUBER_ID)
+      const getUserTagInfos = await getYoutuberHashtags(argYoutuber ? argYoutuber : YOUTUBER_ID)
+      const getRegionTags = await getYoutuberRegionInfo(argYoutuber ? argYoutuber : YOUTUBER_ID)
 
       // * 데이터 바인딩
+      setUserTags(getUserTagInfos)
       setRegionTags(getRegionTags)
       setVideos(getVideoInfos.video)
     }
@@ -69,11 +73,19 @@ export default () => {
     init(searchYoutuber._id)
   }, [searchYoutuber])
 
-  const handleChangeLikeValue = async () => {
+  // 라우터 감지 후 유튜버 정보 반환
+  useEffect(() => {
+    if (route.params && route.params.youtuberId) {
+      setSearchYoutuber({
+        _id: route.params.youtuberId,
+        label: route.params.youtubeChannel
+      })
+    }
+  }, [route.params])
+
+  const handleChangeLikeValue = () => {
     // 유튜버 좋아요 결과 반영 API 실행
-    console.log("바뀔 데이터 값은?", !isActivity)
-    const { data } = await setYoutuberLike(!isActivity, YOUTUBER_ID)
-    console.log('변경 결과는?', data)
+    setYoutuberLike(!isActivity, searchYoutuber._id)
   }
 
   return (
@@ -104,20 +116,28 @@ export default () => {
           <ThumbsUp onPress={handleChangeLikeValue} />
         </View>
         <YoutuberProfile data={youtuber} />
-        <YoutuberRank />
-        <HashTagList />
+        <YoutuberRank data={youtuber} />
+        <HashTagList data={userTags} />
+
+        {/*  조회수 Top5 유튜브 영상 컴포넌트  */}
         <View style={styles.wrapper}>
-          <Text size={20} style={{ padding: 10, paddingLeft: 15 }}>
+          <Text size={20} style={{ paddingTop: 10, paddingLeft: 15 }}>
             🏆 조회수
           <Text weight="BOLD" size={22} color={Colors.RED_4}> Top 5 </Text>
           영상
          </Text>
           <VideoList data={videos} setIsVisible={setIsVisible} />
         </View>
-        <Text size={18} style={{ padding: 10 }}>해시태그로 보는 지역별 영상</Text>
-        <YoutuberMovieInfo data={regionTags} />
-        <YoutubePlayer isVisible={isVisible} setIsVisible={setIsVisible} videoId={videoId} />
+
+        {/*  지역별 유튜브 영상 컴포넌트  */}
+        <View style={[styles.wrapper, { marginTop: 25 }]}>
+          <Text size={20} style={{ padding: 10, paddingLeft: 15 }}>🌏 해시태그로 보는 지역별 영상</Text>
+          <YoutuberMovieInfo navi={props.navigation} data={regionTags} />
+        </View>
       </ScrollView>
+
+      {/* 유튜브 영상 재생 모달 */}
+      <YoutubePlayer isVisible={isVisible} setIsVisible={setIsVisible} videoId={videoId} />
 
       {/* 유튜버 검색 리스트 모달 */}
       {searchToggle ?
@@ -154,11 +174,7 @@ const styles = StyleSheet.create({
     zIndex: 1000
   },
   hiddenHeader: {
-    backgroundColor: '#DFF7F7',
-    // paddingTop: getStatusBarHeight() + 10,
-    // paddingVertical: 18,
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    backgroundColor: '#DFF7F7'
   },
   hiddenThumbsUpWrapper: {
     position: 'absolute',

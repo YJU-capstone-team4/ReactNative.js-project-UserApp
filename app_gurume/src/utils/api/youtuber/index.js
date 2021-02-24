@@ -34,6 +34,12 @@ async function getYoutuberVideoInfo(argYoutuberId = DEFAULT_YOUTUBER_ID) {
     return data
 }
 
+// 유튜버에 관한 해시태그 반환
+async function getYoutuberHashtags(argYoutuberId = DEFAULT_YOUTUBER_ID) {
+    const { data } = await instance.get(`/youtuber/userTag/${argYoutuberId}`)
+    return data
+}
+
 // 유튜버가 방문한 지역 태그 반환
 async function getYoutuberRegionInfo(argYoutuberId = DEFAULT_YOUTUBER_ID) {
     const { data } = await instance.get(`/youtuber/region/${argYoutuberId}`)
@@ -73,5 +79,6 @@ export {
     getYoutuberRegionInfo,
     getFindOneYoutuberInfo,
     setYoutuberLike,
-    searchYoutuberByName
+    searchYoutuberByName,
+    getYoutuberHashtags
 }

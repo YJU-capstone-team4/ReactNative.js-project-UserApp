@@ -5,6 +5,7 @@ import DraggableFlatList from 'react-native-draggable-flatlist';
 // import styles
 import { Text } from '@styles/CommonStyles';
 import markerImage from '@images/delivery_128.png'
+import coffeeImage from '@images/coffee_128.png'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Colors } from '@styles'
 
@@ -25,29 +26,15 @@ function DraggableFlowList(props) {
                 onLongPress={drag}
                 activeOpacity={0.7}
             >
-                <Image style={styles.iconWrapper} source={markerImage} />
+                <Image style={styles.iconWrapper} source={item.typeStore ? markerImage : coffeeImage} />
                 <MaterialCommunityIcons style={styles.horizontalDots} color={
                     index === 0 || index === props.data.length - 1 ? Colors.YELLOW_6 : Colors.GRAY_2
                 } name='dots-horizontal-circle' />
-                <Text style={styles.textContainer}>{item.ytbStoreTbId.storeInfo.storeName}</Text>
+                <Text style={styles.textContainer}>{item.storeName}</Text>
                 { index !== props.data.length - 1 ?
                     <MaterialCommunityIcons style={styles.verticalDots} color={Colors.GRAY_7} size={20} name='dots-vertical' /> : null
                 }
             </TouchableOpacity>
-            // <TouchableOpacity
-            //     style={[styles.wrapperContainer]}
-            //     onLongPress={drag}
-            //     activeOpacity={0.7}
-            // >
-            //     <Image style={styles.iconWrapper} source={markerImage} />
-            //     <MaterialCommunityIcons style={styles.horizontalDots} color={
-            //         index === 0 || index === props.data.length - 1 ? Colors.YELLOW_6 : Colors.GRAY_2
-            //     } name='dots-horizontal-circle' />
-            //     <Text style={styles.textContainer}>{item.storeName}</Text>
-            //     { index !== props.data.length - 1 ?
-            //         <MaterialCommunityIcons style={styles.verticalDots} color={Colors.GRAY_7} size={20} name='dots-vertical' /> : null
-            //     }
-            // </TouchableOpacity>
         );
     }, [])
 

@@ -96,7 +96,7 @@ export default (props) => {
             <View style={[styles.contentWrapper, { marginHorizontal: 0 }]}>
               <Text weight={"BOLD"} style={{ marginTop: 10, marginLeft: 13 }} size={22}>🌝 {store.storeName} 를 방문한 유튜버 정보</Text>
               <View style={[styles.videoWrapper, { paddingBottom: 10 }]}>
-                <YoutuberList data={youtubers} />
+                <YoutuberList navi={props.navigation} data={youtubers} />
               </View>
             </View>
             {/* 관련 영상 */}

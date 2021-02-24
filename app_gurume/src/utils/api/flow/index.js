@@ -10,7 +10,6 @@ import { instance, afterAuth } from '../index'
 // 유저가 추가한 동선 폴더 상세조회
 async function getFlowListItems(argFolderId) {
     const { data } = await instance.get(`userFlow/folder/${argFolderId}`)
-
     return data
 }
 

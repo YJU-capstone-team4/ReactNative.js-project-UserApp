@@ -102,8 +102,8 @@ const MapStorePreview = ({ navigation, storeIndex }) => {
                         <Text numberOfLines={1}>{store ? store.storeAddress : null}</Text>
                     </View>
                     {/* navigation -> storeMap ( 가게 상세 정보 이동 ) */}
-                    <Button onPress={() => toggleStoreNavation()} style={{ backgroundColor: Colors.RED_3, padding: 10 }}>
-                        <Text color={Colors.WHITE} weight={"BOLD"}>상세보기</Text>
+                    <Button onPress={() => toggleStoreNavation()} style={{ backgroundColor: Colors.RED_3 }}>
+                        <Text style={{paddingVertical: 2}} color={Colors.WHITE} weight={"BOLD"}>상세보기</Text>
                     </Button>
                 </View>
             </View>

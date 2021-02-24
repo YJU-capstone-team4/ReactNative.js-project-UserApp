@@ -34,6 +34,17 @@ async function getStoreInfo(argStoreId, argFolderId = null) {
     return data
 }
 
+// 특정 맛집 즐겨찾기 추가
+async function setStoreFavorite(argStoreId, argFolderId, argStoreType) {
+    const { data } = await instance.post(`/favorite`, {
+        folder_id: argFolderId,
+        store_id: argStoreId,
+        typeStore: argStoreType
+    })
+
+    return data
+}
+
 // 맛집 방문한 유튜버, 맛집이 나온 영상 썸네일
 async function getStoreYoutubers(argStoreId) {
     const { data } = await instance.get(`/storeYoutuber/${argStoreId}`)
@@ -51,7 +62,6 @@ async function getStoreAttraction(argLocation) {
                 lng: parseInt(argLocation.lng)
             }
         })
-        console.log('testest1', data)
         return data
 
     } catch (e) {
@@ -64,5 +74,6 @@ export {
     getYoutuberMarkers,
     getStoreInfo,
     getStoreYoutubers,
-    getStoreAttraction
+    getStoreAttraction,
+    setStoreFavorite
 }

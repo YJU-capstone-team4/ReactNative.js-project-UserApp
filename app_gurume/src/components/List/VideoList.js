@@ -36,7 +36,6 @@ const renderVideo = (data, index, setIsVisible) => {
 }
 
 export default function VideoList(props) {
-  console.log('VideoList', props)
   return (
     <View
       style={{
@@ -45,7 +44,6 @@ export default function VideoList(props) {
     >
       {/* 유튜버 조회수 Top 5 영상 위치 */}
       <FlatList
-        // data={props.youtubers ? props.youtubers : mokupViedo}
         data={mokupViedo}
         keyExtractor={(item, index) => `${item.storeId}-${index}`}
         horizontal

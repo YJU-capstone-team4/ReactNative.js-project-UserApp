@@ -35,7 +35,7 @@ export default (props) => {
         <View style={styles.wrapContainer}>
           {/* 🇰🇷  */}
           <Text style={styles.textContainer} size={20}><Text size={22} weight="BOLD">🇰🇷 {region.label}</Text>를 방문한 유튜버</Text>
-          {!youtuberLoading && youtuberData ? <YoutuberList data={youtuberData.ytbChannelTb} /> : null}
+          {!youtuberLoading && youtuberData ? <YoutuberList navi={props.navigation} data={youtuberData.ytbChannelTb} /> : null}
         </View>
         <View style={[styles.wrapContainer, { marginTop: 10 }]}>
           <Text style={styles.textContainer} size={20}><Text size={22} weight="BOLD">🇰🇷 {region.label}</Text> Top5 인기 동선</Text>

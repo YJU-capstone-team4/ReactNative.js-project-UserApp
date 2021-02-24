@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native'
 
 // import components
 import UserInfo from './UserInfo'
-import { Colors } from '@styles';
+import { Colors } from '@styles'
 
 export default function index(props) {
     // 임시 로그인 검증 변수
