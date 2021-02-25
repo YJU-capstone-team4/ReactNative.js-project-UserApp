@@ -37,7 +37,7 @@ export default function index() {
     }
     init(itemValue.key)
   }, [itemValue])
-  
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       {/* Header... */}
@@ -47,7 +47,7 @@ export default function index() {
       </View>
       <SelectBox />
       {/* <FlowMap /> */}
-      <View style={{ borderColor:Colors.GRAY_2, borderWidth: 2 }}>
+      <View style={{ borderColor: Colors.GRAY_4, borderWidth: 2 }}>
         <PolygonMap data={markers} />
       </View>
       <FlowInput />

@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { StyleSheet, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, SafeAreaView, TouchableOpacity, Image, View } from 'react-native';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 
 // import styles
@@ -15,7 +15,7 @@ import { setRefreshFlowIndex } from '../../../utils/api/flow'
 const NUM_ITEMS = 10
 
 function DraggableFlowList(props) {
-    const renderItem = useCallback(({ item, index, drag, isActive }) => {
+    const renderItem = ({ item, index, drag, isActive }) => {
         /**
          * 1. 아이템의 종류에 따라서 기본 마커가 달라진다 ( 맛집, 관광지, 카페 )
          * 2. index 처음과 끝은 하이라이팅 지원.
@@ -30,13 +30,16 @@ function DraggableFlowList(props) {
                 <MaterialCommunityIcons style={styles.horizontalDots} color={
                     index === 0 || index === props.data.length - 1 ? Colors.YELLOW_6 : Colors.GRAY_2
                 } name='dots-horizontal-circle' />
-                <Text style={styles.textContainer}>{item.storeName}</Text>
+                <View>
+                    <Text style={styles.textContainer}>{item.storeName}</Text>
+                    <Text size={14} >{item.storeAddress}</Text>
+                </View>
                 { index !== props.data.length - 1 ?
                     <MaterialCommunityIcons style={styles.verticalDots} color={Colors.GRAY_7} size={20} name='dots-vertical' /> : null
                 }
             </TouchableOpacity>
         );
-    }, [])
+    }
 
     const handleDragEnd = async (e) => {
         const { to, from, data } = await e

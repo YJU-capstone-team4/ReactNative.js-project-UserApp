@@ -10,14 +10,12 @@ import { instance, afterAuth } from '../index'
 // 폴더 조회
 async function getUserFolders() {
     const { data } = await instance.get('userFlow')
-    console.log('폴더 조회 결과 반환 : ', data)
     return data
 }
 
 // 폴더 생성
 async function setUserFolder(argFolderTitle) {
     const { data } = await instance.post('userFlow', {
-        user_id: "payment",
         folderTitle: argFolderTitle
     })
 

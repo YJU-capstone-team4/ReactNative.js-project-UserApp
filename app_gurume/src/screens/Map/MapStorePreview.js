@@ -3,18 +3,15 @@ import { StyleSheet, View, Image, Dimensions, TouchableOpacity, ScrollView } fro
 
 // import dummy data
 import { mokupMarkers1 } from '../../model/mokupMap'
-import { getStoreInfo, getStoreYoutubers } from '../../utils/api/map/index'
+import { getStoreInfo, getStoreYoutubers, setStoreFavorite } from '../../utils/api/map/index'
 
 // import styles
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Text, Button } from '@styles/CommonStyles'
 import { Colors } from '@styles'
 const { width, height } = Dimensions.get("window")
-const CARD_HEIGHT = height * 0.535
+const CARD_HEIGHT = height * 0.54
 const CARD_WIDTH = width
-import thumb_4 from '@images/thumbnail_4.jpg'
-import thumb_3 from '@images/thumbnail_3.jpg'
-import thumb_2 from '@images/thumbnail_2.jpg'
 import youtubeVideoDefault from '@images/youtubeVideoDefault.jpg'
 
 import TestContext from "../../context/TestContext";
@@ -28,18 +25,28 @@ const MapStorePreview = ({ navigation, storeIndex }) => {
 
     useEffect(() => {
         async function init(argStoreIndex, argFolderId) {
-            // TODO 특정 맛집 id, name, address
-            const storeData = await getStoreInfo(argStoreIndex, argFolderId)
-            setStore(storeData)
-            console.log('ㅎㅇ', storeData)
-
             // 맛집 방문한 유튜버, 맛집이 나온 영상 썸네일
             const { video } = await getStoreYoutubers(argStoreIndex)
             setYoutube(video)
+
+            // TODO 특정 맛집 id, name, address
+            const storeData = await getStoreInfo(argStoreIndex, argFolderId)
+            setStore(storeData)
         }
 
         init(storeIndex, state.initValue.selectedFolderId)
     }, [storeIndex])
+
+    /**
+     * 클릭 시 해당 폴더에 추가.
+     * @param {해당 가게 바뀐 좋아요 값} argLikeValue 
+     */
+    const toggleLikeStore = (argLikeValue) => {
+        setStoreFavorite(store._id, state.initValue.selectedFolderId)
+        // setYoutube([...youtube, {
+        //     storeLike: argLikeValue
+        // }])
+    }
 
 
     const toggleStoreNavation = () => {
@@ -59,25 +66,24 @@ const MapStorePreview = ({ navigation, storeIndex }) => {
         <View style={styles.cardContainer}>
             <View style={styles.cardCover}>
                 {
-                    youtube ?
-                        <>
-                            <ScrollView horizontal={true} style={styles.youtuberContainer}>
-                                {
-                                    youtube.map(({ ytbProfile, _id }) =>
-                                        <TouchableOpacity key={`youtuber-${_id}`} onPress={() => toggleYoutuberNavigation(_id)}>
-                                            <Image source={{ uri: ytbProfile }} style={styles.youtuberImage} />
-                                        </TouchableOpacity>
-                                    )
-                                }
-                            </ScrollView>
-                            {/* 유튜브 썸네일 */}
+                    youtube &&
+                    <>
+                        {/* 유튜브 썸네일 */}
+                        {
+                            youtube[0].ytbThumbnail && youtube[0].ytbThumbnail !== '../images/test.jpg' ?
+                                <Image source={{ uri: youtube[0].ytbThumbnail }} style={styles.cardImage} resizeMode="cover" />
+                                : <Image source={youtubeVideoDefault} style={styles.cardImage} resizeMode="cover" />
+                        }
+                        <ScrollView horizontal={true} style={styles.youtuberContainer}>
                             {
-                                youtube[0].ytbThumbnail && youtube[0].ytbThumbnail !== '../images/test.jpg' ?
-                                    <Image source={{ uri: youtube[0].ytbThumbnail }} style={styles.cardImage} resizeMode="cover" />
-                                    : <Image source={youtubeVideoDefault} style={styles.cardImage} resizeMode="cover" />
+                                youtube.map(({ ytbProfile, _id }) =>
+                                    <TouchableOpacity key={`youtuber-${_id}`} onPress={() => toggleYoutuberNavigation(_id)}>
+                                        <Image source={{ uri: ytbProfile }} style={styles.youtuberImage} />
+                                    </TouchableOpacity>
+                                )
                             }
-                        </>
-                        : null
+                        </ScrollView>
+                    </>
                 }
                 {/* 가게 정보 */}
                 <View style={styles.textContext}>
@@ -86,7 +92,11 @@ const MapStorePreview = ({ navigation, storeIndex }) => {
                             {/* 가게 이름 */}
                             <Text size={18} style={{ marginVertical: 6 }} weight={"EXTRA_BOLD"} numberOfLines={1}>{store ? store.storeName : null}</Text>
                             {/* 즐겨찾기 버튼 */}
-                            <TouchableOpacity hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }} style={{ marginTop: 3 }}>
+                            <TouchableOpacity
+                                onPress={() => toggleLikeStore(!store.storeLike)}
+                                hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }}
+                                style={{ marginTop: 3 }}
+                            >
                                 {/* TODO 로그인 전에는 전부 비활성화 -> 클릭시 로그인 창으로 Navigation 이용해서 이동 */}
                                 <MaterialCommunityIcons style={styles.startIconContainer} color={store && store.storeLike ? Colors.YELLOW_3 : Colors.GRAY_2} name="star" />
                             </TouchableOpacity>
@@ -137,6 +147,8 @@ const styles = StyleSheet.create({
         borderWidth: 1.5,
         borderColor: Colors.RED_4,
         borderRadius: 3,
+        marginTop: 10,
+        marginBottom: 2
     },
     textContext: {
         flex: 1.5,
@@ -151,7 +163,7 @@ const styles = StyleSheet.create({
     },
     youtuberContainer: {
         paddingHorizontal: 5,
-        paddingVertical: 2,
+        paddingVertical: 4,
         height: 8,
     },
     youtuberImage: {
@@ -159,7 +171,7 @@ const styles = StyleSheet.create({
         height: 47,
         borderRadius: 30,
         margin: 5,
-        borderColor: Colors.GRAY_2,
+        borderColor: Colors.GRAY_4,
         borderWidth: 0.5
     },
 })

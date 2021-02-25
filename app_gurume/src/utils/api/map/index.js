@@ -35,7 +35,7 @@ async function getStoreInfo(argStoreId, argFolderId = null) {
 }
 
 // 특정 맛집 즐겨찾기 추가
-async function setStoreFavorite(argStoreId, argFolderId, argStoreType) {
+async function setStoreFavorite(argStoreId, argFolderId, argStoreType = '맛집') {
     const { data } = await instance.post(`/favorite`, {
         folder_id: argFolderId,
         store_id: argStoreId,

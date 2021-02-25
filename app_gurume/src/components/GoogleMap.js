@@ -73,7 +73,6 @@ const GoogleMap = (props) => {
         {
           // 마커 생성
           props.data ? props.data.ytbStoreTb.map((value, index) => {
-            console.log(value)
             const { _id, storeName, location } = value
 
             return (

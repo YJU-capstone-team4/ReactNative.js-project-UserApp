@@ -1,4 +1,5 @@
-import React,{ createContext, useState } from 'react'
+import React, { createContext, useState } from 'react'
+import { View, Text } from 'react-native'
 import user_profile from '@images/user_profile.png'
 
 /**
@@ -21,7 +22,7 @@ const TestContextProvider = ({ children }) => {
         nickName: 'Kokohaseyo',
         userEmail: 'c0305sh@naver.com',
         photoUrl: user_profile,
-        selectedFolderId: '60336db678a46f2a7fa8ccc8'
+        selectedFolderId: '60336da678a46f2a7fa8ccc6'
     })
 
     // 프로바이더에 value 프로퍼티로 삽입해줄 객체를 생성하는데, 여기서는 상태와 셋 함수를 state와 actions로 설정.
@@ -29,10 +30,13 @@ const TestContextProvider = ({ children }) => {
         state: { initValue },
         actions: { setInitValue }
     }
+
     // value에 위에서 생성한 객체 넣어준다.
-    return (<TestContext.Provider value={value}>
-        {children}
-    </TestContext.Provider>)
+    return (
+        <TestContext.Provider value={value}>
+            {children}
+        </TestContext.Provider>
+    )
 }
 
 // 사용하기 쉽게 하기위해 변수명을 새로 지어줬다.

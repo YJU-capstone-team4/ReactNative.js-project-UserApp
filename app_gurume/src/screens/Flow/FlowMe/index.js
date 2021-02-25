@@ -67,7 +67,7 @@ export default function index(props) {
           </View>
           {
             markers && convertedMarkers ? <>
-              <View style={{ borderColor: Colors.GRAY_2, borderWidth: 2, marginHorizontal: 6 }}>
+              <View style={{ borderColor: Colors.GRAY_4, borderWidth: 2, marginHorizontal: 6 }}>
                 <PolygonMap data={convertedMarkers} />
               </View>
               <DraggableFlowList data={markers} setMarkers={setMarkers} setConvertMarker={setConvertMarkers} folderValue={itemValue} />
