@@ -10,17 +10,15 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { Text, Button } from '@styles/CommonStyles'
 import { Colors } from '@styles'
 const { width, height } = Dimensions.get("window")
-const CARD_HEIGHT = height * 0.53
+const CARD_HEIGHT = height * 0.535
 const CARD_WIDTH = width
 import thumb_4 from '@images/thumbnail_4.jpg'
 import thumb_3 from '@images/thumbnail_3.jpg'
 import thumb_2 from '@images/thumbnail_2.jpg'
 import youtubeVideoDefault from '@images/youtubeVideoDefault.jpg'
 
-
 import TestContext from "../../context/TestContext";
 
-// TODO 모듈화 마무리하기.
 const MapStorePreview = ({ navigation, storeIndex }) => {
 
     const [store, setStore] = useState(null)
@@ -29,25 +27,20 @@ const MapStorePreview = ({ navigation, storeIndex }) => {
     const { state } = useContext(TestContext)
 
     useEffect(() => {
-        console.log("정보가 들어왔어요!", storeIndex)
-
         async function init(argStoreIndex, argFolderId) {
             // TODO 특정 맛집 id, name, address
             const storeData = await getStoreInfo(argStoreIndex, argFolderId)
-            console.log(storeData)
             setStore(storeData)
+            console.log('ㅎㅇ', storeData)
 
             // 맛집 방문한 유튜버, 맛집이 나온 영상 썸네일
             const { video } = await getStoreYoutubers(argStoreIndex)
-            console.log(video)
             setYoutube(video)
         }
 
         init(storeIndex, state.initValue.selectedFolderId)
     }, [storeIndex])
 
-
-    const STORE_YOUTUBE_INFO = mokupMarkers1[0]
 
     const toggleStoreNavation = () => {
         navigation.navigate('storeMap', {
@@ -91,11 +84,11 @@ const MapStorePreview = ({ navigation, storeIndex }) => {
                     <View style={{ flex: 1 }}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             {/* 가게 이름 */}
-                            <Text style={{ marginVertical: 6 }} weight={"EXTRA_BOLD"} numberOfLines={1}>{store ? store.storeName : null}</Text>
+                            <Text size={18} style={{ marginVertical: 6 }} weight={"EXTRA_BOLD"} numberOfLines={1}>{store ? store.storeName : null}</Text>
                             {/* 즐겨찾기 버튼 */}
-                            <TouchableOpacity style={{ marginTop: 3 }}>
+                            <TouchableOpacity hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }} style={{ marginTop: 3 }}>
                                 {/* TODO 로그인 전에는 전부 비활성화 -> 클릭시 로그인 창으로 Navigation 이용해서 이동 */}
-                                <MaterialCommunityIcons style={styles.startIconContainer} name="star" />
+                                <MaterialCommunityIcons style={styles.startIconContainer} color={store && store.storeLike ? Colors.YELLOW_3 : Colors.GRAY_2} name="star" />
                             </TouchableOpacity>
                         </View>
                         {/* 가게 상세정보 */}
@@ -103,7 +96,7 @@ const MapStorePreview = ({ navigation, storeIndex }) => {
                     </View>
                     {/* navigation -> storeMap ( 가게 상세 정보 이동 ) */}
                     <Button onPress={() => toggleStoreNavation()} style={{ backgroundColor: Colors.RED_3 }}>
-                        <Text style={{paddingVertical: 2}} color={Colors.WHITE} weight={"BOLD"}>상세보기</Text>
+                        <Text style={{ paddingVertical: 2 }} color={Colors.WHITE} weight={"BOLD"}>상세보기</Text>
                     </Button>
                 </View>
             </View>
@@ -141,19 +134,19 @@ const styles = StyleSheet.create({
         flex: 4,
         width: "96%",
         alignSelf: "center",
-        borderWidth: 3,
-        borderColor: Colors.RED_3,
-        // backgroundColor: Colors.RED_3
+        borderWidth: 1.5,
+        borderColor: Colors.RED_4,
+        borderRadius: 3,
     },
     textContext: {
         flex: 1.5,
         padding: 10,
-        paddingTop: 6,
+        paddingTop: 2,
     },
     startIconContainer: {
+        padding: 1,
         borderRadius: 50,
         backgroundColor: Colors.GRAY_6,
-        color: Colors.YELLOW_3,
         fontSize: 20
     },
     youtuberContainer: {

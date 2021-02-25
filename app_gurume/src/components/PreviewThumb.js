@@ -13,12 +13,12 @@ const PREVIEW_WIDTH = width * 0.95
 import flowThumb_1 from '@images/flowThumb_1.jpg'
 import flowThumb_2 from '@images/flowThumb_2.jpg'
 
-export default function PreviewThumb({ data, regionFlow }) {
+export default function PreviewThumb({ data, regionFlow, onPress }) {
     console.log('PreviewThumb', data)
     const [isActivity, setIsActivity] = useState(false)
 
     return (
-        <View style={styles.container}>
+        <TouchableOpacity activeOpacity={0.8} onPress={() => { onPress ? onPress() : null }} style={styles.container}>
             <TouchableOpacity onPress={() => setIsActivity(!isActivity)} style={styles.likeContainer}>
                 <AntIcons name="heart" size={20} color={isActivity ? Colors.RED_4 : Colors.GRAY_4} />
             </TouchableOpacity>
@@ -51,7 +51,7 @@ export default function PreviewThumb({ data, regionFlow }) {
                     </View>
                 )}
             </ScrollView>
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
         bottom: 10,
         flexWrap: 'nowrap',
         maxWidth: 330,
+        zIndex: 1000000
     },
     tagContainer: {
         elevation: 2,

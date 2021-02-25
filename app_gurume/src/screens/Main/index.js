@@ -28,7 +28,7 @@ export default (props) => {
   return (
     <View>
       <View style={styles.statusBar} />
-      <ScrollView stickyHeaderIndices={[0]}>
+      <ScrollView showsVerticalScrollIndicator={false} stickyHeaderIndices={[0]}>
         <MainHeader navi={props.navigation} region={region.label} setRegion={setRegion} />
         <NoticeContainer />
         {/* <SearchInput /> */}
@@ -39,7 +39,7 @@ export default (props) => {
         </View>
         <View style={[styles.wrapContainer, { marginTop: 10 }]}>
           <Text style={styles.textContainer} size={20}><Text size={22} weight="BOLD">🇰🇷 {region.label}</Text> Top5 인기 동선</Text>
-          <FlowList data={flowData} />
+          <FlowList navi={props.navigation} data={flowData} />
         </View>
       </ScrollView>
     </View>

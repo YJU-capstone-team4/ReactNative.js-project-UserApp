@@ -120,14 +120,12 @@ const shareFlowTb = {
   ]
 }
 
-export default function index() {
+export default function index(props) {
   const [itemValue, setItemValue] = useState({ key: 0, label: '해시태그' })
   const [hashTagText, setHashTagText] = useState('')
   const [signalOnPress, setSignalOnPress] = useState(false)
 
   const [flowsData, setFlowsData] = useState()
-
-
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
@@ -164,6 +162,8 @@ export default function index() {
         <Text style={styles.textContainer}>검색 결과</Text>
       </View>
       <FlowList
+        naviPath={true}
+        navi={props.navigation}
         data={shareFlowTb}
       />
     </ScrollView>
