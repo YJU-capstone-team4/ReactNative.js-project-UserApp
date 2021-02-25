@@ -16,6 +16,12 @@ async function getAllYoutubersInfo() {
     return data
 }
 
+// 유튜버 이름으로 검색
+async function searchYoutuberByName(argYoutuberName) {
+    const { data } = await instance.get(`/youtuberSearch/${argYoutuberName}`)
+    return data
+}
+
 // 사용자가 입력한 유튜버 검색
 async function getYoutuberInfo(argYoutuberId = DEFAULT_YOUTUBER_ID) {
     const { data } = await instance.get(`map/youtuberSearch/youtuber/${argYoutuberId}`)
@@ -25,6 +31,12 @@ async function getYoutuberInfo(argYoutuberId = DEFAULT_YOUTUBER_ID) {
 // 유튜버 조회수 top5 영상
 async function getYoutuberVideoInfo(argYoutuberId = DEFAULT_YOUTUBER_ID) {
     const { data } = await instance.get(`/youtuber/video/${argYoutuberId}`)
+    return data
+}
+
+// 유튜버에 관한 해시태그 반환
+async function getYoutuberHashtags(argYoutuberId = DEFAULT_YOUTUBER_ID) {
+    const { data } = await instance.get(`/youtuber/userTag/${argYoutuberId}`)
     return data
 }
 
@@ -66,5 +78,7 @@ export {
     getYoutuberVideoInfo,
     getYoutuberRegionInfo,
     getFindOneYoutuberInfo,
-    setYoutuberLike
+    setYoutuberLike,
+    searchYoutuberByName,
+    getYoutuberHashtags
 }

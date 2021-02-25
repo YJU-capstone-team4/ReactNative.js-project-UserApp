@@ -35,14 +35,11 @@ const MapScreen = ({ navigation }) => {
   // -->>
 
   //******** 토글 제어 ********
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('drawerClose', (e) => {
-  //     console.log("사이드바 종료")
-  //     // setShowFlows(false)
-  //   });
-
-  //   return unsubscribe
-  // }, [navigation])
+  useEffect(() => {
+    if (setSearchYoutuber) {
+      setStoreToggle(false)
+    }
+  }, [searchToggle])
 
   //******** 지도 제어 ********
 
@@ -76,7 +73,7 @@ const MapScreen = ({ navigation }) => {
 
           return tempObj
         })
-        
+
         setMarkers({ count: convertedMarkerArray.length, ytbStoreTb: convertedMarkerArray })
       } catch (e) {
         // 전체 마커 refresh 메서드 실행
@@ -113,7 +110,7 @@ const MapScreen = ({ navigation }) => {
       }
       {/* 새로고침 토글 */}
       <TouchableOpacity onPress={() => toggleRefreshBtn()} style={styles.refreshIconWrapper}>
-        <Text weight={"BOLD"} color={Colors.GREEN_3}>🎃  마커 초기화</Text>
+        <Text weight={"BOLD"} color={Colors.GREEN_3}>🎃  새로고침</Text>
       </TouchableOpacity>
 
       {/* 가게 정보 토글 */}

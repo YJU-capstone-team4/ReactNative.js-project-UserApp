@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -7,18 +7,15 @@ import { getStatusBarHeight } from "react-native-status-bar-height";
 // components
 import useSelectBox from '@components/SelectBox'
 import { Text } from '../../styles/CommonStyles'
-import { mokupSideRoute } from '../../model/mokupSideRoute'
-import { mokupUser, mokupFolder } from '../../model/mokupUser'
 
 // styles
 import { Colors } from '@styles'
 import user_profile from '@images/user_profile.png'
 import MapFlows from './MapFlows';
 
-
 // import apis
 import { getFlowListItems } from '../../utils/api/flow';
-
+import TestContext from "../../context/TestContext"
 
 // navigation.goBack()
 
@@ -27,18 +24,33 @@ export default function MapSideBar(props) {
     const [showFlows, setShowFlows] = useState(false)
     const [SelectBox, itemValue, setItemValue] = useSelectBox()
 
+    const { state, actions } = useContext(TestContext)
+
     useEffect(() => {
         if (!itemValue) return
 
-        console.log("사용자가 폴더 변경을 요청하였습니다.")
+        /**
+         * 폴더 변경 요청에 따른 초기화 함수
+         * @param {폴더 아이디} argFolderId 
+         */
         async function init(argFolderId) {
-            const { stores } = await getFlowListItems(argFolderId)
-            console.log(stores)
-            setUserFlow(stores)
+            const data = await getFlowListItems(argFolderId)
+            setUserFlow(data)
         }
+        // 폴더 데이터 초기화
         init(itemValue.key)
+
+        // 전역 변수의 폴더 선택값 반영 folderId
+        actions.setInitValue({
+            ...state.initValue,
+            selectedFolderId: itemValue.key
+        })
     }, [itemValue])
 
+    /**
+     * 유저 데이터 반환 컴포넌트
+     * @param {유저 데이터} data 
+     */
     const UserSet = (data) => {
         return <View style={[styles.container, {
             flexDirection: 'row',
@@ -70,7 +82,7 @@ export default function MapSideBar(props) {
                     (
                         <View style={[styles.folderWrapper, { marginTop: -40 }]}>
                             <View style={{ flex: 1, zIndex: 100 }}>
-                                <SelectBox userFlow={mokupFolder} />
+                                <SelectBox />
                             </View>
                             <MapFlows data={userFlow} navi={props.navigation} />
                         </View>
@@ -80,16 +92,34 @@ export default function MapSideBar(props) {
                         <View style={{ flex: 1 }}>
                             <UserSet />
                             <View style={styles.folderContainer}>
-                                {mokupSideRoute.map((data, index) =>
-                                    <TouchableOpacity
-                                        onPress={() => setShowFlows(true)}
-                                        style={styles.container, styles.folderItemContainer}
-                                        key={index}
-                                    >
-                                        <MaterialCommunityIcons name={data.icon} color="black" size={18} />
-                                        <Text size={20} style={styles.folderText}>{data.routeName}</Text>
-                                    </TouchableOpacity >
-                                )}
+                                <TouchableOpacity
+                                    onPress={() => setShowFlows(true)}
+                                    style={styles.container, styles.folderItemContainer}
+                                >
+                                    <MaterialCommunityIcons name={'account-box'} color="black" size={18} />
+                                    <Text size={20} style={styles.folderText}>동선 폴더</Text>
+                                </TouchableOpacity >
+                                <TouchableOpacity
+                                    onPress={() => setShowFlows(true)}
+                                    style={styles.container, styles.folderItemContainer}
+                                >
+                                    <MaterialCommunityIcons name={'star'} color="black" size={18} />
+                                    <Text size={20} style={styles.folderText}>유튜버 즐겨찾기</Text>
+                                </TouchableOpacity >
+                                <TouchableOpacity
+                                    onPress={() => setShowFlows(true)}
+                                    style={styles.container, styles.folderItemContainer}
+                                >
+                                    <MaterialCommunityIcons name={'star'} color="black" size={18} />
+                                    <Text size={20} style={styles.folderText}>관심있는 유저동선</Text>
+                                </TouchableOpacity >
+                                <TouchableOpacity
+                                    onPress={() => setShowFlows(true)}
+                                    style={styles.container, styles.folderItemContainer}
+                                >
+                                    <MaterialCommunityIcons name={'account-box'} color="black" size={18} />
+                                    <Text size={20} style={styles.folderText}>내 정보</Text>
+                                </TouchableOpacity >
                             </View>
                         </View>
                         {/* 로그아웃 메뉴 */}

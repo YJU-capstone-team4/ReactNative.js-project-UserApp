@@ -1,21 +1,21 @@
 import React, { useCallback } from 'react';
-import { StyleSheet, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, SafeAreaView, TouchableOpacity, Image, View } from 'react-native';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 
 // import styles
 import { Text } from '@styles/CommonStyles';
 import markerImage from '@images/delivery_128.png'
+import coffeeImage from '@images/coffee_128.png'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Colors } from '@styles'
 
 // import apis
 import { setRefreshFlowIndex } from '../../../utils/api/flow'
 
-
 const NUM_ITEMS = 10
 
 function DraggableFlowList(props) {
-    const renderItem = useCallback(({ item, index, drag, isActive }) => {
+    const renderItem = ({ item, index, drag, isActive }) => {
         /**
          * 1. 아이템의 종류에 따라서 기본 마커가 달라진다 ( 맛집, 관광지, 카페 )
          * 2. index 처음과 끝은 하이라이팅 지원.
@@ -26,17 +26,20 @@ function DraggableFlowList(props) {
                 onLongPress={drag}
                 activeOpacity={0.7}
             >
-                <Image style={styles.iconWrapper} source={markerImage} />
+                <Image style={styles.iconWrapper} source={item.typeStore ? markerImage : coffeeImage} />
                 <MaterialCommunityIcons style={styles.horizontalDots} color={
-                    index === 0 || index === props.tempData.length - 1 ? Colors.YELLOW_6 : Colors.GRAY_2
+                    index === 0 || index === props.data.length - 1 ? Colors.YELLOW_6 : Colors.GRAY_2
                 } name='dots-horizontal-circle' />
-                <Text style={styles.textContainer}>{item.ytbStoreTbId.storeInfo.storeName}</Text>
-                { index !== props.tempData.length - 1 ?
+                <View>
+                    <Text style={styles.textContainer}>{item.storeName}</Text>
+                    <Text size={14} >{item.storeAddress}</Text>
+                </View>
+                { index !== props.data.length - 1 ?
                     <MaterialCommunityIcons style={styles.verticalDots} color={Colors.GRAY_7} size={20} name='dots-vertical' /> : null
                 }
             </TouchableOpacity>
         );
-    }, [])
+    }
 
     const handleDragEnd = async (e) => {
         const { to, from, data } = await e
@@ -45,14 +48,14 @@ function DraggableFlowList(props) {
         if (to === from) {
             return;
         } else {
-            const storeIds = data.map(v => v.storeId)
+            const storeIds = await data.map(v => v.storeId)
 
             let arrayChangedIndexes = {
                 folderId: props.folderValue.key,
                 storeIds
             }
 
-            props.setTempData(data)
+            await props.setMarkers(data)
             const result = await setRefreshFlowIndex(arrayChangedIndexes)
             console.log('스토어 순서 변경 결과는?', result)
         }
@@ -61,7 +64,7 @@ function DraggableFlowList(props) {
     return (
         <SafeAreaView style={styles.container}>
             <DraggableFlatList
-                data={props.tempData}
+                data={props.data}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => `draggable-item-${index}`}
                 onDragEnd={(e) => handleDragEnd(e)}

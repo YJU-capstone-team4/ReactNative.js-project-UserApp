@@ -8,35 +8,40 @@ import { FONT_SIZE_18 } from './../../styles/typography';
 const { width, height } = Dimensions.get("window");
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 
-
-export default function YoutuberRank() {
+/**
+ * 유튜버 랭킹 반환 컴포넌트
+ * @param {youtuberRankInfo} data 
+ */
+export default function YoutuberRank({ data }) {
+  console.log(data)
+  if (!data) return <View><Text>Loading...</Text></View>
+  const isPluseValue = data.ytbRankIncrease >= 0
   return (
     <View
       style={{
-        backgroundColor: Colors.GRAY_1 + "50",
-        // height: 300,
-        padding: 25,
+        backgroundColor: Colors.GRAY_2 + "30",
+        padding: 15,
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginVertical: 10,
+        marginVertical: 15,
       }}
     >
       <View style={styles.textWrapper}>
         <Text style={styles.textTitle}>인기 유튜버</Text>
-        <Text style={styles.textRank} weight="BOLD">1 위</Text>
-        <FontAwesomeIcon style={[styles.statusIcon, { top: 3 }]} color={Colors.GREEN_4} size={19} name="sort-up" />
-        <Text>1</Text>
+        <Text style={styles.textRank} weight="BOLD">{data.rank} 위</Text>
+        <FontAwesomeIcon style={[styles.statusIcon, { top: 3 }]} color={isPluseValue ? Colors.GREEN_4 : Colors.RED_3} size={19} name="sort-up" />
+        <Text>{data.ytbRankIncrease}</Text>
       </View>
       <View style={styles.textWrapper}>
-        <Text style={styles.textTitle}>급상승 유튜버</Text>
-        <Text style={styles.textRank} weight="BOLD">2 위</Text>
+        <Text style={styles.textTitle}>인기동영상 개수</Text>
+        <Text style={styles.textRank} weight="BOLD">{data.videoCount} 개</Text>
         <FontAwesomeIcon style={[styles.statusIcon, { bottom: 6 }]} color={Colors.RED_3} size={19} name="sort-down" />
         <Text>1</Text>
       </View>
       <View style={styles.textWrapper}>
-        <Text style={styles.textTitle}>인기 급상승 유튜버</Text>
-        <Text style={styles.textRank} weight="BOLD">100 위</Text>
+        <Text style={styles.textTitle}>최근 업로드 영상 개수</Text>
+        <Text style={styles.textRank} weight="BOLD">{data.lastVideoCount} 개</Text>
         <FontAwesomeIcon style={[styles.statusIcon, { top: 3 }]} color={Colors.GREEN_4} size={19} name="sort-up" />
         <Text>3</Text>
       </View>
@@ -49,11 +54,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginVertical: 10,
     alignItems: 'center',
+    justifyContent: 'space-between'
   },
   textTitle: {
     width: width * 0.35,
     fontSize: FONT_SIZE_18,
-    textAlign: 'center'
+    // textAlign: 'center'
   },
   textRank: {
     width: width * 0.2,

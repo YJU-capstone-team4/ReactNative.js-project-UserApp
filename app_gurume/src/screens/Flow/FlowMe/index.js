@@ -18,23 +18,37 @@ import DraggableFlowList from './DraggableFlowList'
 import { getFlowListItems } from '../../../utils/api/flow'
 
 export default function index(props) {
-  const EMPTY_ARRAY = []              // ScrollView + FlatList 충돌로 빈 배열 선언
-  const [markers, setMarkers] = useState(tempMarkers)
-  const [tempMarker, setTempMarker] = useState(null)
-  const [SelectBox, itemValue, setItemValue] = useSelectBox()
+  const EMPTY_ARRAY = []                                              // ScrollView + FlatList 충돌로 빈 배열 선언
+
+  const [markers, setMarkers] = useState(null)                        // 사용자 폴더의 값 로딩 후 반환
+  const [convertedMarkers, setConvertMarkers] = useState(null)        // PolygonMap 맵 전용 변수 :: 위도 경도만 따로 빼낸 배열.
+  const [SelectBox, itemValue, setItemValue] = useSelectBox()         // 폴더 변경 감지
 
   useEffect(() => {
     if (!itemValue) return
 
-    console.log("사용자가 폴더 변경을 요청하였습니다.")
     async function init(argFolderId) {
-      const { stores } = await getFlowListItems(argFolderId)
-      console.log(stores)
-      setTempMarker(stores)
+      // 폴더 아이디로 해당 값 불러오기
+      const data = await getFlowListItems(argFolderId)
 
+      setMarkers(data)
     }
     init(itemValue.key)
   }, [itemValue])
+
+  useEffect(() => {
+    if (!markers) return
+
+    // PolygonMap 맵 전용 위도 경도 데이터셋 만들기
+    let tempConvertedArr = markers.map(item => (
+      {
+        latitude: item.location.lat,
+        longitude: item.location.lng
+      }
+    ))
+
+    setConvertMarkers(tempConvertedArr)
+  }, [markers])
 
   return (
     <FlatList
@@ -51,11 +65,13 @@ export default function index(props) {
           <View style={{ paddingHorizontal: 6 }}>
             <SelectBox />
           </View>
-          <View style={{ borderColor: Colors.GRAY_2, borderWidth: 2, marginHorizontal: 6 }}>
-            <PolygonMap data={markers} />
-          </View>
           {
-            tempMarker && <DraggableFlowList data={markers} setMarkers={setMarkers} tempData={tempMarker} setTempData={setTempMarker} folderValue={itemValue} />
+            markers && convertedMarkers ? <>
+              <View style={{ borderColor: Colors.GRAY_4, borderWidth: 2, marginHorizontal: 6 }}>
+                <PolygonMap data={convertedMarkers} />
+              </View>
+              <DraggableFlowList data={markers} setMarkers={setMarkers} setConvertMarker={setConvertMarkers} folderValue={itemValue} />
+            </> : null
           }
         </>
       }

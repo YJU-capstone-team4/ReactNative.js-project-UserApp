@@ -19,10 +19,12 @@ import UserScreen from '@screens/User'
 import SignInScreen from '@screens/User/SignIn'
 import ModifyFolder from '@screens/User/ModifyFolder'
 import ModifyName from '@screens/User/ModifyName'
+import ShowFlowScreen from '@screens/Flow/FlowSearch/ShowFlowList'
 
 const Tab = createBottomTabNavigator()
 const MapStack = createStackNavigator()
 const MainStack = createStackNavigator()
+const FlowStack = createStackNavigator()
 
 export default function BottomNavigation() {
   return (
@@ -67,7 +69,7 @@ export default function BottomNavigation() {
       />
       <Tab.Screen
         name="Flow"
-        component={FlowScreen}
+        component={FlowStackScreen}
         options={{
           tabBarLabel: '동선',
           tabBarIcon: ({ color }) => (
@@ -75,16 +77,6 @@ export default function BottomNavigation() {
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="statistic"
-        component={StatisticScreen}
-        options={{
-          tabBarLabel: '통계',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="chart-bubble" color={color} size={26} />
-          ),
-        }}
-      /> */}
       <Tab.Screen
         name="Youtuber"
         component={YoutuberScreen}
@@ -96,6 +88,35 @@ export default function BottomNavigation() {
         }}
       />
     </Tab.Navigator >
+  )
+}
+
+const FlowStackScreen = ({ navigation }) => {
+  // console.log('네비게이션 정보', navigation)
+  return (
+    <FlowStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          shadowColor: 'black', // iOS
+          elevation: 0, // Android
+        },
+        headerTitleStyle: {
+          fontFamily: Typography.FONT_FAMILY_BOLD,
+          marginTop: 2,
+          marginLeft: -10,
+        }
+      }}>
+      <MapStack.Screen
+        name="Flow"
+        options={{ headerMode: 'none', headerShown: false }}
+        component={FlowScreen}
+      />
+      <MapStack.Screen
+        name="FlowShow"
+        options={({ route }) => ({ title: route.params.title ? route.params.title : '동선 보기' })}
+        component={ShowFlowScreen}
+      />
+    </FlowStack.Navigator>
   )
 }
 

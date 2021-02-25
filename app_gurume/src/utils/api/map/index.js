@@ -31,7 +31,17 @@ async function getStoreInfo(argStoreId, argFolderId = null) {
             folderId: argFolderId
         }
     })
-    // console.log(data.ytbStoreTb)
+    return data
+}
+
+// 특정 맛집 즐겨찾기 추가
+async function setStoreFavorite(argStoreId, argFolderId, argStoreType = '맛집') {
+    const { data } = await instance.post(`/favorite`, {
+        folder_id: argFolderId,
+        store_id: argStoreId,
+        typeStore: argStoreType
+    })
+
     return data
 }
 
@@ -44,10 +54,19 @@ async function getStoreYoutubers(argStoreId) {
 
 // 맛집 인근의 주면 명소 추천
 async function getStoreAttraction(argLocation) {
-    const { lat, lng } = argLocation
+    try {
+        console.log('맛집 인근의 주면 명소 추천')
+        const { data } = await instance.get(`storeDetail/attraction`, {
+            params: {
+                lat: parseInt(argLocation.lat),
+                lng: parseInt(argLocation.lng)
+            }
+        })
+        return data
 
-    const { data } = await instance.get(`storeDetail/attraction/${lat}&${lng}`)
-    return data
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 export {
@@ -55,5 +74,6 @@ export {
     getYoutuberMarkers,
     getStoreInfo,
     getStoreYoutubers,
-    getStoreAttraction
+    getStoreAttraction,
+    setStoreFavorite
 }

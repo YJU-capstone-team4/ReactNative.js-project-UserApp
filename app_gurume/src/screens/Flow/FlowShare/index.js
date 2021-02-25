@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
-import { ScrollView, StyleSheet, View, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import { tempMarkers } from '../../../model/mokupMap'
 
 // import styles
 import { Colors } from '@styles'
 import { Text } from '@styles/CommonStyles'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 
 // import components
@@ -15,10 +14,30 @@ import PolygonMap from '@components/PolygonMap'
 // import screens
 import FlowInput from './FlowInput'
 
+// import apis
+import { getFlowListItems } from '../../../utils/api/flow'
+
 export default function index() {
   const [markers, setMarkers] = useState(tempMarkers)
   const [SelectBox, itemValue, setItemValue] = useSelectBox()
-  
+
+  useEffect(() => {
+    if (!itemValue) return
+
+    async function init(argFolderId) {
+      // 폴더 아이디로 해당 값 불러오기
+      const data = await getFlowListItems(argFolderId)
+      let tempConvertedArr = data.map(item => (
+        {
+          latitude: item.location.lat,
+          longitude: item.location.lng
+        }
+      ))
+      setMarkers(tempConvertedArr)
+    }
+    init(itemValue.key)
+  }, [itemValue])
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
       {/* Header... */}
@@ -28,7 +47,7 @@ export default function index() {
       </View>
       <SelectBox />
       {/* <FlowMap /> */}
-      <View style={{ borderColor:Colors.GRAY_2, borderWidth: 2 }}>
+      <View style={{ borderColor: Colors.GRAY_4, borderWidth: 2 }}>
         <PolygonMap data={markers} />
       </View>
       <FlowInput />

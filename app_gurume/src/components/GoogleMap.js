@@ -73,11 +73,8 @@ const GoogleMap = (props) => {
         {
           // 마커 생성
           props.data ? props.data.ytbStoreTb.map((value, index) => {
-            console.log(value)
             const { _id, storeName, location } = value
-            if (index === 0) {
-              console.log('🔥 ' + "데이터 인식 후 지도에 마커 그려지는 중.")
-            }
+
             return (
               <Marker
                 key={`marker-${index}`}
