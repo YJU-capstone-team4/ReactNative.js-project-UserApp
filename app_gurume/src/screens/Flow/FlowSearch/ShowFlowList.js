@@ -46,7 +46,7 @@ const ShowFlowLIst = () => {
             </TouchableOpacity>
             <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
                 {
-                    markers && <View style={{ borderColor: Colors.GRAY_5, borderWidth: 2 }}>
+                    markers && markers.length > 0 && <View style={{ borderColor: Colors.GRAY_5, borderWidth: 2 }}>
                         <PolygonMap data={markers} />
                     </View>
                 }

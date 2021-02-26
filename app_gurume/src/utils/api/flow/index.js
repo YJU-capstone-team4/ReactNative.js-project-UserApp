@@ -32,6 +32,24 @@ async function setFlowLike(argType, argFlowId) {
     return data
 }
 
-export { setFlowLike, getFlowListItems, setRefreshFlowIndex }
+// 동선 공유
+async function setUserFlowShare(argData) {
+    try {
+        const { data } = await instance.post('shareFlow/folder', argData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+
+        return data
+    } catch (e) {
+        console.log('에러에러', e)
+        return (e)
+    }
+
+    // return data
+}
+
+export { setFlowLike, getFlowListItems, setRefreshFlowIndex, setUserFlowShare }
 
 

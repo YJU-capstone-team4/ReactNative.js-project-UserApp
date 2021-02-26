@@ -66,12 +66,12 @@ export default function index(props) {
             <SelectBox />
           </View>
           {
-            markers && convertedMarkers ? <>
+            markers && convertedMarkers && convertedMarkers.length > 0 ? <>
               <View style={{ borderColor: Colors.GRAY_4, borderWidth: 2, marginHorizontal: 6 }}>
                 <PolygonMap data={convertedMarkers} />
               </View>
               <DraggableFlowList data={markers} setMarkers={setMarkers} setConvertMarker={setConvertMarkers} folderValue={itemValue} />
-            </> : null
+            </> : <Text style={{ alignSelf: 'center' }}>폴더가 비었습니다. 가게를 추가해주세요!!</Text>
           }
         </>
       }

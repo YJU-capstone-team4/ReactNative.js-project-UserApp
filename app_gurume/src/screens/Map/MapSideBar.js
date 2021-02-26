@@ -96,7 +96,7 @@ export default function MapSideBar(props) {
                                     onPress={() => setShowFlows(true)}
                                     style={styles.container, styles.folderItemContainer}
                                 >
-                                    <MaterialCommunityIcons name={'account-box'} color="black" size={18} />
+                                    <MaterialCommunityIcons name={'folder-open'} color="black" size={18} />
                                     <Text size={20} style={styles.folderText}>동선 폴더</Text>
                                 </TouchableOpacity >
                                 <TouchableOpacity

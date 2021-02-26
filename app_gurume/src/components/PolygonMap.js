@@ -98,8 +98,8 @@ const styles = StyleSheet.create({
     markerWrapper: {
         backgroundColor: Colors.YELLOW_5,
         borderRadius: 50,
-        width: 40,
-        height: 40,
+        width: 35,
+        height: 35,
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: Colors.GRAY_8,

@@ -29,6 +29,7 @@ const useSelectBox = (props) => {
         temp.push({
           key: item._id,
           label: item.folderTitle,
+          isShared: item.share
         })
       ))
 
