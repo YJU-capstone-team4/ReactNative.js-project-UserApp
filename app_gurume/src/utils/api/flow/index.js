@@ -7,6 +7,12 @@ import { instance, afterAuth } from '../index'
 
 // 🎃 API 리스트 🎃
 
+// 동선 - 검색
+async function getSharedUserFlow(argData) {
+    const { data } = await instance.post('flowSearch/flow', argData)
+    return data
+}
+
 // 유저가 추가한 동선 폴더 상세조회
 async function getFlowListItems(argFolderId) {
     const { data } = await instance.get(`userFlow/folder/${argFolderId}`)
@@ -50,6 +56,6 @@ async function setUserFlowShare(argData) {
     // return data
 }
 
-export { setFlowLike, getFlowListItems, setRefreshFlowIndex, setUserFlowShare }
+export { setFlowLike, getFlowListItems, setRefreshFlowIndex, setUserFlowShare, getSharedUserFlow }
 
 

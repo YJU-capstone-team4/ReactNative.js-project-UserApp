@@ -8,6 +8,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 // import utils
 import { convertRegion, convertFullRegion } from '@utils'
 
+// import apis
+import { getSharedUserFlow } from '../../../utils/api/flow'
+
 // import mokup
 import mokupRegion from '../../../model/mokupRegion'
 
@@ -36,25 +39,48 @@ export default function FlowHashTags(props) {
   const [userHashTags, setUserHashTags] = useState([])
 
   useEffect(() => {
-    if (props.signalOnPress === true) {
+    if (props.signalOnPress === true && props.itemValue.option === 'tag') {
       setUserHashTags([...userHashTags, props.hashTagText])
       props.setSignalOnPress(false)
       props.setHashTagText('')
 
-      // TODO 여기서 검색결과 반영 로직 주는게 좋겠다.
+      const { selectedRegionTags, selectedSeasonTags } = convertRegionArr(regionTags, seasonTags)
+      // 검색 API 전송
+      const sendData = {
+        regionTag: selectedRegionTags,
+        seasonTag: selectedSeasonTags,
+        userTag: [...userHashTags, props.hashTagText],
+        shareTitle: '',
+        nickname: '',
+        option: props.itemValue.option
+      }
+      console.log('검색 API 전송', sendData)
+      sendSearchData(sendData)
     }
-
   }, [props.signalOnPress])
 
 
   // 선택적 해시태그 삭제
   const handelRemoveHashTag = (index) => {
+    const selectedUserHashTag = userHashTags.filter((e, i) => (i !== index))
+    setUserHashTags(selectedUserHashTag)
 
-    setUserHashTags(userHashTags.filter((e, i) => (i !== index)))
+    const { selectedRegionTags, selectedSeasonTags } = convertRegionArr(regionTags, seasonTags)
+    // 검색 API 전송
+    const sendData = {
+      regionTag: selectedRegionTags,
+      seasonTag: selectedSeasonTags,
+      userTag: selectedUserHashTag,
+      shareTitle: '',
+      nickname: '',
+      option: 'tag'
+    }
+
+    sendSearchData(sendData)
   }
 
   // 해시태그 클릭 시 변경되는 UI
-  const hashTagOnPress = (argHastTagType, argItem, argIndex) => {
+  const hashTagOnPress = async (argHastTagType, argItem, argIndex) => {
     // 두 종류로 나뉘어진다.
     // 1. 지역별 해시태그
     // 2. 계절별 해시태그
@@ -66,22 +92,48 @@ export default function FlowHashTags(props) {
     let newArr = [...copyArr] // copying the old datas array
     newArr[argIndex] = argItem
 
+
+    const { selectedRegionTags, selectedSeasonTags } = convertRegionArr(regionTags, seasonTags)
+
+    console.log('결과는!?', selectedRegionTags, selectedSeasonTags)
+
+    argHastTagType === 'region' ? setRegionTags(newArr) : setSeasonTag(newArr)
+
+    // 여기서 서버로 요청 보내고 다시 받아야 함.
+    // 예외 처리) 지역태그, 계절태그 중 하나라도 선택하지 않을 경우, 서버로 전송 불가능 적용.
+    if (selectedRegionTags.length === 0 || selectedSeasonTags.length === 0) return props.setFlowsData(null);
+
+    // 검색 API 전송
+    const sendData = {
+      regionTag: selectedRegionTags,
+      seasonTag: selectedSeasonTags,
+      userTag: userHashTags,
+      shareTitle: '',
+      nickname: '',
+      option: 'tag'
+    }
+    sendSearchData(sendData)
+  }
+
+  const convertRegionArr = (argRegionTags, argSeasonTags) => {
     let selectedRegionTags = []
     let selectedSeasonTags = []
 
-    regionTags.map(item => {
+    argRegionTags.map(item => {
       if (item.onPress) {
         selectedRegionTags.push(item.originalLabel)
       }
     })
 
-    seasonTags.map(item => item.onPress ? selectedSeasonTags.push(item.label) : null)
+    argSeasonTags.map(item => item.onPress ? selectedSeasonTags.push(item.label) : null)
 
+    return { selectedRegionTags, selectedSeasonTags }
+  }
 
-    console.log('결과는!?', selectedRegionTags)
-    console.log('결과는!?', selectedSeasonTags)
-
-    argHastTagType === 'region' ? setRegionTags(newArr) : setSeasonTag(newArr)
+  const sendSearchData = async argData => {
+    const data = await getSharedUserFlow(argData)
+    console.log(data)
+    data.count !== 0 && props.setFlowsData(data)
   }
 
   return (
