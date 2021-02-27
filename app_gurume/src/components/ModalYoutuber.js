@@ -10,10 +10,11 @@ import { getStatusBarHeight } from "react-native-status-bar-height"
 import { Text } from './../styles/CommonStyles'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 const { width, height } = Dimensions.get("window")
+import YOUTUBE_IMAGE from '../assets/images/youtube_image.png'
 
 // import apis
 import { useAsync } from '../utils/hooks'
-import { getAllYoutubersInfo, searchYoutuberByName } from '../utils/api/youtuber/index'
+import { getAllYoutubersInfo, searchYoutuberByName, setYoutuberRequest } from '../utils/api/youtuber/index'
 
 const YoutuberContainer = ({ item, onClick }) => (
     <TouchableOpacity onPress={() => onClick(item._id, item.ytbChannel)} style={styles.wrapperContainer}>
@@ -51,8 +52,6 @@ const ModalYoutuber = (props) => {
     const handleOnChangeText = async (text) => {
         setYoutuberName(text)
 
-        console.log(text)
-
         if (text && text.length > 0) {
             const searchedYoutubers = await searchYoutuberByName(text)
             console.log(searchedYoutubers)
@@ -86,6 +85,12 @@ const ModalYoutuber = (props) => {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    // 서버로 유튜버 정보 요청
+    const handleYoutuberRequest = async () => {
+        const data = await setYoutuberRequest(youtuberName)
+        console.log('ㅇㅁㅅㅁ', data)
     }
 
     const toggleBackButton = () => {
@@ -133,8 +138,31 @@ const ModalYoutuber = (props) => {
                                 <Text>전체 유튜버 데이터가 {!youtubersLoading && youtubers ? youtubers.count : 0}건 있습니다.</Text>
                                 :
                                 <>
-                                    <Text weight="BOLD">{youtuberName}</Text>
-                                    <Text> 관련 데이터가 {!youtubersLoading && youtubers ? youtubers.count : 0}건 있습니다.</Text>
+                                    <View style={{ alignItems: 'center', width: '100%' }}>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <Text weight="BOLD">{youtuberName}</Text>
+                                            <Text> 관련 데이터가 {!youtubersLoading && youtubers ? youtubers.count : 0}건 있습니다.</Text>
+                                        </View>
+                                        {
+                                            !youtubersLoading && youtubers && youtubers.count === 0 && <View style={styles.infoContainer} >
+                                                <Image source={YOUTUBE_IMAGE} />
+                                                <TouchableOpacity
+                                                    onPress={() => handleYoutuberRequest()}
+                                                    style={styles.infoBtnWrapper}
+                                                >
+                                                    <Text color={Colors.WHITE} size={20}>
+                                                        유튜버
+                                                    </Text>
+                                                    <Text weight="BOLD" style={{ paddingVertical: 10 }} color={Colors.WHITE} size={22}>
+                                                        {youtuberName} 의
+                                                    </Text>
+                                                    <Text color={Colors.WHITE} size={18}>
+                                                        맛집 정보 요청하기
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        }
+                                    </View>
                                 </>
                         }
                     </View>
@@ -151,7 +179,7 @@ const ModalYoutuber = (props) => {
                         ) : <Text weight="BOLD" style={{ alignSelf: 'center', paddingVertical: 20 }}>유튜버 데이터 로딩중...</Text>
                 }
             </ScrollView>
-        </View>
+        </View >
     )
 }
 
@@ -214,6 +242,23 @@ const styles = StyleSheet.create({
         marginTop: 0,
         paddingTop: 10,
         backgroundColor: Colors.WHITE,
+    },
+    infoContainer: {
+        width: '100%',
+        marginTop: 30,
+        alignItems: 'center',
+        paddingTop: 30,
+        backgroundColor: Colors.GRAY_1,
+        borderRadius: 15,
+        elevation: 2
+    },
+    infoBtnWrapper: {
+        marginVertical: 30,
+        paddingVertical: 25,
+        width: "90%",
+        alignItems: 'center',
+        backgroundColor: Colors.GRAY_8,
+        borderRadius: 10
     }
 
 })

@@ -29,7 +29,7 @@ const MapFlows = (props) => {
                 style={[styles.flowBtnContainer, { marginVertical: 20 }]}
                 backgroundColor={Colors.GRAY_7}
                 borderColor={Colors.BLACK}
-                onPress={() => props.navi.navigate('Flow', { screen: 'flowMe' })}
+                onPress={() => props.navi.navigate('Flow')}
             // TODO 네비게이션에 해당 폴더 index 번호 넘겨줘서 루프테이지 - 내 동선 - 해당 인덱스 번호까지 연결해줘야 함.
             >
                 <Text style={{ paddingVertical: 15 }} size={18} color={Colors.WHITE}>🌸 동선 관리 페이지로 이동하기</Text>

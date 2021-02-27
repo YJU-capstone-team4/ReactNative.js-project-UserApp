@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
+import { TouchableOpacity } from 'react-native'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack';
@@ -7,6 +8,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 // import styles
 import { Colors, Typography } from '@styles'
+import { Text } from '@styles/CommonStyles'
 
 // import screens
 import MainScreen from '@screens/Main'
@@ -107,13 +109,30 @@ const FlowStackScreen = ({ navigation }) => {
         }
       }}>
       <MapStack.Screen
-        name="Flow"
+        name="FlowMain"
         options={{ headerMode: 'none', headerShown: false }}
         component={FlowScreen}
       />
       <MapStack.Screen
         name="FlowShow"
-        options={({ route }) => ({ title: route.params.title ? route.params.title : '동선 보기' })}
+        options={({ route }) => ({
+          title: route.params.title ? route.params.title : '동선 보기',
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('FlowMain')}
+              hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }}
+              style={{ left: 15 }}
+            >
+              <MaterialCommunityIcons name="arrow-left-circle" size={28} />
+            </TouchableOpacity>
+          ),
+          headerTitle: props => (
+            <Text weight={"BOLD"} size={20}> { route.params.title}</Text>
+          )
+        })}
+        // options={{
+        //   title: '동선보기',
+        // }}
         component={ShowFlowScreen}
       />
     </FlowStack.Navigator>

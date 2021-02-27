@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, View, TextInput, TouchableOpacity, Alert, Keyboard } from 'react-native'
 import { Colors, Typography } from '@styles'
 import { Text } from '@styles/CommonStyles'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -27,14 +27,16 @@ const ModifyFolder = () => {
         }
 
         await setUserFolder(folderName)
+        Keyboard.dismiss()
         setFolderName('')
         initFolder()
     }
 
     const deleteFolder = async (argFolderId) => {
         const result = await deleteUserFolder(argFolderId)
+        Keyboard.dismiss()
         console.log(result)
-        initFolder()
+        await initFolder()
     }
 
     return (
@@ -60,9 +62,11 @@ const ModifyFolder = () => {
                     <View key={item._id} style={styles.folderWrapper}>
                         <Text size={18}>{item.folderTitle}</Text>
                         <View style={{ flexDirection: 'row' }}>
+                            {/* 수정 */}
                             <TouchableOpacity>
                                 <FontAwesome size={20} name="pencil" />
                             </TouchableOpacity>
+                            {/* 삭제 */}
                             <TouchableOpacity onPress={() => deleteFolder(item._id)} style={styles.btnWrapper}>
                                 <FontAwesome size={20} name="trash" />
                             </TouchableOpacity>

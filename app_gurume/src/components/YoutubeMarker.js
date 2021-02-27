@@ -7,16 +7,14 @@ import { Text } from '@styles/CommonStyles'
 import markerImage from '@images/delivery_128.png'
 
 const YoutubeMarker = (props) => (
-    <MarkerContainer>
-        <CustomMarker source={markerImage} />
-        {
-            <MarkerTitleContainer>
-                <Text style={{ lineHeight: 26 }} size={16} weight={"BOLD"}>{props.title}</Text>
-            </MarkerTitleContainer>
-            //   : null
-        }
+    <MarkerContainer MarkerContainer >
+        <CustomMarker source={props.markerImage} />
+        <MarkerTitleContainer>
+            <Text style={{ lineHeight: 26 }} size={16} weight={"BOLD"}>{props.title}</Text>
+        </MarkerTitleContainer>
     </MarkerContainer>
-);
+)
+
 
 export default YoutubeMarker
 

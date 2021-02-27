@@ -41,11 +41,13 @@ const MapStorePreview = ({ navigation, storeIndex }) => {
      * 클릭 시 해당 폴더에 추가.
      * @param {해당 가게 바뀐 좋아요 값} argLikeValue 
      */
-    const toggleLikeStore = (argLikeValue) => {
-        setStoreFavorite(store._id, state.initValue.selectedFolderId)
-        // setYoutube([...youtube, {
-        //     storeLike: argLikeValue
-        // }])
+    const toggleLikeStore = async () => {
+        setStore({
+            ...store,
+            storeLike: !store.storeLike
+        })
+        await setStoreFavorite(!store.storeLike, store._id, state.initValue.selectedFolderId)
+        console.log("변경완료")
     }
 
 
@@ -66,24 +68,24 @@ const MapStorePreview = ({ navigation, storeIndex }) => {
         <View style={styles.cardContainer}>
             <View style={styles.cardCover}>
                 {
-                    youtube &&
-                    <>
-                        {/* 유튜브 썸네일 */}
-                        {
-                            youtube[0].ytbThumbnail && youtube[0].ytbThumbnail !== '../images/test.jpg' ?
-                                <Image source={{ uri: youtube[0].ytbThumbnail }} style={styles.cardImage} resizeMode="cover" />
-                                : <Image source={youtubeVideoDefault} style={styles.cardImage} resizeMode="cover" />
-                        }
-                        <ScrollView horizontal={true} style={styles.youtuberContainer}>
+                    youtube ?
+                        <>
+                            {/* 유튜브 썸네일 */}
                             {
-                                youtube.map(({ ytbProfile, _id }) =>
-                                    <TouchableOpacity key={`youtuber-${_id}`} onPress={() => toggleYoutuberNavigation(_id)}>
-                                        <Image source={{ uri: ytbProfile }} style={styles.youtuberImage} />
-                                    </TouchableOpacity>
-                                )
+                                youtube[0].ytbThumbnail && youtube[0].ytbThumbnail !== '../images/test.jpg' ?
+                                    <Image source={{ uri: youtube[0].ytbThumbnail }} style={styles.cardImage} resizeMode="cover" />
+                                    : <Image source={youtubeVideoDefault} style={styles.cardImage} resizeMode="cover" />
                             }
-                        </ScrollView>
-                    </>
+                            <ScrollView horizontal={true} style={styles.youtuberContainer}>
+                                {
+                                    youtube.map(({ ytbProfile, _id }) =>
+                                        <TouchableOpacity key={`youtuber-${_id}`} onPress={() => toggleYoutuberNavigation(_id)}>
+                                            <Image source={{ uri: ytbProfile }} style={styles.youtuberImage} />
+                                        </TouchableOpacity>
+                                    )
+                                }
+                            </ScrollView>
+                        </> : <Image source={youtubeVideoDefault} style={styles.cardImage} resizeMode="cover" />
                 }
                 {/* 가게 정보 */}
                 <View style={styles.textContext}>
@@ -93,7 +95,7 @@ const MapStorePreview = ({ navigation, storeIndex }) => {
                             <Text size={18} style={{ marginVertical: 6 }} weight={"EXTRA_BOLD"} numberOfLines={1}>{store ? store.storeName : null}</Text>
                             {/* 즐겨찾기 버튼 */}
                             <TouchableOpacity
-                                onPress={() => toggleLikeStore(!store.storeLike)}
+                                onPress={() => toggleLikeStore()}
                                 hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }}
                                 style={{ marginTop: 3 }}
                             >

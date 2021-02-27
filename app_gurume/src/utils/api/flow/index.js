@@ -27,13 +27,10 @@ async function setRefreshFlowIndex(argData) {
 }
 
 // 동선 좋아요 추가 / 삭제
-async function setFlowLike(argType, argFlowId) {
-    let data = null
-    const idSet = {
+async function setFlowLike(argFlowId) {
+    const data = await instance.post('shareFlow/like', {
         shareFlow_id: argFlowId
-    }
-
-    data = argType ? await instance.post('shareFlow/like', idSet) : await instance.delete('shareFlow/like', idSet)
+    })
 
     return data
 }
@@ -56,6 +53,14 @@ async function setUserFlowShare(argData) {
     // return data
 }
 
-export { setFlowLike, getFlowListItems, setRefreshFlowIndex, setUserFlowShare, getSharedUserFlow }
+// 공유동선 조회수 증가
+async function setYourFlowCountUp(argShareFlowId) {
+    const { data } = await instance.post('shareFlowDetail/folder', {
+        shareFlowId: argShareFlowId
+    })
+}
+
+
+export { setFlowLike, getFlowListItems, setRefreshFlowIndex, setUserFlowShare, getSharedUserFlow, setYourFlowCountUp }
 
 

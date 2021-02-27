@@ -9,6 +9,9 @@ import AntIcons from 'react-native-vector-icons/AntDesign';
 
 const PREVIEW_WIDTH = width * 0.95
 
+// import apis
+import { setFlowLike } from '../utils/api/flow'
+
 // import images
 import flowThumb_1 from '@images/flowThumb_1.jpg'
 import flowThumb_2 from '@images/flowThumb_2.jpg'
@@ -17,9 +20,15 @@ export default function PreviewThumb({ data, regionFlow, onPress }) {
     // console.log('PreviewThumb', data)
     const [isActivity, setIsActivity] = useState(false)
 
+    const handleLikeUp = () => {
+        console.log(data)
+        setFlowLike(data._id)
+        setIsActivity(!isActivity)
+    }
+
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={() => setIsActivity(!isActivity)} style={styles.likeContainer}>
+            <TouchableOpacity onPress={() => handleLikeUp()} style={styles.likeContainer}>
                 <AntIcons name="heart" size={20} color={isActivity ? Colors.RED_4 : Colors.GRAY_4} />
             </TouchableOpacity>
             <Image source={data.adminTag && data.adminTag.seasonTag === '여름' ? flowThumb_1 : flowThumb_2} style={styles.thumbnailImage} />

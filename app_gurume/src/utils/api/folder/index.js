@@ -25,8 +25,11 @@ async function setUserFolder(argFolderTitle) {
 
 // 폴더 삭제
 async function deleteUserFolder(argFolderId) {
-    const { data } = await instance.delete('userFlow')
-    console.log('폴더 삭제 결과 반환 : ', response.data.adminTagTbs[0].adminTag)
+    const { data } = await instance.delete('userFlow', {
+        params: {
+            folder_id: argFolderId
+        }
+    })
     return data
 }
 

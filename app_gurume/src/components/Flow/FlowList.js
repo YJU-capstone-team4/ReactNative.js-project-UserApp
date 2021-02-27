@@ -8,19 +8,23 @@ import { Text } from '@styles/CommonStyles'
 import PreviewThumb from '@components/PreviewThumb'
 
 export default function FlowList(props) {
-  const handleOnPress = () => {
+  const handleOnPress = (argItems) => {
+    const naviData = {
+      shareFlowId: argItems._id,
+      folderId: argItems.folderId,
+      title: argItems.shareTitle
+    }
     props.naviPath ?
-      props.navi.navigate('FlowShow', {
-        title: '서울에는 이런것도 있지'
-      }) :
-      props.navi.navigate('Flow', { screen: 'FlowShow', params: { title: '서울에는 이런것도 있지' } })
+      props.navi.navigate('FlowShow', naviData) :
+      props.navi.navigate('Flow', { screen: 'FlowShow', params: naviData })
   }
   return (
     <View style={styles.container}    >
       {
         props.data && props.data.shareFlowTb && props.data.shareFlowTb.length !== 0 ?
-          props.data.shareFlowTb.map(((value, index) => <PreviewThumb onPress={handleOnPress} regionFlow={Boolean(props.region)} key={`thumb-${index}`} data={value} />)) :
-          <View style={styles.emptyContainer}>
+          props.data.shareFlowTb.map(
+            ((value, index) => <PreviewThumb onPress={() => handleOnPress(value)} regionFlow={Boolean(props.region)} key={`thumb-${index}`} data={value} />)
+          ) : <View style={styles.emptyContainer}>
             <Text>검색 데이터가 없습니다.</Text>
           </View>
       }

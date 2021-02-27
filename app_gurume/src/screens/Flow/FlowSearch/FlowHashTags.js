@@ -21,7 +21,7 @@ const exampleData = mokupRegion.map((item, index) => {
     key: `region-${index}`,
     label: String(convertRegion(item)),
     originalLabel: item,
-    onPress: Boolean(Math.round(Math.random()))
+    onPress: index === 0
   }
 })
 
@@ -29,7 +29,7 @@ const mokupSeasonTags = ["봄", "여름", "가을", "겨울"].map((item, index) 
   return {
     key: `season-${index}`,
     label: item,
-    onPress: false
+    onPress: true
   }
 })
 
@@ -38,23 +38,32 @@ export default function FlowHashTags(props) {
   const [seasonTags, setSeasonTag] = useState(mokupSeasonTags)
   const [userHashTags, setUserHashTags] = useState([])
 
+  // 초기 셋팅값 불러오기
+  useEffect(() => {
+    props.setSignalOnPress(true)
+  }, [])
+
+  // 사용자의 태그 클릭에 따른 검색 결과 반환
   useEffect(() => {
     if (props.signalOnPress === true && props.itemValue.option === 'tag') {
-      setUserHashTags([...userHashTags, props.hashTagText])
+      let copyUserHashTag = Array.prototype.slice.call(userHashTags)
+      if (props.hashTagText.length > 0) {
+        copyUserHashTag.push(props.hashTagTex)
+        setUserHashTags(copyUserHashTag)
+        props.setHashTagText('')
+      }
       props.setSignalOnPress(false)
-      props.setHashTagText('')
 
       const { selectedRegionTags, selectedSeasonTags } = convertRegionArr(regionTags, seasonTags)
       // 검색 API 전송
       const sendData = {
         regionTag: selectedRegionTags,
         seasonTag: selectedSeasonTags,
-        userTag: [...userHashTags, props.hashTagText],
+        userTag: copyUserHashTag,
         shareTitle: '',
         nickname: '',
-        option: props.itemValue.option
+        option: 'tag'
       }
-      console.log('검색 API 전송', sendData)
       sendSearchData(sendData)
     }
   }, [props.signalOnPress])
@@ -91,7 +100,6 @@ export default function FlowHashTags(props) {
 
     let newArr = [...copyArr] // copying the old datas array
     newArr[argIndex] = argItem
-
 
     const { selectedRegionTags, selectedSeasonTags } = convertRegionArr(regionTags, seasonTags)
 
@@ -132,8 +140,44 @@ export default function FlowHashTags(props) {
 
   const sendSearchData = async argData => {
     const data = await getSharedUserFlow(argData)
-    console.log(data)
-    data.count !== 0 && props.setFlowsData(data)
+    console.log('서버로 전송한 값', argData)
+    console.log('서버로 부터 받은 값', data)
+    props.setFlowsData(data)
+    /**
+     * 서버로 전송한 값 Object {
+  "nickname": "",
+  "option": "tag",
+  "regionTag": Array [
+    "서울특별시",
+  ],
+  "seasonTag": Array [
+    "봄",
+    "여름",
+    "가을",
+    "겨울",
+  ],
+  "shareTitle": "",
+  "userTag": Array [],
+}
+
+서버로 전송한 값 Object {
+  "nickname": "",
+  "option": "tag",
+  "regionTag": Array [
+    "서울특별시",
+  ],
+  "seasonTag": Array [
+    "봄",
+    "여름",
+    "가을",
+    "겨울",
+  ],
+  "shareTitle": "",
+  "userTag": Array [
+    "",
+  ],
+}
+     */
   }
 
   return (

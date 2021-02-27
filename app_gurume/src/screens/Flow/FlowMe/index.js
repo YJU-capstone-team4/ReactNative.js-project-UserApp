@@ -26,7 +26,7 @@ export default function index(props) {
 
   useEffect(() => {
     if (!itemValue) return
-
+    console.log(props)
     async function init(argFolderId) {
       // 폴더 아이디로 해당 값 불러오기
       const data = await getFlowListItems(argFolderId)

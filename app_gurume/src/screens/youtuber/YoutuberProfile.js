@@ -10,8 +10,7 @@ const { width, height } = Dimensions.get("window");
 import thumb from '@images/thumbnail_1.jpg'
 
 export default function youtuberProfile({ data }) {
-  return (
-    data &&
+  return data ?
     <View
       style={styles.container}
     >
@@ -19,13 +18,16 @@ export default function youtuberProfile({ data }) {
       <Text style={styles.titleContainer} weight="BOLD" size={20}>{data.ytbChannel}</Text>
       <Text>구독자 {parseInt(data.ytbSubscribe / 1000)}만명</Text>
     </View>
-  )
+    : <View style={styles.container}    >
+      <View style={[styles.youtuberImage, { backgroundColor: Colors.GRAY_2 }]} />
+      <Text style={styles.titleContainer} weight="BOLD" size={20}>로딩중...</Text>
+      <Text>구독자 n만명</Text>
+    </View>
 }
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.WHITE,
-    // height: 200,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
