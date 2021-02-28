@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, StyleSheet } from 'react-native'
 
 // import components
@@ -12,31 +12,16 @@ import { Text } from '@styles/CommonStyles'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 // import apis
-import { getUserFolders } from '../utils/api/folder'
+import TestContext from "../context/TestContext"
 
 const useSelectBox = (props) => {
-  const [userFlows, setUserFlows] = useState(null)
   const [itemValue, setItemValue] = useState(null)
   const [ModalSelector, visible, setVisible] = useModalSelector()
 
-  // 초기 유저 폴더 세팅
-  useEffect(() => {
-    async function init() {
-      const data = await getUserFolders()
-      console.log(data)
-      let temp = [{ key: -1, section: true, label: '코코님의 동선 폴더' }]
-      data.map(item => (
-        temp.push({
-          key: item._id,
-          label: item.folderTitle,
-          isShared: item.share
-        })
-      ))
+  const { globalUserFlows } = useContext(TestContext)
 
-      setUserFlows(temp)
-      setItemValue(temp[1])
-    }
-    init()
+  useEffect(() => {
+    setItemValue(globalUserFlows[1])
   }, [])
 
   const SelectBox = () => {
@@ -44,7 +29,7 @@ const useSelectBox = (props) => {
     return (
       <>
         {
-          userFlows ?
+          globalUserFlows ?
             <View style={styles.folderWrap}>
               <TouchableOpacity
                 style={styles.downIcon}
@@ -52,7 +37,7 @@ const useSelectBox = (props) => {
                 hitSlop={{ top: 60, right: 60, bottom: 60, left: 60 }}
               >
                 <MaterialCommunityIcons size={16} color={Colors.RED_3} style={{ paddingRight: 3 }} name="map-marker" />
-                <Text size={20}> {itemValue ? itemValue.label : userFlows[1].label}</Text>
+                <Text size={20}> {itemValue ? itemValue.label : globalUserFlows[1].label}</Text>
                 <FeatherIcons name="chevron-down" size={22} color={Colors.GRAY_8} />
               </TouchableOpacity>
             </View>
@@ -61,7 +46,7 @@ const useSelectBox = (props) => {
         {
           visible ?
             <ModalSelector
-              data={userFlows}
+              data={globalUserFlows}
               onChange={setItemValue}
             />
             : null

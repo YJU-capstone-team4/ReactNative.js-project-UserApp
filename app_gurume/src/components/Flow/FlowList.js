@@ -25,7 +25,7 @@ export default function FlowList(props) {
           props.data.shareFlowTb.map(
             ((value, index) => <PreviewThumb onPress={() => handleOnPress(value)} regionFlow={Boolean(props.region)} key={`thumb-${index}`} data={value} />)
           ) : <View style={styles.emptyContainer}>
-            <Text>검색 데이터가 없습니다.</Text>
+            <Text>조회된 데이터가 없습니다.</Text>
           </View>
       }
     </View>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { ScrollView, StyleSheet, View, Alert } from 'react-native'
 import { tempMarkers } from '../../../model/mokupMap'
 
@@ -16,16 +16,18 @@ import FlowInput from './FlowInput'
 
 // import apis
 import { getFlowListItems } from '../../../utils/api/flow'
+import TestContext from "../../../context/TestContext"
 
 export default function index() {
   const [markers, setMarkers] = useState(tempMarkers)
   const [SelectBox, itemValue, setItemValue] = useSelectBox()
   const [regionTags, setRegionTags] = useState([])
+  const { globalUserFlows } = useContext(TestContext)                 // 전역 폴더 값
 
   useEffect(() => {
     if (!itemValue) return
     // 이미 공유 된 동선이라면 경고창 로딩
-    // else if(itemValue.isShared) return Alert.alert('이미 공유 된 동선입니다.')
+    else if (itemValue.isShared) Alert.alert('이미 공유 된 동선입니다., 지금은 수정하면 에러나요~')
 
     async function init(argFolderId) {
       // 폴더 아이디로 해당 값 불러오기
@@ -55,7 +57,7 @@ export default function index() {
 
 
     init(itemValue.key)
-  }, [itemValue])
+  }, [itemValue, globalUserFlows])
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>

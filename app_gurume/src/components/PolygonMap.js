@@ -31,12 +31,12 @@ const PolygonMap = (props) => {
             <MapView
                 style={styles.mapContainer}
                 initialRegion={region}
-                minZoomLevel={5}
+                minZoomLevel={6}
                 showsCompass={false}
                 moveOnMarkerPress={false}   // 마커 클릭 이벤트 제어
-                scrollEnabled={false}
-                zoomTapEnabled={false}
-                liteMode={true}
+                // scrollEnabled={false}
+                // zoomTapEnabled={false}
+                // liteMode={true}
                 ref={mapRef}
                 onMapReady={() => setMapReady(true)}
             >

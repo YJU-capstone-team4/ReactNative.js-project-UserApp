@@ -4,7 +4,7 @@ import MapView from "react-native-map-clustering"
 import { Marker } from 'react-native-maps'
 
 // import components
-import YoutubeMarker from './YoutubeMarker';
+import YoutubeMarker from './YoutubeMarker'
 
 // import styles
 import { Colors } from '@styles'

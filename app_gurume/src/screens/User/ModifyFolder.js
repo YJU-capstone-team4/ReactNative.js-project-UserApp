@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { StyleSheet, View, TextInput, TouchableOpacity, Alert, Keyboard } from 'react-native'
 import { Colors, Typography } from '@styles'
 import { Text } from '@styles/CommonStyles'
@@ -6,10 +6,13 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 // import apis
 import { getUserFolders, setUserFolder, deleteUserFolder } from '@utils/api/folder'
+import TestContext from "../../context/TestContext"
 
 const ModifyFolder = () => {
     const [folders, setFolders] = useState(null)
     const [folderName, setFolderName] = useState('')
+
+    const { userFolderInit } = useContext(TestContext)
 
     useEffect(() => {
         initFolder()
@@ -19,6 +22,7 @@ const ModifyFolder = () => {
         const data = await getUserFolders()
         console.log(data)
         setFolders(data)
+        userFolderInit()
     }
 
     const setNewFolder = async () => {

@@ -21,6 +21,8 @@ import UserScreen from '@screens/User'
 import SignInScreen from '@screens/User/SignIn'
 import ModifyFolder from '@screens/User/ModifyFolder'
 import ModifyName from '@screens/User/ModifyName'
+import FavoriteYoutuber from '@screens/User/FavoriteYoutuber'
+import FavoriteFlow from '@screens/User/FavoriteFlow'
 import ShowFlowScreen from '@screens/Flow/FlowSearch/ShowFlowList'
 
 const Tab = createBottomTabNavigator()
@@ -94,7 +96,7 @@ export default function BottomNavigation() {
 }
 
 const FlowStackScreen = ({ navigation }) => {
-  // console.log('네비게이션 정보', navigation)
+  console.log('네비게이션 정보', navigation)
   return (
     <FlowStack.Navigator
       screenOptions={{
@@ -185,6 +187,20 @@ const MainStackScreen = ({ navigation }) => {
           title: '닉네임 변경',
         }}
         component={ModifyName}
+      />
+      <MapStack.Screen
+        name="FavoriteYoutuber"
+        options={{
+          title: '유튜버 즐겨찾기',
+        }}
+        component={FavoriteYoutuber}
+      />
+      <MapStack.Screen
+        name="FavoriteFlow"
+        options={{
+          title: '관심있는 유저동선',
+        }}
+        component={FavoriteFlow}
       />
     </MainStack.Navigator>
   )

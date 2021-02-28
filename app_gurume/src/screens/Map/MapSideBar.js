@@ -24,7 +24,7 @@ export default function MapSideBar(props) {
     const [showFlows, setShowFlows] = useState(false)
     const [SelectBox, itemValue, setItemValue] = useSelectBox()
 
-    const { state, actions } = useContext(TestContext)
+    const { state, actions, globalUserFlows } = useContext(TestContext)
 
     useEffect(() => {
         if (!itemValue) return
@@ -33,6 +33,7 @@ export default function MapSideBar(props) {
          * 폴더 변경 요청에 따른 초기화 함수
          * @param {폴더 아이디} argFolderId 
          */
+
         async function init(argFolderId) {
             const data = await getFlowListItems(argFolderId)
             setUserFlow(data)
@@ -45,7 +46,7 @@ export default function MapSideBar(props) {
             ...state.initValue,
             selectedFolderId: itemValue.key
         })
-    }, [itemValue])
+    }, [itemValue, globalUserFlows])
 
     /**
      * 유저 데이터 반환 컴포넌트
@@ -100,21 +101,21 @@ export default function MapSideBar(props) {
                                     <Text size={20} style={styles.folderText}>동선 폴더</Text>
                                 </TouchableOpacity >
                                 <TouchableOpacity
-                                    onPress={() => setShowFlows(true)}
+                                    onPress={() => props.navigation.navigate('Main', { screen: 'FavoriteYoutuber' })}
                                     style={styles.container, styles.folderItemContainer}
                                 >
                                     <MaterialCommunityIcons name={'star'} color="black" size={18} />
                                     <Text size={20} style={styles.folderText}>유튜버 즐겨찾기</Text>
                                 </TouchableOpacity >
                                 <TouchableOpacity
-                                    onPress={() => setShowFlows(true)}
+                                    onPress={() => props.navigation.navigate('Main', { screen: 'FavoriteFlow' })}
                                     style={styles.container, styles.folderItemContainer}
                                 >
                                     <MaterialCommunityIcons name={'star'} color="black" size={18} />
                                     <Text size={20} style={styles.folderText}>관심있는 유저동선</Text>
                                 </TouchableOpacity >
                                 <TouchableOpacity
-                                    onPress={() => setShowFlows(true)}
+                                    onPress={() => props.navigation.navigate('Main', { screen: 'userInfo' })}
                                     style={styles.container, styles.folderItemContainer}
                                 >
                                     <MaterialCommunityIcons name={'account-box'} color="black" size={18} />

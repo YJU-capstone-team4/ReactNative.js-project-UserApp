@@ -15,6 +15,7 @@ import YOUTUBE_IMAGE from '../assets/images/youtube_image.png'
 // import apis
 import { useAsync } from '../utils/hooks'
 import { getAllYoutubersInfo, searchYoutuberByName, setYoutuberRequest } from '../utils/api/youtuber/index'
+import { Alert } from 'react-native'
 
 const YoutuberContainer = ({ item, onClick }) => (
     <TouchableOpacity onPress={() => onClick(item._id, item.ytbChannel)} style={styles.wrapperContainer}>
@@ -90,6 +91,7 @@ const ModalYoutuber = (props) => {
     // 서버로 유튜버 정보 요청
     const handleYoutuberRequest = async () => {
         const data = await setYoutuberRequest(youtuberName)
+        Alert.alert("신청 완료! 신청 유튜버 DB저장 완료!")
         console.log('ㅇㅁㅅㅁ', data)
     }
 

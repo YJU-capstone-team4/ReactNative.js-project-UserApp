@@ -8,7 +8,7 @@ import { Text } from '@styles/CommonStyles'
 import PolygonMap from '@components/PolygonMap'
 
 // import apis
-import { getFlowListItems, setYourFlowCountUp } from '../../../utils/api/flow'
+import { getFlowListItems, setYourFlowCountUp, setFlowLike } from '../../../utils/api/flow'
 
 const ShowFlowLIst = (props) => {
     // TODO shareFolderId 맵핑시키기.
@@ -28,7 +28,7 @@ const ShowFlowLIst = (props) => {
                     longitude: item.location.lng
                 }
             ))
-
+            setFlowLike(argShareFlowId)
             // 데이터 반환
             setStores(data)
             setMarkers(tempConvertedArr)

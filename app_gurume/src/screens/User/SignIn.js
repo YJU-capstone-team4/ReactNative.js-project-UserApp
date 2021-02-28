@@ -21,7 +21,8 @@ export default function SignIn() {
             if (result.type === 'success') {
                 const googleUser = result.user
                 console.log(googleUser)
-                console.log(result.accessToken)
+                console.log(result)
+                // console.log(result.accessToken)
                 Alert.alert("🔥 로그인 성공!!!")
                 /**
                  * 로그인 후 활용 예정 데이터

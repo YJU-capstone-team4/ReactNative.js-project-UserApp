@@ -138,7 +138,7 @@ export default (props) => {
         {/*  지역별 유튜브 영상 컴포넌트  */}
         <View style={[styles.wrapper, { marginTop: 25 }]}>
           <Text size={20} style={{ padding: 10, paddingLeft: 15 }}>🌏 해시태그로 보는 지역별 영상</Text>
-          <YoutuberMovieInfo navi={props.navigation} searchYoutuber={searchYoutuber} data={regionTags} />
+          {regionTags && <YoutuberMovieInfo navi={props.navigation} searchYoutuber={searchYoutuber} data={regionTags} />}
         </View>
       </ScrollView>
 

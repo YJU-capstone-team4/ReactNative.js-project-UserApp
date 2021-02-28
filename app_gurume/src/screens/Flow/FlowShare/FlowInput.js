@@ -10,11 +10,8 @@ import axios from 'axios'
 // import styles
 import { Colors, Typography } from '@styles'
 
-// import apis
-import { setUserFlowShare } from '../../../utils/api/flow'
-import { PolygonMap } from '@components/PolygonMap';
-
 const REGION_TAG_COLOR = '#ff99cc'
+const SEASON_TAG_COLOR = '#ffc000'
 
 const dummyTags = [
   {
@@ -43,7 +40,8 @@ export default function FlowInput(props) {
   // -->>
   // 사용자로 부터 입력된 해시태그 리스트
   const [regionTags, setRegionTags] = useState(['서울'])
-  const [seasonTags, setSeasonTags] = useState(['봄'])
+  const [seasonTag, setSeasonTag] = useState('봄')
+  const [seasonTags, setSeasonTags] = useState(['봄', '여름', '가을', '겨울'])
   const [userTags, setUserTags] = useState(['테스트1', '테스트2'])
 
   // 사용자가 현재 입력중인 문자열
@@ -147,7 +145,7 @@ export default function FlowInput(props) {
       formData.append('folderId', props.folderInfo.key)
       formData.append('adminTag', JSON.stringify({
         regionTag: regionTags,
-        seasonTag: seasonTags[0]
+        seasonTag
       }))
       formData.append('userTags', JSON.stringify(userTags))
 
@@ -165,9 +163,9 @@ export default function FlowInput(props) {
       sendXmlHttpRequest(formData)
 
       // 데이터 초기화 ..
-      // setTitle('')
-      // setHashTag('')
-      // setImage(null)
+      setTitle('')
+      setHashTag('')
+      setImage(null)
     }
   }
 
@@ -283,14 +281,14 @@ export default function FlowInput(props) {
           ))
         }
       </View>
-      {/* <Text style={styles.inputText}># 계절 태그</Text>
+      <Text style={styles.inputText}># 계절 태그</Text>
       <View style={styles.container}>
         {
-          regionTags.map((tag, index) => (
-            tagPreview(tag, REGION_TAG_COLOR, index, 'regionTag')
+          seasonTags.map((tag, index) => (
+            tagPreview(tag, SEASON_TAG_COLOR, index, 'regionTag')
           ))
         }
-      </View> */}
+      </View>
       <Text style={styles.inputText}># 해시 태그</Text>
       <View style={styles.container}>
         {userTags.map((tag, index) => (

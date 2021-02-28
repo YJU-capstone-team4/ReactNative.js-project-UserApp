@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Dimensions, Image, StyleSheet } from 'react-native'
+import { View, Dimensions, Image, StyleSheet, TouchableOpacity } from 'react-native'
 
 // import styles
 import { Text } from '@styles/CommonStyles'
@@ -21,20 +21,29 @@ export default function youtuberMovieInfo(props) {
   const [regionVideos, setRegionVideos] = useState(null)
 
   useEffect(() => {
+    console.log("변경!")
     if (props.data && props.data.length > 0) {
       setSelectedRegionTag(props.data[0])
-      // props.navi.navigate('Map')
     }
-  }, [props.searchYoutuber, props.data])
+  }, [props.searchYoutuber._id, props.data])
 
   useEffect(() => {
     console.log("지역태그 선택 변경!!")
+    console.log('data', props.searchYoutuber._id, selectedRegionTag)
     getRegionVideos()
   }, [selectedRegionTag])
 
   const getRegionVideos = async () => {
-    const data = await getYoutuberRegionVideo(props.youtuberId ? props.youtuberId._id : YOUTUBER_ID, [selectedRegionTag])
+    const data = await getYoutuberRegionVideo(props.searchYoutuber ? props.searchYoutuber._id : YOUTUBER_ID, [selectedRegionTag])
+    console.log("video Data", data)
     setRegionVideos(data)
+  }
+
+  const handleNavigation = async ({ storeId }) => {
+    props.navi.navigate('storeMap', {
+      storeId,
+      storeName: '실험용',
+    })
   }
 
   return (
@@ -44,10 +53,10 @@ export default function youtuberMovieInfo(props) {
         regionVideos && regionVideos.length > 0 ?
           regionVideos.map(item =>
             <View key={item._id} style={styles.container}>
-              <View style={{ width: width * 0.55, paddingRight: 8 }}>
+              <TouchableOpacity activeOpacity={0.8} style={{ width: width * 0.55, paddingRight: 8 }}>
                 <Image style={{ width: '100%', height: '100%', borderRadius: 10 }} resizeMode='cover' source={secondMovieThumbnail} />
-              </View>
-              <View style={{ flex: 1, paddingVertical: 5 }}>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => handleNavigation(item)} activeOpacity={0.8} style={{ flex: 1, paddingVertical: 5 }}>
                 <View style={{ backgroundColor: Colors.GRAY_7, paddingVertical: 3, paddingHorizontal: 10, borderRadius: 20 }}>
                   <Text numberOfLines={1} color={Colors.WHITE}>
                     {item.ytbVideoName}
@@ -55,7 +64,7 @@ export default function youtuberMovieInfo(props) {
                 </View>
                 <Text style={{ paddingVertical: 40 }} weight="BOLD">{item.storeAddress}</Text>
                 <Text>조회수 {parseInt(item.hits / 1000)}만회</Text>
-              </View>
+              </TouchableOpacity>
             </View>
           )
           : <View><Text>해당 지역의 정보가 없습니다... 이건 있을수 없는 일이다.</Text></View>

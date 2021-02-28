@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from 'react'
 import { StyleSheet, View, Image, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
 
 // import dummy data
-import { mokupMarkers1 } from '../../model/mokupMap'
 import { getStoreInfo, getStoreYoutubers, setStoreFavorite } from '../../utils/api/map/index'
 
 // import styles
@@ -14,14 +13,14 @@ const CARD_HEIGHT = height * 0.54
 const CARD_WIDTH = width
 import youtubeVideoDefault from '@images/youtubeVideoDefault.jpg'
 
-import TestContext from "../../context/TestContext";
+import TestContext from "../../context/TestContext"
 
 const MapStorePreview = ({ navigation, storeIndex }) => {
 
     const [store, setStore] = useState(null)
     const [youtube, setYoutube] = useState(null)
 
-    const { state } = useContext(TestContext)
+    const { state, userFolderInit } = useContext(TestContext)
 
     useEffect(() => {
         async function init(argStoreIndex, argFolderId) {
@@ -42,11 +41,16 @@ const MapStorePreview = ({ navigation, storeIndex }) => {
      * @param {해당 가게 바뀐 좋아요 값} argLikeValue 
      */
     const toggleLikeStore = async () => {
-        setStore({
-            ...store,
-            storeLike: !store.storeLike
-        })
-        await setStoreFavorite(!store.storeLike, store._id, state.initValue.selectedFolderId)
+        try {
+            await setStoreFavorite(!store.storeLike, store._id, state.initValue.selectedFolderId)
+            userFolderInit()
+            setStore({
+                ...store,
+                storeLike: !store.storeLike
+            })
+        } catch (e) {
+            console.log(e)
+        }
         console.log("변경완료")
     }
 
@@ -149,13 +153,12 @@ const styles = StyleSheet.create({
         borderWidth: 1.5,
         borderColor: Colors.RED_4,
         borderRadius: 3,
-        marginTop: 10,
-        marginBottom: 2
+        marginTop: 8,
     },
     textContext: {
         flex: 1.5,
         padding: 10,
-        paddingTop: 2,
+        paddingTop: 0,
     },
     startIconContainer: {
         padding: 1,
@@ -165,8 +168,9 @@ const styles = StyleSheet.create({
     },
     youtuberContainer: {
         paddingHorizontal: 5,
-        paddingVertical: 4,
-        height: 8,
+        paddingTop: 2,
+        paddingBottom: 1,
+        height: 3,
     },
     youtuberImage: {
         width: 47,

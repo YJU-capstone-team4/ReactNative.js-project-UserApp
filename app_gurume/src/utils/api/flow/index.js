@@ -27,9 +27,9 @@ async function setRefreshFlowIndex(argData) {
 }
 
 // 동선 좋아요 추가 / 삭제
-async function setFlowLike(argFlowId) {
+async function setFlowLike(argShareFolderId) {
     const data = await instance.post('shareFlow/like', {
-        shareFlow_id: argFlowId
+        shareFlow_id: argShareFolderId
     })
 
     return data

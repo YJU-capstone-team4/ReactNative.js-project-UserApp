@@ -18,7 +18,7 @@ import flowThumb_2 from '@images/flowThumb_2.jpg'
 
 export default function PreviewThumb({ data, regionFlow, onPress }) {
     // console.log('PreviewThumb', data)
-    const [isActivity, setIsActivity] = useState(false)
+    const [isActivity, setIsActivity] = useState(data.flowLike)
 
     const handleLikeUp = () => {
         console.log(data)

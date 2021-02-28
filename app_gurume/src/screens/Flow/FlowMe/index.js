@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 
 // import styles
@@ -16,6 +16,7 @@ import DraggableFlowList from './DraggableFlowList'
 
 // import apis
 import { getFlowListItems } from '../../../utils/api/flow'
+import TestContext from "../../../context/TestContext"
 
 export default function index(props) {
   const EMPTY_ARRAY = []                                              // ScrollView + FlatList 충돌로 빈 배열 선언
@@ -23,6 +24,7 @@ export default function index(props) {
   const [markers, setMarkers] = useState(null)                        // 사용자 폴더의 값 로딩 후 반환
   const [convertedMarkers, setConvertMarkers] = useState(null)        // PolygonMap 맵 전용 변수 :: 위도 경도만 따로 빼낸 배열.
   const [SelectBox, itemValue, setItemValue] = useSelectBox()         // 폴더 변경 감지
+  const { globalUserFlows } = useContext(TestContext)                 // 전역 폴더 값
 
   useEffect(() => {
     if (!itemValue) return
@@ -34,7 +36,7 @@ export default function index(props) {
       setMarkers(data)
     }
     init(itemValue.key)
-  }, [itemValue])
+  }, [itemValue, globalUserFlows])
 
   useEffect(() => {
     if (!markers) return
