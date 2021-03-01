@@ -12,27 +12,22 @@ export default function index() {
   return (
     <View style={styles.selectContainer}>
       <Text style={{ alignSelf: 'center', padding: 10 }}>동선</Text>
-      <FlowList />
-      <TouchableOpacity style={styles.buttonContainer}>
-        <Text weight={"BOLD"} style={{ color: Colors.WHITE }}>더보기</Text>
-      </TouchableOpacity>
+      {/* <FlowList /> */}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   selectContainer: {
-    marginBottom: 10,
+    flex: 1,
+    // marginBottom: 50,
   },
   buttonContainer: {
-    elevation: 3,
     margin: 5,
     width: 100,
     paddingVertical: 15,
     borderRadius: 10,
-    backgroundColor: Colors.DEEP_BLUE,
     alignSelf: 'flex-end',
     alignItems: 'center'
-
   }
 })

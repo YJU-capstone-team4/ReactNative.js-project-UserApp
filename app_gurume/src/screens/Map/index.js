@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 // import apis
-import { useAsync } from '../../utils/hooks'
 import { getAllMarkers, getYoutuberMarkers } from '../../utils/api/map'
 
 // import components
@@ -11,9 +10,9 @@ import GoogleMap from '@components/GoogleMap'
 
 // import screens
 import MapHeader from './MapHeader'
-import MapStorePreview from './MapStorePreview';
+import MapStorePreview from './MapStorePreview'
 import MapSideBar from './MapSideBar'
-import ModalYoutuber from './../../components/ModalYoutuber';
+import ModalYoutuber from './../../components/ModalYoutuber'
 
 // import styles
 import { Colors } from '@styles'
@@ -35,6 +34,11 @@ const MapScreen = ({ navigation }) => {
   // -->>
 
   //******** 토글 제어 ********
+  useEffect(() => {
+    if (setSearchYoutuber) {
+      setStoreToggle(false)
+    }
+  }, [searchToggle])
 
   //******** 지도 제어 ********
 
@@ -68,7 +72,7 @@ const MapScreen = ({ navigation }) => {
 
           return tempObj
         })
-        
+
         setMarkers({ count: convertedMarkerArray.length, ytbStoreTb: convertedMarkerArray })
       } catch (e) {
         // 전체 마커 refresh 메서드 실행
@@ -76,18 +80,16 @@ const MapScreen = ({ navigation }) => {
     }
 
     if (!searchYoutuber._id || searchYoutuber._id === '') {
-      console.log("초기화 신호 !!!!!!!!!!!!!")
       init()
     }
 
     else if (searchYoutuber._id) {
-      console.log("특정 유튜버만 로딩하는 신호 받음!!!!!!!!!!!!!", searchYoutuber._id)
       refresh(searchYoutuber._id)
     }
   }, [searchYoutuber])
 
+  // 수동적 초기화 로직 실행
   const toggleRefreshBtn = () => {
-    console.log("초기화 버튼 클릭!")
     setStoreToggle(false)
     setSearchYoutuber({ _id: '', label: '' })
   }
@@ -107,7 +109,7 @@ const MapScreen = ({ navigation }) => {
       }
       {/* 새로고침 토글 */}
       <TouchableOpacity onPress={() => toggleRefreshBtn()} style={styles.refreshIconWrapper}>
-        <Text weight={"BOLD"} color={Colors.GREEN_3}>🎃  마커 초기화</Text>
+        <Text weight={"BOLD"} color={Colors.GREEN_3}>🎃  새로고침</Text>
       </TouchableOpacity>
 
       {/* 가게 정보 토글 */}

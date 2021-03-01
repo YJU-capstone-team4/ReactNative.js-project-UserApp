@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, StyleSheet } from 'react-native'
 
 // import components
@@ -11,57 +11,54 @@ import { Colors, Typography } from '@styles'
 import { Text } from '@styles/CommonStyles'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-const SelectBox = (props) => {
-  const [userFlows, setUserFlows] = useState(null)
+// import apis
+import TestContext from "../context/TestContext"
+
+const useSelectBox = (props) => {
   const [itemValue, setItemValue] = useState(null)
   const [ModalSelector, visible, setVisible] = useModalSelector()
 
-  // 초기 유저 폴더 세팅
+  const { globalUserFlows } = useContext(TestContext)
+
   useEffect(() => {
-    setUserFlows([
-      { key: -1, section: true, label: '폴더선택' },
-      { key: 0, label: 'YJU 여름 여행' },
-      { key: 1, label: '제주도 여행' },
-      { key: 2, label: '국밥팸 서울나들이' },
-      { key: 3, label: '부산여행' },
-    ])
+    setItemValue(globalUserFlows[1])
   }, [])
 
-  // 폴더 변경 감지
-  // useEffect(() => {
-  //   console.log("폴더가 변경되었습니다!")
-  // }, [itemValue])
+  const SelectBox = () => {
 
-  return (
-    <>
-      {
-        userFlows ?
-          <View style={styles.folderWrap}>
-            <TouchableOpacity
-              style={styles.downIcon}
-              onPress={() => setVisible(!visible)}
-              hitSlop={{ top: 60, right: 60, bottom: 60, left: 60 }}
-            >
-              <MaterialCommunityIcons size={16} color={Colors.RED_3} style={{ paddingRight: 3 }} name="map-marker" />
-              <Text size={20}> {itemValue ? itemValue.label : userFlows[1].label}</Text>
-              <FeatherIcons name="chevron-down" size={22} color={Colors.GRAY_8} />
-            </TouchableOpacity>
-          </View>
-          : null
-      }
-      {
-        visible ?
-          <ModalSelector
-            data={userFlows}
-            onChange={setItemValue}
-          />
-          : null
-      }
-    </>
-  )
+    return (
+      <>
+        {
+          globalUserFlows ?
+            <View style={styles.folderWrap}>
+              <TouchableOpacity
+                style={styles.downIcon}
+                onPress={() => setVisible(!visible)}
+                hitSlop={{ top: 60, right: 60, bottom: 60, left: 60 }}
+              >
+                <MaterialCommunityIcons size={16} color={Colors.RED_3} style={{ paddingRight: 3 }} name="map-marker" />
+                <Text size={20}> {itemValue ? itemValue.label : globalUserFlows[1].label}</Text>
+                <FeatherIcons name="chevron-down" size={22} color={Colors.GRAY_8} />
+              </TouchableOpacity>
+            </View>
+            : null
+        }
+        {
+          visible ?
+            <ModalSelector
+              data={globalUserFlows}
+              onChange={setItemValue}
+            />
+            : null
+        }
+      </>
+    )
+  }
+
+  return [SelectBox, itemValue, setItemValue]
 }
 
-export default SelectBox
+export default useSelectBox
 
 const styles = StyleSheet.create({
   folderWrap: {

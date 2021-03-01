@@ -1,44 +1,34 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { Colors } from '@styles';
 import { Text } from '@styles/CommonStyles';
 
-export default function HashTagList() {
+export default function HashTagList({ data, onPress, selectedRegionTag }) {
   return (
     <View
       style={{
         flexDirection: 'row',
         flexWrap: 'wrap',
-        // paddingHorizontal: 10,
-        // paddingTop: 6,
         paddingBottom: 10,
         justifyContent: 'center'
       }}
     >
-      <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
-        <Text color={Colors.WHITE} weight="BOLD" size={16}># 야식이 입맛</Text>
-      </View>
-      <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
-        <Text color={Colors.WHITE} weight="BOLD" size={16}># 푸드파이터</Text>
-      </View>
-      <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
-        <Text color={Colors.WHITE} weight="BOLD" size={16}># 먹방</Text>
-      </View>
-      <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
-        <Text color={Colors.WHITE} weight="BOLD" size={16}># 고기맛집</Text>
-      </View>
-      <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
-        <Text color={Colors.WHITE} weight="BOLD" size={16}># 시골먹방</Text>
-      </View>
-      <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
-        <Text color={Colors.WHITE} weight="BOLD" size={16}># 구독</Text>
-      </View>
-      <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
-        <Text color={Colors.WHITE} weight="BOLD" size={16}># 강아지</Text>
-      </View>
-      <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
-        <Text color={Colors.WHITE} weight="BOLD" size={16}># 대한민국</Text>
-      </View>
+      {
+        data ? data.map(item => {
+          const isSelected = selectedRegionTag && selectedRegionTag === item || !onPress
+          return <TouchableOpacity onPress={() => onPress ? onPress(item) : null} key={item} style={[styles.hashtagContainer, { backgroundColor: isSelected ? Colors.GRAY_7 : Colors.GRAY_3 }]}>
+            <Text color={isSelected ? Colors.WHITE : Colors.BLACK} weight="BOLD" size={16}># {item}</Text>
+          </TouchableOpacity>
+        }) : <>
+            <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
+              <Text color={Colors.WHITE } weight="BOLD" size={16}># 로딩중...</Text>
+            </View>
+            <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
+              <Text color={Colors.WHITE } weight="BOLD" size={16}># 로딩중...</Text>
+            </View>
+          </>
+
+      }
     </View>
   )
 }

@@ -17,9 +17,10 @@ const FlowMeStack = createStackNavigator()
 export default function FlowTopNavigation() {
   return (
     <Tab.Navigator
+      swipeEnabled={false}
       screenOptions={{
         headerStyle: {
-          elevation: 0
+          elevation: 0,
         }
       }}
       tabBarOptions={{
@@ -27,16 +28,18 @@ export default function FlowTopNavigation() {
         labelStyle: {
           fontSize: 16,
           fontFamily: Typography.FONT_FAMILY_BOLD,
+          
         },
         style: {
           backgroundColor: Colors.WHITE, elevation: 0, borderBottomWidth: 3,
-          borderBottomColor: Colors.RED_3 + "10", marginTop: 3
+          borderBottomColor: Colors.GRAY_8 + "10", marginTop: 3,
+          marginHorizontal: 18
         },
         indicatorStyle: {
           borderBottomWidth: 3,
-          borderBottomColor: Colors.RED_3,
+          borderBottomColor: Colors.GRAY_8,
           position: 'relative',
-          top: 48
+          top: 48,
         }
       }}
     >
@@ -86,9 +89,6 @@ const FlowMeStackScreen = ({ navigation }) => {
       />
       <FlowMeStack.Screen
         name="sharedFlow"
-        // options={{
-        //   title: '내가 공유한 동선 리스트',
-        // }}
         options={{ headerMode: 'none', headerShown: false }}
         component={SharedFlowList}
       />

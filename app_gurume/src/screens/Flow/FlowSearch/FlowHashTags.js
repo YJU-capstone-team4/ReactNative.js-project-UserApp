@@ -3,9 +3,13 @@ import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { Text } from '@styles/CommonStyles'
 import { Colors } from '@styles'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 // import utils
-import { convertRegion } from '@utils'
+import { convertRegion, convertFullRegion } from '@utils'
+
+// import apis
+import { getSharedUserFlow } from '../../../utils/api/flow'
 
 // import mokup
 import mokupRegion from '../../../model/mokupRegion'
@@ -17,7 +21,7 @@ const exampleData = mokupRegion.map((item, index) => {
     key: `region-${index}`,
     label: String(convertRegion(item)),
     originalLabel: item,
-    onPress: Boolean(Math.round(Math.random()))
+    onPress: index === 0
   }
 })
 
@@ -25,27 +29,67 @@ const mokupSeasonTags = ["봄", "여름", "가을", "겨울"].map((item, index) 
   return {
     key: `season-${index}`,
     label: item,
-    onPress: false
+    onPress: true
   }
 })
 
 export default function FlowHashTags(props) {
   const [regionTags, setRegionTags] = useState(exampleData)
   const [seasonTags, setSeasonTag] = useState(mokupSeasonTags)
-  const [userHashTags, setUserHashTags] = useState(['야식이 입맛', '고기맛집'])
+  const [userHashTags, setUserHashTags] = useState([])
 
+  // 초기 셋팅값 불러오기
   useEffect(() => {
-    if (props.signalOnPress === true) {
-      setUserHashTags([...userHashTags, props.hashTagText])
-      props.setSignalOnPress(false)
-      props.setHashTagText('')
-      // TODO 여기서 검색결과 반영 로직 주는게 좋겠다.
-    }
+    props.setSignalOnPress(true)
+  }, [])
 
+  // 사용자의 태그 클릭에 따른 검색 결과 반환
+  useEffect(() => {
+    if (props.signalOnPress === true && props.itemValue.option === 'tag') {
+      let copyUserHashTag = Array.prototype.slice.call(userHashTags)
+      if (props.hashTagText.length > 0) {
+        copyUserHashTag.push(props.hashTagTex)
+        setUserHashTags(copyUserHashTag)
+        props.setHashTagText('')
+      }
+      props.setSignalOnPress(false)
+
+      const { selectedRegionTags, selectedSeasonTags } = convertRegionArr(regionTags, seasonTags)
+      // 검색 API 전송
+      const sendData = {
+        regionTag: selectedRegionTags,
+        seasonTag: selectedSeasonTags,
+        userTag: copyUserHashTag,
+        shareTitle: '',
+        nickname: '',
+        option: 'tag'
+      }
+      sendSearchData(sendData)
+    }
   }, [props.signalOnPress])
 
+
+  // 선택적 해시태그 삭제
+  const handelRemoveHashTag = (index) => {
+    const selectedUserHashTag = userHashTags.filter((e, i) => (i !== index))
+    setUserHashTags(selectedUserHashTag)
+
+    const { selectedRegionTags, selectedSeasonTags } = convertRegionArr(regionTags, seasonTags)
+    // 검색 API 전송
+    const sendData = {
+      regionTag: selectedRegionTags,
+      seasonTag: selectedSeasonTags,
+      userTag: selectedUserHashTag,
+      shareTitle: '',
+      nickname: '',
+      option: 'tag'
+    }
+
+    sendSearchData(sendData)
+  }
+
   // 해시태그 클릭 시 변경되는 UI
-  const hashTagOnPress = (argHastTagType, argItem, argIndex) => {
+  const hashTagOnPress = async (argHastTagType, argItem, argIndex) => {
     // 두 종류로 나뉘어진다.
     // 1. 지역별 해시태그
     // 2. 계절별 해시태그
@@ -57,11 +101,87 @@ export default function FlowHashTags(props) {
     let newArr = [...copyArr] // copying the old datas array
     newArr[argIndex] = argItem
 
+    const { selectedRegionTags, selectedSeasonTags } = convertRegionArr(regionTags, seasonTags)
+
+    console.log('결과는!?', selectedRegionTags, selectedSeasonTags)
+
     argHastTagType === 'region' ? setRegionTags(newArr) : setSeasonTag(newArr)
+
+    // 여기서 서버로 요청 보내고 다시 받아야 함.
+    // 예외 처리) 지역태그, 계절태그 중 하나라도 선택하지 않을 경우, 서버로 전송 불가능 적용.
+    if (selectedRegionTags.length === 0 || selectedSeasonTags.length === 0) return props.setFlowsData(null);
+
+    // 검색 API 전송
+    const sendData = {
+      regionTag: selectedRegionTags,
+      seasonTag: selectedSeasonTags,
+      userTag: userHashTags,
+      shareTitle: '',
+      nickname: '',
+      option: 'tag'
+    }
+    sendSearchData(sendData)
+  }
+
+  const convertRegionArr = (argRegionTags, argSeasonTags) => {
+    let selectedRegionTags = []
+    let selectedSeasonTags = []
+
+    argRegionTags.map(item => {
+      if (item.onPress) {
+        selectedRegionTags.push(item.originalLabel)
+      }
+    })
+
+    argSeasonTags.map(item => item.onPress ? selectedSeasonTags.push(item.label) : null)
+
+    return { selectedRegionTags, selectedSeasonTags }
+  }
+
+  const sendSearchData = async argData => {
+    const data = await getSharedUserFlow(argData)
+    console.log('서버로 전송한 값', argData)
+    console.log('서버로 부터 받은 값', data)
+    props.setFlowsData(data)
+    /**
+     * 서버로 전송한 값 Object {
+  "nickname": "",
+  "option": "tag",
+  "regionTag": Array [
+    "서울특별시",
+  ],
+  "seasonTag": Array [
+    "봄",
+    "여름",
+    "가을",
+    "겨울",
+  ],
+  "shareTitle": "",
+  "userTag": Array [],
+}
+
+서버로 전송한 값 Object {
+  "nickname": "",
+  "option": "tag",
+  "regionTag": Array [
+    "서울특별시",
+  ],
+  "seasonTag": Array [
+    "봄",
+    "여름",
+    "가을",
+    "겨울",
+  ],
+  "shareTitle": "",
+  "userTag": Array [
+    "",
+  ],
+}
+     */
   }
 
   return (
-    <View style={styles.container}    >
+    <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Text weight="BOLD" size={20} style={styles.titleWrapper}># 지역별 해시태그</Text>
         {/* 지역별 해시태그 */}
@@ -72,7 +192,7 @@ export default function FlowHashTags(props) {
               key={item.key}
               style={[styles.hashtagContainer, item.onPress ? null : { backgroundColor: Colors.GRAY_2 }]}
             >
-              <Text color={item.onPress ? Colors.WHITE : Colors.GRAY_5} weight="BOLD" size={16}>{item.label}</Text>
+              <Text color={item.onPress ? Colors.WHITE : Colors.GRAY_5} weight="BOLD" size={16}># {item.label}</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -93,23 +213,34 @@ export default function FlowHashTags(props) {
                   weight="BOLD"
                   size={16}
                 >
-                  {item.label}
+                  # {item.label}
                 </Text>
               </TouchableOpacity>
             )
           }
         </View>
       </View>
-      <View style={styles.headerContainer}>
+      <View style={[styles.headerContainer, { marginBottom: -15 }]}>
         <Text weight="BOLD" size={20} style={styles.titleWrapper}># 사용자가 추가한 해시태그</Text>
         {/* 사용자 해시태그 */}
         <View style={styles.userHashTagContainer}>
           {
-            userHashTags.map((item, index) =>
-              <TouchableOpacity key={`user-${index}`} style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
+            userHashTags.length > 0 ? userHashTags.map((item, index) =>
+              <View key={`user-${index}`} style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
+                <TouchableOpacity
+                  onPress={() => handelRemoveHashTag(index)}
+                  hitSlop={{ top: 20, right: 50, bottom: 20, left: 20 }}
+                  style={styles.deleteHashtagBtn}
+                >
+                  <MaterialCommunityIcons
+                    name="close-circle"
+                    color="black"
+                    size={22}
+                  />
+                </TouchableOpacity>
                 <Text color={Colors.WHITE} weight="BOLD" size={16}># {item}</Text>
-              </TouchableOpacity>
-            )
+              </View>
+            ) : <Text style={{ paddingVertical: 10 }}>추가된 해시태그가 없습니다...</Text>
           }
         </View>
       </View>
@@ -135,7 +266,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     borderBottomWidth: 1,
     borderBottomColor: Colors.GRAY_2,
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     paddingTop: 6,
     paddingBottom: 15
   },
@@ -151,13 +282,18 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginVertical: 6,
     elevation: 1.5,
-    minWidth: 60,
+    minWidth: 62,
     alignItems: 'center',
-    marginRight: 4
+    marginHorizontal: 2
   },
   userHashTagContainer: {
     flexDirection: 'row',
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     flexWrap: 'wrap',
+  },
+  deleteHashtagBtn: {
+    position: 'absolute',
+    right: -8,
+    top: -13,
   }
 })

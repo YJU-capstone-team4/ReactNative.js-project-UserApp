@@ -1,20 +1,30 @@
 import React, { useState } from 'react'
-import { View, TouchableOpacity, StyleSheet } from 'react-native'
+import { TouchableOpacity, StyleSheet } from 'react-native'
 
 // import styles
-import { Text } from '@styles/CommonStyles'
 import { Colors } from '@styles'
 import AntIcons from 'react-native-vector-icons/AntDesign';
 
-export default function ThumbsUp() {
-
+const useThumbsUp = () => {
   const [isActivity, setIsActivity] = useState(false)
-  return (
-    <TouchableOpacity onPress={() => setIsActivity(!isActivity)} style={styles.container}>
-      <AntIcons name="heart" size={20} color={isActivity ? Colors.RED_4 : Colors.GRAY_4} />
-    </TouchableOpacity>
-  )
+
+  const ThumbsUp = (props) => {
+    const handleOnPress = () => {
+      props.onPress()
+      setIsActivity(!isActivity)
+    }
+
+    return (
+      <TouchableOpacity onPress={() => handleOnPress()} style={[styles.container, props.isSmallVersion && styles.smallVersion]}>
+        <AntIcons name="heart" size={props.isSmallVersion ? 16 : 20} color={isActivity ? Colors.RED_4 : Colors.GRAY_4} />
+      </TouchableOpacity>
+    )
+  }
+
+  return [ThumbsUp, isActivity, setIsActivity]
 }
+
+export default useThumbsUp
 
 const styles = StyleSheet.create({
   container: {
@@ -33,5 +43,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
+    zIndex: -1
+  },
+  smallVersion: {
+    width: 25,
+    height: 25,
+    padding: 3
   }
 })

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 
 // import styles
@@ -9,14 +9,48 @@ import { tempMarkers } from '../../../model/mokupMap'
 
 // import components
 import PolygonMap from '@components/PolygonMap'
-import SelectBox from '@components/SelectBox'
+import useSelectBox from '@components/SelectBox'
 
 // import screens
 import DraggableFlowList from './DraggableFlowList'
 
+// import apis
+import { getFlowListItems } from '../../../utils/api/flow'
+import TestContext from "../../../context/TestContext"
+
 export default function index(props) {
-  const EMPTY_ARRAY = []              // ScrollView + FlatList 충돌로 빈 배열 선언
-  const [markers, setMarkers] = useState(tempMarkers)
+  const EMPTY_ARRAY = []                                              // ScrollView + FlatList 충돌로 빈 배열 선언
+
+  const [markers, setMarkers] = useState(null)                        // 사용자 폴더의 값 로딩 후 반환
+  const [convertedMarkers, setConvertMarkers] = useState(null)        // PolygonMap 맵 전용 변수 :: 위도 경도만 따로 빼낸 배열.
+  const [SelectBox, itemValue, setItemValue] = useSelectBox()         // 폴더 변경 감지
+  const { globalUserFlows } = useContext(TestContext)                 // 전역 폴더 값
+
+  useEffect(() => {
+    if (!itemValue) return
+    console.log(props)
+    async function init(argFolderId) {
+      // 폴더 아이디로 해당 값 불러오기
+      const data = await getFlowListItems(argFolderId)
+
+      setMarkers(data)
+    }
+    init(itemValue.key)
+  }, [itemValue, globalUserFlows])
+
+  useEffect(() => {
+    if (!markers) return
+
+    // PolygonMap 맵 전용 위도 경도 데이터셋 만들기
+    let tempConvertedArr = markers.map(item => (
+      {
+        latitude: item.location.lat,
+        longitude: item.location.lng
+      }
+    ))
+
+    setConvertMarkers(tempConvertedArr)
+  }, [markers])
 
   return (
     <FlatList
@@ -33,8 +67,14 @@ export default function index(props) {
           <View style={{ paddingHorizontal: 6 }}>
             <SelectBox />
           </View>
-          <PolygonMap data={markers} />
-          <DraggableFlowList data={markers} setMarkers={setMarkers} />
+          {
+            markers && convertedMarkers && convertedMarkers.length > 0 ? <>
+              <View style={{ borderColor: Colors.GRAY_4, borderWidth: 2, marginHorizontal: 6 }}>
+                <PolygonMap data={convertedMarkers} />
+              </View>
+              <DraggableFlowList data={markers} setMarkers={setMarkers} setConvertMarker={setConvertMarkers} folderValue={itemValue} />
+            </> : <Text style={{ alignSelf: 'center' }}>폴더가 비었습니다. 가게를 추가해주세요!!</Text>
+          }
         </>
       }
     />

@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
+import { TouchableOpacity } from 'react-native'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack';
@@ -7,6 +8,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 // import styles
 import { Colors, Typography } from '@styles'
+import { Text } from '@styles/CommonStyles'
 
 // import screens
 import MainScreen from '@screens/Main'
@@ -17,10 +19,16 @@ import YoutuberScreen from '@screens/Youtuber'
 import StoreScreen from '@screens/Store'
 import UserScreen from '@screens/User'
 import SignInScreen from '@screens/User/SignIn'
+import ModifyFolder from '@screens/User/ModifyFolder'
+import ModifyName from '@screens/User/ModifyName'
+import FavoriteYoutuber from '@screens/User/FavoriteYoutuber'
+import FavoriteFlow from '@screens/User/FavoriteFlow'
+import ShowFlowScreen from '@screens/Flow/FlowSearch/ShowFlowList'
 
 const Tab = createBottomTabNavigator()
 const MapStack = createStackNavigator()
 const MainStack = createStackNavigator()
+const FlowStack = createStackNavigator()
 
 export default function BottomNavigation() {
   return (
@@ -31,11 +39,17 @@ export default function BottomNavigation() {
         labelStyle: {
           fontSize: 12,
           fontFamily: Typography.FONT_FAMILY_BOLD,
-          marginBottom: 3
+          marginBottom: 8,
         },
+        style: {
+          paddingVertical: 4,
+          height: 58,
+          borderBottomWidth: 0.5,
+          borderBottomColor: Colors.GRAY_3
+        }
       }}
       initialRouteName="Main"
-      barStyle={{ backgroundColor: Colors.WHITE }}
+      sceneContainerStyle={{ backgroundColor: Colors.WHITE }}
     >
       <Tab.Screen
         name="Main"
@@ -59,21 +73,11 @@ export default function BottomNavigation() {
       />
       <Tab.Screen
         name="Flow"
-        component={FlowScreen}
+        component={FlowStackScreen}
         options={{
           tabBarLabel: '동선',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="map-marker-path" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="statistic"
-        component={StatisticScreen}
-        options={{
-          tabBarLabel: '통계',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="chart-bubble" color={color} size={26} />
           ),
         }}
       />
@@ -88,6 +92,52 @@ export default function BottomNavigation() {
         }}
       />
     </Tab.Navigator >
+  )
+}
+
+const FlowStackScreen = ({ navigation }) => {
+  console.log('네비게이션 정보', navigation)
+  return (
+    <FlowStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          shadowColor: 'black', // iOS
+          elevation: 0, // Android
+        },
+        headerTitleStyle: {
+          fontFamily: Typography.FONT_FAMILY_BOLD,
+          marginTop: 2,
+          marginLeft: -10,
+        }
+      }}>
+      <MapStack.Screen
+        name="FlowMain"
+        options={{ headerMode: 'none', headerShown: false }}
+        component={FlowScreen}
+      />
+      <MapStack.Screen
+        name="FlowShow"
+        options={({ route }) => ({
+          title: route.params.title ? route.params.title : '동선 보기',
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('FlowMain')}
+              hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }}
+              style={{ left: 15 }}
+            >
+              <MaterialCommunityIcons name="arrow-left-circle" size={28} />
+            </TouchableOpacity>
+          ),
+          headerTitle: props => (
+            <Text weight={"BOLD"} size={20}> { route.params.title}</Text>
+          )
+        })}
+        // options={{
+        //   title: '동선보기',
+        // }}
+        component={ShowFlowScreen}
+      />
+    </FlowStack.Navigator>
   )
 }
 
@@ -123,6 +173,34 @@ const MainStackScreen = ({ navigation }) => {
           title: '내 정보',
         }}
         component={UserScreen}
+      />
+      <MapStack.Screen
+        name="ModifyFolder"
+        options={{
+          title: '동선 폴더 관리',
+        }}
+        component={ModifyFolder}
+      />
+      <MapStack.Screen
+        name="ModifyName"
+        options={{
+          title: '닉네임 변경',
+        }}
+        component={ModifyName}
+      />
+      <MapStack.Screen
+        name="FavoriteYoutuber"
+        options={{
+          title: '유튜버 즐겨찾기',
+        }}
+        component={FavoriteYoutuber}
+      />
+      <MapStack.Screen
+        name="FavoriteFlow"
+        options={{
+          title: '관심있는 유저동선',
+        }}
+        component={FavoriteFlow}
       />
     </MainStack.Navigator>
   )

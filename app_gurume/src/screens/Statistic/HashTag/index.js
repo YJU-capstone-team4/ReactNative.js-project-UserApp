@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
 
 // import styles
 import { Colors, Typography } from '@styles'
+import { Text } from '@styles/CommonStyles'
 
 export default function index() {
   return (
@@ -10,7 +11,7 @@ export default function index() {
       <Text style={{ alignSelf: 'center', padding: 10 }}>해시태그</Text>
       <View
         style={{
-          backgroundColor: '#00EBFF',
+          backgroundColor: '#DDDCFF',
           height: 300,
           flex: 1,
           justifyContent: 'center',
@@ -21,16 +22,14 @@ export default function index() {
         <Text>해시태그 비교 차트 정보가 들어갈 공간입니다.</Text>
         <Text>HashTagChart</Text>
       </View>
-      <TouchableOpacity style={styles.buttonContainer}>
-        <Text style={styles.buttonText}>더보기</Text>
-      </TouchableOpacity>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   selectContainer: {
-    marginBottom: 10,
+    // marginBottom: 10,
+    flex: 1,
   },
   buttonContainer: {
     elevation: 3,
@@ -38,7 +37,6 @@ const styles = StyleSheet.create({
     width: 100,
     paddingVertical: 15,
     borderRadius: 10,
-    backgroundColor: Colors.DEEP_BLUE,
     alignSelf: 'flex-end',
   },
   buttonText: {

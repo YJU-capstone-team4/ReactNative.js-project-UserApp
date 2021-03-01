@@ -6,7 +6,7 @@ import PropTypes from "prop-types"
 // import modules
 import MapView, { Marker, Polyline } from 'react-native-maps'
 import { Colors } from '@styles';
-
+import { markers } from '../model/mokupMap';
 
 const PolygonMap = (props) => {
     const [region, setRegion] = useState({
@@ -24,17 +24,19 @@ const PolygonMap = (props) => {
             mapRef.current.fitToSuppliedMarkers(props.data.map(({ _id }) => _id), { edgePadding: { top: 70, right: 70, bottom: 70, left: 70 } })
         }
     }, [mapReady, props.data])
+    // TODO coordinate 전용 배열 만들기.
 
     return (
         <View>
             <MapView
                 style={styles.mapContainer}
                 initialRegion={region}
-                minZoomLevel={5}
+                minZoomLevel={6}
                 showsCompass={false}
                 moveOnMarkerPress={false}   // 마커 클릭 이벤트 제어
-                scrollEnabled={false}
-                zoomTapEnabled={false}
+                // scrollEnabled={false}
+                // zoomTapEnabled={false}
+                // liteMode={true}
                 ref={mapRef}
                 onMapReady={() => setMapReady(true)}
             >
@@ -73,6 +75,7 @@ const PolygonMap = (props) => {
 
 PolygonMap.defaultProps = {
     markers: [],
+    temp: PropTypes.array,
 }
 
 PolygonMap.propTypes = {
@@ -95,8 +98,8 @@ const styles = StyleSheet.create({
     markerWrapper: {
         backgroundColor: Colors.YELLOW_5,
         borderRadius: 50,
-        width: 40,
-        height: 40,
+        width: 35,
+        height: 35,
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: Colors.GRAY_8,

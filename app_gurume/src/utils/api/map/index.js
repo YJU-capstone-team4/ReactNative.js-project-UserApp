@@ -24,9 +24,36 @@ async function getYoutuberMarkers(argYtbChannelId = DEFAULT_YOUTUBER_ID) {
 }
 
 // 특정 맛집 id, name, address
-async function getStoreInfo(argStoreId) {
-    const { data } = await instance.get(`/map/store/${argStoreId}`)
-    // console.log(data.ytbStoreTb)
+async function getStoreInfo(argStoreId, argFolderId = null) {
+    const { data } = await instance.get(`/map/store`, {
+        params: {
+            storeId: argStoreId,
+            folderId: argFolderId
+        }
+    })
+    return data
+}
+
+// 특정 맛집 즐겨찾기 추가
+async function setStoreFavorite(argLikeValue, argStoreId, argFolderId, argStoreType = '맛집') {
+    console.log(argLikeValue, argStoreId, argFolderId)
+
+    const defaultData = {
+        folder_id: argFolderId,
+        store_id: argStoreId,
+        typeStore: argStoreType
+    }
+
+    let data = ''
+
+    if (argLikeValue) {
+        data = await instance.post('favorite', defaultData)
+    } else {
+        data = await instance.delete('favorite', {
+            params: defaultData
+        })
+    }
+
     return data
 }
 
@@ -39,10 +66,19 @@ async function getStoreYoutubers(argStoreId) {
 
 // 맛집 인근의 주면 명소 추천
 async function getStoreAttraction(argLocation) {
-    const { lat, lng } = argLocation
+    try {
+        console.log('맛집 인근의 주면 명소 추천')
+        const { data } = await instance.get(`storeDetail/attraction`, {
+            params: {
+                lat: parseInt(argLocation.lat),
+                lng: parseInt(argLocation.lng)
+            }
+        })
+        return data
 
-    const { data } = await instance.get(`storeDetail/attraction/${lat}&${lng}`)
-    return data
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 export {
@@ -50,5 +86,6 @@ export {
     getYoutuberMarkers,
     getStoreInfo,
     getStoreYoutubers,
-    getStoreAttraction
+    getStoreAttraction,
+    setStoreFavorite
 }

@@ -6,6 +6,8 @@ import { AppLoading } from 'expo'
 // Navigation Component
 import RootNavigationContainer from './src/navigations/RootNavigation'
 
+import { TestContextProvider } from "./src/context/TestContext";
+
 export default function App() {
   // loading fonts
   const [isLoaded] = useFonts({
@@ -16,12 +18,12 @@ export default function App() {
   })
 
   return (
-    <>
+    <TestContextProvider>
       {!isLoaded ? (
         <AppLoading />
       ) : (
           <RootNavigationContainer />
         )}
-    </>
+    </TestContextProvider>
   )
 }
