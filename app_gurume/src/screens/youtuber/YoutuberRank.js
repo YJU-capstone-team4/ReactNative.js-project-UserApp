@@ -13,9 +13,6 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
  * @param {youtuberRankInfo} data 
  */
 export default function YoutuberRank({ data }) {
-  console.log(data)
-  if (!data) return <View><Text>Loading...</Text></View>
-  const isPluseValue = data.ytbRankIncrease >= 0
   return (
     <View
       style={{
@@ -29,19 +26,19 @@ export default function YoutuberRank({ data }) {
     >
       <View style={styles.textWrapper}>
         <Text style={styles.textTitle}>인기 유튜버</Text>
-        <Text style={styles.textRank} weight="BOLD">{data.rank} 위</Text>
-        <FontAwesomeIcon style={[styles.statusIcon, { top: 3 }]} color={isPluseValue ? Colors.GREEN_4 : Colors.RED_3} size={19} name="sort-up" />
-        <Text>{data.ytbRankIncrease}</Text>
+        <Text style={styles.textRank} weight="BOLD">{data ? data.rank : 'N'} 위</Text>
+        <FontAwesomeIcon style={[styles.statusIcon, { top: 3 }]} color={data && data.ytbRankIncrease >= 0 ? Colors.GREEN_4 : Colors.RED_3} size={19} name="sort-up" />
+        <Text>{data && data.ytbRankIncrease}</Text>
       </View>
       <View style={styles.textWrapper}>
         <Text style={styles.textTitle}>인기동영상 개수</Text>
-        <Text style={styles.textRank} weight="BOLD">{data.videoCount} 개</Text>
+        <Text style={styles.textRank} weight="BOLD">{data && data.videoCount} 개</Text>
         <FontAwesomeIcon style={[styles.statusIcon, { bottom: 6 }]} color={Colors.RED_3} size={19} name="sort-down" />
         <Text>1</Text>
       </View>
       <View style={styles.textWrapper}>
         <Text style={styles.textTitle}>최근 업로드 영상 개수</Text>
-        <Text style={styles.textRank} weight="BOLD">{data.lastVideoCount} 개</Text>
+        <Text style={styles.textRank} weight="BOLD">{data && data.lastVideoCount} 개</Text>
         <FontAwesomeIcon style={[styles.statusIcon, { top: 3 }]} color={Colors.GREEN_4} size={19} name="sort-up" />
         <Text>3</Text>
       </View>

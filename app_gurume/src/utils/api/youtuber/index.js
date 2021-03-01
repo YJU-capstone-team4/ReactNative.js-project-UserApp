@@ -46,9 +46,16 @@ async function getYoutuberRegionInfo(argYoutuberId = DEFAULT_YOUTUBER_ID) {
     return data
 }
 
-// 유튜버가 방문한 지역별 영상
-async function getYoutuberRegionVideo(argYoutuberId = DEFAULT_YOUTUBER_ID) {
-    const { data } = await instance.get(`/youtuber/localVideo/${argYoutuberId}`)
+/**
+ * 유튜버가 방문한 지역별 영상
+ * @param {string} argYoutuberId 
+ * @param {array} argRegionTags 
+ */
+async function getYoutuberRegionVideo(argYoutuberId = DEFAULT_YOUTUBER_ID, argRegionTags) {
+    const { data } = await instance.post(`/youtuber/localVideo`, {
+        ytb_id: argYoutuberId,
+        regionTags: argRegionTags
+    })
     return data
 }
 
@@ -59,14 +66,17 @@ async function getFindOneYoutuberInfo(argYoutuberId = DEFAULT_YOUTUBER_ID) {
 }
 
 // 유튜버 좋아요 활성화
-async function setYoutuberLike(argLikeType, argYoutuberId = DEFAULT_YOUTUBER_ID) {
-    let data = null
+async function setYoutuberLike(argYoutuberId = DEFAULT_YOUTUBER_ID) {
+    const { data } = await instance.post(`youtuber/like`, { ytb_id: argYoutuberId })
 
-    if (argLikeType) {
-        data = await instance.post(`youtuber/like`, { ytb_id: argYoutuberId })
-    } else {
-        data = await instance.delete(`youtuber/like`, { ytb_id: argYoutuberId })
-    }
+    return data
+}
+
+// 서버에 없는 유튜버 신청하기
+async function setYoutuberRequest(argYoutuberName) {
+    const { data } = await instance.post('youtuber/request', {
+        ytbChannel: argYoutuberName
+    })
 
     return data
 }
@@ -80,5 +90,7 @@ export {
     getFindOneYoutuberInfo,
     setYoutuberLike,
     searchYoutuberByName,
-    getYoutuberHashtags
+    getYoutuberHashtags,
+    setYoutuberRequest,
+    getYoutuberRegionVideo
 }

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 // import apis
-import { useAsync } from '../../utils/hooks'
 import { getAllMarkers, getYoutuberMarkers } from '../../utils/api/map'
 
 // import components
@@ -11,9 +10,9 @@ import GoogleMap from '@components/GoogleMap'
 
 // import screens
 import MapHeader from './MapHeader'
-import MapStorePreview from './MapStorePreview';
+import MapStorePreview from './MapStorePreview'
 import MapSideBar from './MapSideBar'
-import ModalYoutuber from './../../components/ModalYoutuber';
+import ModalYoutuber from './../../components/ModalYoutuber'
 
 // import styles
 import { Colors } from '@styles'

@@ -7,6 +7,12 @@ import { instance, afterAuth } from '../index'
 
 // 🎃 API 리스트 🎃
 
+// 동선 - 검색
+async function getSharedUserFlow(argData) {
+    const { data } = await instance.post('flowSearch/flow', argData)
+    return data
+}
+
 // 유저가 추가한 동선 폴더 상세조회
 async function getFlowListItems(argFolderId) {
     const { data } = await instance.get(`userFlow/folder/${argFolderId}`)
@@ -21,17 +27,40 @@ async function setRefreshFlowIndex(argData) {
 }
 
 // 동선 좋아요 추가 / 삭제
-async function setFlowLike(argType, argFlowId) {
-    let data = null
-    const idSet = {
-        shareFlow_id: argFlowId
-    }
-
-    data = argType ? await instance.post('shareFlow/like', idSet) : await instance.delete('shareFlow/like', idSet)
+async function setFlowLike(argShareFolderId) {
+    const data = await instance.post('shareFlow/like', {
+        shareFlow_id: argShareFolderId
+    })
 
     return data
 }
 
-export { setFlowLike, getFlowListItems, setRefreshFlowIndex }
+// 동선 공유
+async function setUserFlowShare(argData) {
+    try {
+        const { data } = await instance.post('shareFlow/folder', argData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+
+        return data
+    } catch (e) {
+        console.log('에러에러', e)
+        return (e)
+    }
+
+    // return data
+}
+
+// 공유동선 조회수 증가
+async function setYourFlowCountUp(argShareFlowId) {
+    const { data } = await instance.post('shareFlowDetail/folder', {
+        shareFlowId: argShareFlowId
+    })
+}
+
+
+export { setFlowLike, getFlowListItems, setRefreshFlowIndex, setUserFlowShare, getSharedUserFlow, setYourFlowCountUp }
 
 

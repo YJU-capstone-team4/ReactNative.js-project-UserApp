@@ -1,6 +1,8 @@
-import React, { createContext, useState } from 'react'
-import { View, Text } from 'react-native'
+import React, { createContext, useState, useEffect } from 'react'
 import user_profile from '@images/user_profile.png'
+
+// import apis
+import { getUserFolders } from '../utils/api/folder'
 
 /**
  * 컨텍스트를 만들어 줍니다. 인자로 defaultValue 넣어줄 수 있습니다.
@@ -25,10 +27,32 @@ const TestContextProvider = ({ children }) => {
         selectedFolderId: '60336da678a46f2a7fa8ccc6'
     })
 
+    const [userFlows, setUserFlows] = useState(null)
+
+    useEffect(() => {
+        initFolder()
+    }, [])
+
+    const initFolder = async () => {
+        const data = await getUserFolders()
+        let temp = [{ key: -1, section: true, label: '코코님의 동선 폴더' }]
+        data.map(item => (
+            temp.push({
+                key: item._id,
+                label: item.folderTitle,
+                isShared: item.share
+            })
+        ))
+        console.log('변환데이터는?', temp)
+        setUserFlows(temp)
+    }
+
     // 프로바이더에 value 프로퍼티로 삽입해줄 객체를 생성하는데, 여기서는 상태와 셋 함수를 state와 actions로 설정.
     const value = {
         state: { initValue },
-        actions: { setInitValue }
+        actions: { setInitValue },
+        globalUserFlows: userFlows,
+        userFolderInit: initFolder
     }
 
     // value에 위에서 생성한 객체 넣어준다.

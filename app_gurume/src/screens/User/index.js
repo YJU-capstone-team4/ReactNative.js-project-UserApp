@@ -10,10 +10,10 @@ export default function index(props) {
     const [isLogin, setIsLogin] = useState(true)
 
     useEffect(() => {
-        // props.navigation.navigate('signIn', {
-        //     // storeId: index,
-        //     // storeName: marker.title,
-        // })
+        props.navigation.navigate('signIn', {
+            // storeId: index,
+            // storeName: marker.title,
+        })
     }, [])
 
     return (

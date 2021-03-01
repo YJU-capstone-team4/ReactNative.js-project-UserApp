@@ -14,14 +14,19 @@ export default function HashTagList({ data, onPress, selectedRegionTag }) {
       }}
     >
       {
-        data && data.map(item => {
+        data ? data.map(item => {
           const isSelected = selectedRegionTag && selectedRegionTag === item || !onPress
           return <TouchableOpacity onPress={() => onPress ? onPress(item) : null} key={item} style={[styles.hashtagContainer, { backgroundColor: isSelected ? Colors.GRAY_7 : Colors.GRAY_3 }]}>
             <Text color={isSelected ? Colors.WHITE : Colors.BLACK} weight="BOLD" size={16}># {item}</Text>
           </TouchableOpacity>
-
-        }
-        )
+        }) : <>
+            <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
+              <Text color={Colors.WHITE } weight="BOLD" size={16}># 로딩중...</Text>
+            </View>
+            <View style={[styles.hashtagContainer, { backgroundColor: Colors.GRAY_7 }]}>
+              <Text color={Colors.WHITE } weight="BOLD" size={16}># 로딩중...</Text>
+            </View>
+          </>
 
       }
     </View>

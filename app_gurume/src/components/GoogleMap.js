@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'
-import MapView from "react-native-map-clustering";
+import MapView from "react-native-map-clustering"
 import { Marker } from 'react-native-maps'
 
 // import components
-import YoutubeMarker from './YoutubeMarker';
+import YoutubeMarker from './YoutubeMarker'
 
 // import styles
 import { Colors } from '@styles'
 import { Text } from '../styles/CommonStyles'
-import { clusterColorPicker } from '../utils';
+import { clusterColorPicker } from '../utils'
+import markerImage from '@images/delivery_128.png'
 
 const GoogleMap = (props) => {
   const [region, setRegion] = useState({
     latitude: 36.86990,
     longitude: 127.89554,
-    latitudeDelta: 3.5, // 0.009
-    longitudeDelta: 3.5,
+    latitudeDelta: 4, // 0.009
+    longitudeDelta: 4,
   })
 
   const initialMapState = {
@@ -86,7 +87,7 @@ const GoogleMap = (props) => {
                 coordinate={{ latitude: location.lat, longitude: location.lng }}
                 showCallout={false}
               >
-                <YoutubeMarker title={storeName} />
+                <YoutubeMarker markerImage={markerImage} title={storeName} />
               </Marker>
             )
           }) : null

@@ -8,16 +8,19 @@ import { Text } from '@styles/CommonStyles'
 import PolygonMap from '@components/PolygonMap'
 
 // import apis
-import { getFlowListItems } from '../../../utils/api/flow'
+import { getFlowListItems, setYourFlowCountUp, setFlowLike } from '../../../utils/api/flow'
 
-const ShowFlowLIst = () => {
+const ShowFlowLIst = (props) => {
+    // TODO shareFolderId 맵핑시키기.
     const [markers, setMarkers] = useState(null)
     const [stores, setStores] = useState(null)
     const [isActivity, setIsActivity] = useState(false)
 
     useEffect(() => {
-        async function init(argFolderId) {
+        const { params } = props.route
+        async function init(argFolderId, argShareFlowId) {
             // 폴더 아이디로 해당 값 불러오기
+            // setYourFlowCountUp(argShar)
             const data = await getFlowListItems(argFolderId)
             let tempConvertedArr = data.map(item => (
                 {
@@ -25,13 +28,13 @@ const ShowFlowLIst = () => {
                     longitude: item.location.lng
                 }
             ))
-
+            setFlowLike(argShareFlowId)
             // 데이터 반환
             setStores(data)
             setMarkers(tempConvertedArr)
         }
-        init('5fb7b0473fddab615456b166')
-    }, [])
+        init(params.folderId, params.shareFlowId)
+    }, [props.route])
 
     if (!stores || !markers) {
         return <View style={styles.container}>
@@ -46,7 +49,7 @@ const ShowFlowLIst = () => {
             </TouchableOpacity>
             <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
                 {
-                    markers && <View style={{ borderColor: Colors.GRAY_5, borderWidth: 2 }}>
+                    markers && markers.length > 0 && <View style={{ borderColor: Colors.GRAY_5, borderWidth: 2 }}>
                         <PolygonMap data={markers} />
                     </View>
                 }
@@ -58,7 +61,7 @@ const ShowFlowLIst = () => {
                             </View>
                             <View>
                                 <Text weight="BOLD" style={{ paddingBottom: 5 }}>{`<${item.typeStore}>`} {item.storeName}</Text>
-                                <Text>{item.storeAddress}</Text>
+                                <Text style={{ flex: 1 }}>{item.storeAddress}</Text>
                             </View>
                         </View>
                     ))
@@ -75,10 +78,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.WHITE,
         // height: '100%',
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+        paddingTop: 8
     },
     storeWrapper: {
-        paddingVertical: 20,
+        paddingVertical: 15,
         flexDirection: 'row',
         alignItems: 'center'
     },
@@ -86,7 +90,7 @@ const styles = StyleSheet.create({
         // padding: 10,
         width: 35,
         height: 35,
-        marginLeft: 10,
+        // marginLeft: 5,
         marginRight: 20,
         backgroundColor: Colors.YELLOW_4,
         borderRadius: 150,

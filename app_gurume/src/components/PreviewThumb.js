@@ -9,49 +9,63 @@ import AntIcons from 'react-native-vector-icons/AntDesign';
 
 const PREVIEW_WIDTH = width * 0.95
 
+// import apis
+import { setFlowLike } from '../utils/api/flow'
+
 // import images
 import flowThumb_1 from '@images/flowThumb_1.jpg'
 import flowThumb_2 from '@images/flowThumb_2.jpg'
 
 export default function PreviewThumb({ data, regionFlow, onPress }) {
-    console.log('PreviewThumb', data)
-    const [isActivity, setIsActivity] = useState(false)
+    // console.log('PreviewThumb', data)
+    const [isActivity, setIsActivity] = useState(data.flowLike)
+
+    const handleLikeUp = () => {
+        console.log(data)
+        setFlowLike(data._id)
+        setIsActivity(!isActivity)
+    }
 
     return (
-        <TouchableOpacity activeOpacity={0.8} onPress={() => { onPress ? onPress() : null }} style={styles.container}>
-            <TouchableOpacity onPress={() => setIsActivity(!isActivity)} style={styles.likeContainer}>
+        <View style={styles.container}>
+            <TouchableOpacity onPress={() => handleLikeUp()} style={styles.likeContainer}>
                 <AntIcons name="heart" size={20} color={isActivity ? Colors.RED_4 : Colors.GRAY_4} />
             </TouchableOpacity>
-            <Image source={data.adminTag.seasonTag === '여름' ? flowThumb_1 : flowThumb_2} style={styles.thumbnailImage} />
+            <Image source={data.adminTag && data.adminTag.seasonTag === '여름' ? flowThumb_1 : flowThumb_2} style={styles.thumbnailImage} />
             {/* 불투명 Black 배경 */}
             <View style={styles.thumbnailBackground} />
             {/* 썸네일 제목 */}
-            <View style={styles.thumbnailTitle}>
+            <TouchableOpacity activeOpacity={0.8} onPress={() => { onPress ? onPress() : null }} style={styles.thumbnailTitle}>
                 <Text weight="BOLD" numberOfLines={1} style={styles.buttonText, styles.thumbTitleText}>
                     {data.shareTitle}
                 </Text>
-            </View>
+            </TouchableOpacity>
             {/* 썸네일 관련 태그 */}
             <ScrollView
+                showsVerticalScrollIndicator={false}
                 horizontal={true}
                 style={styles.hashtagContainer}
             >
                 {
-                    !regionFlow ?
+                    !regionFlow && data.adminTag && data.adminTag.regionTag && data.adminTag.seasonTag &&
+                    <>
                         <View style={[styles.tagContainer, { backgroundColor: '#F5839A' }]}>
                             <Text weight="BOLD" style={styles.buttonText}>{data.adminTag.regionTag[0]}</Text>
-                        </View> : null
+                        </View>
+                        <View style={[styles.tagContainer, { backgroundColor: Colors.YELLOW_6 }]}>
+                            <Text weight="BOLD" style={styles.buttonText}>{data.adminTag.seasonTag}</Text>
+                        </View>
+                    </>
                 }
-                <View style={[styles.tagContainer, { backgroundColor: Colors.YELLOW_6 }]}>
-                    <Text weight="BOLD" style={styles.buttonText}>{data.adminTag.seasonTag}</Text>
-                </View>
-                {data.userTags.map((tag, index) =>
-                    <View key={index} style={[styles.tagContainer, { backgroundColor: Colors.GRAY_7 }]}>
-                        <Text weight="BOLD" style={styles.buttonText}># {tag}</Text>
-                    </View>
-                )}
+                {
+                    data.userTags.map((tag, index) =>
+                        <View key={index} style={[styles.tagContainer, { backgroundColor: Colors.GRAY_7 }]}>
+                            <Text weight="BOLD" style={styles.buttonText}># {tag}</Text>
+                        </View>
+                    )
+                }
             </ScrollView>
-        </TouchableOpacity>
+        </View >
     )
 }
 
