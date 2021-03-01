@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, ScrollView, StatusBar } from 'react-native'
+import React, { useState, useRef } from 'react'
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 import { getStatusBarHeight } from "react-native-status-bar-height";
 import { Colors, Typography } from '@styles'
+import FeatherIcons from 'react-native-vector-icons/Feather'
 
 // import components
 import YoutuberList from '@components/List/YoutuberList'
@@ -25,10 +26,24 @@ export default (props) => {
   const [regionFlowsState] = useAsync(() => getRegionFlows(region.label), [region.label])
   const { loading: flowLoading, data: flowData, error: flowError } = regionFlowsState
 
+  const [isOverScroll, setIsOverScroll] = useState(false)                             // 반응형 scrollTo 버튼
+  const scrollRef = useRef(null)
+
   return (
     <View>
       <View style={styles.statusBar} />
-      <ScrollView showsVerticalScrollIndicator={false} stickyHeaderIndices={[0]}>
+      <ScrollView 
+      showsVerticalScrollIndicator={false} 
+      stickyHeaderIndices={[0]}
+        // 스크롤 위치에 따른 scrollTo 버튼
+        onScroll={event => {
+          const y = event.nativeEvent.contentOffset.y
+          const customOverScrollSignal = y >= 125
+
+          setIsOverScroll(customOverScrollSignal)
+        }}
+        ref={scrollRef}
+      >
         <MainHeader navi={props.navigation} region={region.label} setRegion={setRegion} />
         <NoticeContainer />
         {/* <SearchInput /> */}
@@ -42,6 +57,13 @@ export default (props) => {
           <FlowList navi={props.navigation} data={flowData} />
         </View>
       </ScrollView>
+      {
+        // 스크롤 위치에 따른 scrollTo 버튼
+        isOverScroll &&
+        <TouchableOpacity onPress={() => { scrollRef.current.scrollTo({ x: 5, y: 5, animated: true }) }} style={{ position: 'absolute', bottom: 70, right: 25 }}>
+          <FeatherIcons name="arrow-up" color={Colors.WHITE} size={20} style={{ padding: 10, backgroundColor: Colors.RED_3, borderRadius: 50 }} />
+        </TouchableOpacity>
+      }
     </View>
   )
 }

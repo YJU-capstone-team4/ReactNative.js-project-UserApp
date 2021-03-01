@@ -7,7 +7,6 @@ import { Text } from '@styles/CommonStyles'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import FeatherIcons from 'react-native-vector-icons/Feather'
 
-
 // import components
 import FlowList from '@components/Flow/FlowList'
 
