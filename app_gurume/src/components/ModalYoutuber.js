@@ -90,9 +90,13 @@ const ModalYoutuber = (props) => {
 
     // 서버로 유튜버 정보 요청
     const handleYoutuberRequest = async () => {
-        const data = await setYoutuberRequest(youtuberName)
-        Alert.alert("신청 완료! 신청 유튜버 DB저장 완료!")
-        console.log('ㅇㅁㅅㅁ', data)
+        try {
+            const data = await setYoutuberRequest(youtuberName)
+            Alert.alert("신청 완료! 신청 유튜버 DB저장 완료!")
+            console.log('ㅇㅁㅅㅁ', data)
+        } catch (e) {
+            Alert.alert("해당 유튜버가 없습니다 정확한 유튜버 이름을 입력해주세요!")
+        }
     }
 
     const toggleBackButton = () => {

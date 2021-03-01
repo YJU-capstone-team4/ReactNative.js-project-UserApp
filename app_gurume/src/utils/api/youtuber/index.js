@@ -74,7 +74,7 @@ async function setYoutuberLike(argYoutuberId = DEFAULT_YOUTUBER_ID) {
 
 // 서버에 없는 유튜버 신청하기
 async function setYoutuberRequest(argYoutuberName) {
-    const { data } = await instance.post('youtuber/request', {
+    const { data } = await instance.post('youtuberRequest', {
         ytbChannel: argYoutuberName
     })
 
