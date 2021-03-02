@@ -103,8 +103,6 @@ export default function FlowHashTags(props) {
 
     const { selectedRegionTags, selectedSeasonTags } = convertRegionArr(regionTags, seasonTags)
 
-    console.log('결과는!?', selectedRegionTags, selectedSeasonTags)
-
     argHastTagType === 'region' ? setRegionTags(newArr) : setSeasonTag(newArr)
 
     // 여기서 서버로 요청 보내고 다시 받아야 함.
@@ -123,6 +121,11 @@ export default function FlowHashTags(props) {
     sendSearchData(sendData)
   }
 
+  /**
+   * 
+   * @param {array} argRegionTags 
+   * @param {array} argSeasonTags 
+   */
   const convertRegionArr = (argRegionTags, argSeasonTags) => {
     let selectedRegionTags = []
     let selectedSeasonTags = []
@@ -140,44 +143,7 @@ export default function FlowHashTags(props) {
 
   const sendSearchData = async argData => {
     const data = await getSharedUserFlow(argData)
-    console.log('서버로 전송한 값', argData)
-    console.log('서버로 부터 받은 값', data)
     props.setFlowsData(data)
-    /**
-     * 서버로 전송한 값 Object {
-  "nickname": "",
-  "option": "tag",
-  "regionTag": Array [
-    "서울특별시",
-  ],
-  "seasonTag": Array [
-    "봄",
-    "여름",
-    "가을",
-    "겨울",
-  ],
-  "shareTitle": "",
-  "userTag": Array [],
-}
-
-서버로 전송한 값 Object {
-  "nickname": "",
-  "option": "tag",
-  "regionTag": Array [
-    "서울특별시",
-  ],
-  "seasonTag": Array [
-    "봄",
-    "여름",
-    "가을",
-    "겨울",
-  ],
-  "shareTitle": "",
-  "userTag": Array [
-    "",
-  ],
-}
-     */
   }
 
   return (

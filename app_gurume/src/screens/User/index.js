@@ -9,12 +9,12 @@ export default function index(props) {
     // 임시 로그인 검증 변수
     const [isLogin, setIsLogin] = useState(true)
 
-    useEffect(() => {
-        props.navigation.navigate('signIn', {
-            // storeId: index,
-            // storeName: marker.title,
-        })
-    }, [])
+    // useEffect(() => {
+    //     props.navigation.navigate('signIn', {
+    //         // storeId: index,
+    //         // storeName: marker.title,
+    //     })
+    // }, [])
 
     return (
         <View style={styles.container}>

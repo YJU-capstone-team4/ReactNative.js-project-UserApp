@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, View, Animated, Dimensions } from 'react-native'
+import { StyleSheet, View, Animated, TouchableOpacity } from 'react-native'
 
 // import modules
 import Modal from 'react-native-modal';
@@ -43,34 +43,30 @@ const YoutubePlayer = (props) => {
             isVisible={Boolean(props.isVisible)}
             swipeDirection="down"
             onSwipeComplete={() => handleSwipeComplete(props)}
-            // coverScreen={false}
-            // deviceHeight={Math.max(Dimensions.get('window').height, Dimensions.get('screen').height)}
+            coverScreen={false}
+            onBackdropPress={() => handleSwipeComplete(props)}
             style={{ marginHorizontal: 5 }}
         >
             <View style={styles.container}>
                 <Youtube
                     style={{ zindex: 10000 }}
                     height={195}
+                    play={true}
                     apiKey={'AIzaSyCrS8s_D9BpIshutUGsQ8gz6mQee3sn7K4'} //여러분의 API_KEY 보안 잘해주세요^^!
                     videoId={props.videoId} // 리스트에서 보낸 videoId를 받아옴
                     onReady={(state) => handleChangeState(state)}   // 영상 상태변화 감지
-                    allowsFullscreenVideo={false}
+                    onFullScreenChange={() => { console.log("변경!") }}
+                // allowsFullscreenVideo={false}
                 />
                 {isReady ? null : <Text style={styles.loadingText}>로딩중...</Text>}
                 <View style={styles.textContainer}>
                     <Text size={20}>SUB 🔥만드는자VS먹는자🔥 초밥집 사장님께서 평생 무료 이용권을 걸고 도전을 신청해 ...</Text>
                     <View style={styles.infoTextContainer}>
-                        <Text>조회수 130만</Text>
+                        <Text weight="BOLD">조회수 130만</Text>
                         <Text>2020. 12. 30.</Text>
                     </View>
                 </View>
-                <Animated.View style={[styles.closeText, {
-                    transform: [
-                        {
-                            scale: startValue,
-                        },
-                    ],
-                }]} >
+                <Animated.View style={[styles.closeText, { transform: [{ scale: startValue }] }]} >
                     <MaterialCommunityIcons
                         color={Colors.BLUE_4}
                         size={30}
@@ -78,7 +74,7 @@ const YoutubePlayer = (props) => {
                     />
                 </Animated.View>
             </View>
-        </Modal>
+        </Modal >
     )
 }
 
@@ -91,6 +87,7 @@ const styles = StyleSheet.create({
         paddingBottom: 0,
         paddingHorizontal: 7,
         borderRadius: 10,
+        zIndex: 1000000
     },
     textContainer: {
         paddingTop: 10,

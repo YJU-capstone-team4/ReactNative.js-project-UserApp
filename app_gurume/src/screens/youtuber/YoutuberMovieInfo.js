@@ -22,12 +22,14 @@ export default function youtuberMovieInfo(props) {
 
   useEffect(() => {
     console.log("변경!")
-    if (props.data && props.data.length > 0) {
+    if (props.data && props.data.length > 0 ) {
+      console.log("지역 태그 초기화 요청!")
       setSelectedRegionTag(props.data[0])
     }
   }, [props.searchYoutuber._id, props.data])
 
   useEffect(() => {
+    // if (!selectedRegionTag) return ;
     console.log("지역태그 선택 변경!!")
     console.log('data', props.searchYoutuber._id, selectedRegionTag)
     getRegionVideos()

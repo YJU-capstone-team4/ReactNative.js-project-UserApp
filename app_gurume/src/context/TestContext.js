@@ -17,8 +17,6 @@ const TestContext = createContext("");
  * @constructor
  */
 const TestContextProvider = ({ children }) => {
-
-    // 여기서 사용할 상태들을 useState로 생성합니다.
     const [initValue, setInitValue] = useState({
         isLogin: true,
         nickName: 'Kokohaseyo',
@@ -43,7 +41,6 @@ const TestContextProvider = ({ children }) => {
                 isShared: item.share
             })
         ))
-        console.log('변환데이터는?', temp)
         setUserFlows(temp)
     }
 
@@ -63,7 +60,6 @@ const TestContextProvider = ({ children }) => {
     )
 }
 
-// 사용하기 쉽게 하기위해 변수명을 새로 지어줬다.
 const { Consumer: TestContextConsumer } = TestContext
 // === const TestContextConsumer = TestContext.Consumer 와 같음 객체에서 여러개를 재할당 할 때 쉽게 할 수 있음.
 

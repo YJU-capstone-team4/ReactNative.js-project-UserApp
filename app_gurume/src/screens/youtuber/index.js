@@ -55,8 +55,18 @@ export default (props) => {
 
   useEffect(() => {
     async function init(argYoutuber) {
+      // * 초기 값이 없으면 설정 변경.
+      if(!argYoutuber) {
+        setSearchYoutuber({
+          _id: YOUTUBER_ID,
+          label: null,
+        })
+      }
+
+      // * 초기화
       setYoutuber(null)
       setUserTags(null)
+
       // * 유튜버 정보 로딩
       const getYoutuberInfo = await getFindOneYoutuberInfo(argYoutuber ? argYoutuber : YOUTUBER_ID)
       setYoutuber(getYoutuberInfo)

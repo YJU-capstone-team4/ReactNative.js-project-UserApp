@@ -6,13 +6,12 @@ import PropTypes from "prop-types"
 // import modules
 import MapView, { Marker, Polyline } from 'react-native-maps'
 import { Colors } from '@styles';
-import { markers } from '../model/mokupMap';
 
 const PolygonMap = (props) => {
     const [region, setRegion] = useState({
         latitude: 36.86990,
         longitude: 127.89554,
-        latitudeDelta: 3.5, // 0.009
+        latitudeDelta: 3.5,
         longitudeDelta: 3.5,
     })
     const [mapReady, setMapReady] = useState(false)
@@ -24,7 +23,6 @@ const PolygonMap = (props) => {
             mapRef.current.fitToSuppliedMarkers(props.data.map(({ _id }) => _id), { edgePadding: { top: 70, right: 70, bottom: 70, left: 70 } })
         }
     }, [mapReady, props.data])
-    // TODO coordinate 전용 배열 만들기.
 
     return (
         <View>
@@ -34,11 +32,11 @@ const PolygonMap = (props) => {
                 minZoomLevel={6}
                 showsCompass={false}
                 moveOnMarkerPress={false}   // 마커 클릭 이벤트 제어
+                ref={mapRef}
+                onMapReady={() => setMapReady(true)}
                 // scrollEnabled={false}
                 // zoomTapEnabled={false}
                 // liteMode={true}
-                ref={mapRef}
-                onMapReady={() => setMapReady(true)}
             >
                 {
                     props.data ? props.data.map((marker, index) =>

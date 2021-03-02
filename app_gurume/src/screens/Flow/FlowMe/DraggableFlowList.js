@@ -56,8 +56,7 @@ function DraggableFlowList(props) {
             }
 
             await props.setMarkers(data)
-            const result = await setRefreshFlowIndex(arrayChangedIndexes)
-            console.log('스토어 순서 변경 결과는?', result)
+            await setRefreshFlowIndex(arrayChangedIndexes)
         }
     }
 

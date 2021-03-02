@@ -15,7 +15,6 @@ const ModalSelector = (props) => {
             onChange={(option) => { props.onChange(option) }}
             onModalClose={() => props.setModalOpen(false)}
             overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.85)', height: Dimensions.get('window').height }}
-            // style={{ height: Dimensions.get('window').height + 20}}
         />
     )
 }

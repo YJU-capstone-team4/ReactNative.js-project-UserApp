@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { TouchableOpacity } from 'react-native'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -30,7 +30,12 @@ const MapStack = createStackNavigator()
 const MainStack = createStackNavigator()
 const FlowStack = createStackNavigator()
 
-export default function BottomNavigation() {
+export default function BottomNavigation(props) {
+  // useEffect(() => {
+  //TODO USER CHECK
+  //   // console.log('이동합니다!!', props.navigation.state.routeName) 
+  // }, [props])
+
   return (
     <Tab.Navigator
       tabBarOptions={{
