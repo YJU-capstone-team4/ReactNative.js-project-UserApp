@@ -2,6 +2,7 @@ import defaultAxios from 'axios'
 
 // TODO 배포시 URL 변경
 const API_URL = 'http://13.125.69.16'
+// const API_URL = 'http://172.26.1.124:3000'
 
 // 엑시오스 초기화 함수
 const createInstance = () => {

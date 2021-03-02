@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { View, StyleSheet, Image, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
 
 // import styles
-import { Colors, Typography } from '@styles'
+import { Colors } from '@styles'
 import { Text } from './../styles/CommonStyles';
-const { width, height } = Dimensions.get("window");
+const { width } = Dimensions.get("window");
 import AntIcons from 'react-native-vector-icons/AntDesign';
 
 const PREVIEW_WIDTH = width * 0.95
@@ -17,7 +17,6 @@ import flowThumb_1 from '@images/flowThumb_1.jpg'
 import flowThumb_2 from '@images/flowThumb_2.jpg'
 
 export default function PreviewThumb({ data, regionFlow, onPress }) {
-    // console.log('PreviewThumb', data)
     const [isActivity, setIsActivity] = useState(data.flowLike)
 
     const handleLikeUp = () => {

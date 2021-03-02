@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Alert, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -9,19 +9,16 @@ import { Colors, Typography } from '@styles'
 export default function SearchInput(props) {
   const [tempValue, setTempValue] = useState(null)
 
+  // 1. 검색 버튼이 눌렸다는 신호를 상위 컴포넌트에 넘겨준다.
+  // 2. 상위 컴포넌트에서는 해당 검색 신호를 받아들이고
+  // 3. input 창의 text 를 서버로 전송
+  // 4. 검색 결과가 서버로 부터 도착하면 해당 검색 결과를 불러올 리스트 토글 ON
+  // 5. 토글이 ON => 리스트 컴포넌트에 서버로 부터 도착한 데이터 전송하기.
   const handleClicked = () => {
     if (!tempValue) {
-      console.log("검색어를 입력해주세요!!!")
-    } else {
-      // const 
+      return Alert.alert("검색어를 입력해주세요!!!")
     }
-    console.log("클릭!")
     props.onPress(true)
-    // 1. 검색 버튼이 눌렸다는 신호를 상위 컴포넌트에 넘겨준다.
-    // 2. 상위 컴포넌트에서는 해당 검색 신호를 받아들이고
-    // 3. input 창의 text 를 서버로 전송
-    // 4. 검색 결과가 서버로 부터 도착하면 해당 검색 결과를 불러올 리스트 토글 ON
-    // 5. 토글이 ON => 리스트 컴포넌트에 서버로 부터 도착한 데이터 전송하기.
   }
 
   return (

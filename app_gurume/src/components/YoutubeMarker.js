@@ -1,10 +1,9 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { CustomMarker, MarkerContainer, MarkerTitleContainer } from '@styles/GoogleMapStyles'
 
 // import styles
 import { Text } from '@styles/CommonStyles'
-import markerImage from '@images/delivery_128.png'
 
 const YoutubeMarker = (props) => (
     <MarkerContainer MarkerContainer >

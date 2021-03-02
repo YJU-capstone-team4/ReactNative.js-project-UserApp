@@ -44,7 +44,6 @@ const ModalYoutuber = (props) => {
     // 리로딩 신호 받아 들인 후 값 저장
     useEffect(() => {
         if (youtubersLoading === false && allYoutubers && !youtubers) {
-            console.log("유튜버 목록 새로 받아옴@!!!")
             setYoutubers(allYoutubers)
         }
     }, [youtubersLoading])
@@ -60,11 +59,7 @@ const ModalYoutuber = (props) => {
                 count: searchedYoutubers.YtbChannelTb.length,
                 ytbChannelTb: searchedYoutubers.YtbChannelTb
             })
-            // let tempYoutuberList =
-            //     await allYoutubers.ytbChannelTb.filter(youtuber => !Hangul.search(youtuber.ytbChannel, text))
-            // setYoutubers({ count: tempYoutuberList.length, ytbChannelTb: tempYoutuberList })
         } else {
-            console.log("초기화 로직 발동!")
             setYoutubers(null)
             setYoutuberName(null)
             refetch()
@@ -91,9 +86,8 @@ const ModalYoutuber = (props) => {
     // 서버로 유튜버 정보 요청
     const handleYoutuberRequest = async () => {
         try {
-            const data = await setYoutuberRequest(youtuberName)
+            await setYoutuberRequest(youtuberName)
             Alert.alert("신청 완료! 신청 유튜버 DB저장 완료!")
-            console.log('ㅇㅁㅅㅁ', data)
         } catch (e) {
             Alert.alert("해당 유튜버가 없습니다 정확한 유튜버 이름을 입력해주세요!")
         }
@@ -131,7 +125,6 @@ const ModalYoutuber = (props) => {
                     <TouchableOpacity
                         style={{ position: 'absolute', right: 20 }}
                         hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }}
-                    // onPress={() => handleOnChangeText()}
                     >
                         <MaterialCommunityIcons name="magnify" size={24} />
                     </TouchableOpacity>

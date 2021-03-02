@@ -32,6 +32,7 @@ const FlowStack = createStackNavigator()
 
 export default function BottomNavigation(props) {
   // useEffect(() => {
+  //TODO USER CHECK
   //   // console.log('이동합니다!!', props.navigation.state.routeName) 
   // }, [props])
 

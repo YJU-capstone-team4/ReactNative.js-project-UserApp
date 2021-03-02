@@ -44,7 +44,6 @@ const YoutubePlayer = (props) => {
             swipeDirection="down"
             onSwipeComplete={() => handleSwipeComplete(props)}
             coverScreen={false}
-            // deviceHeight={Math.max(Dimensions.get('window').height, Dimensions.get('screen').height)}
             onBackdropPress={() => handleSwipeComplete(props)}
             style={{ marginHorizontal: 5 }}
         >
@@ -56,8 +55,8 @@ const YoutubePlayer = (props) => {
                     apiKey={'AIzaSyCrS8s_D9BpIshutUGsQ8gz6mQee3sn7K4'} //여러분의 API_KEY 보안 잘해주세요^^!
                     videoId={props.videoId} // 리스트에서 보낸 videoId를 받아옴
                     onReady={(state) => handleChangeState(state)}   // 영상 상태변화 감지
-                    onFullScreenChange={() => {console.log("변경!")}}
-                    // allowsFullscreenVideo={false}
+                    onFullScreenChange={() => { console.log("변경!") }}
+                // allowsFullscreenVideo={false}
                 />
                 {isReady ? null : <Text style={styles.loadingText}>로딩중...</Text>}
                 <View style={styles.textContainer}>
@@ -66,17 +65,8 @@ const YoutubePlayer = (props) => {
                         <Text weight="BOLD">조회수 130만</Text>
                         <Text>2020. 12. 30.</Text>
                     </View>
-                    {/* <TouchableOpacity onPress={() => handleSwipeComplete(props)}>
-                        <Text>Close</Text>
-                    </TouchableOpacity> */}
                 </View>
-                <Animated.View style={[styles.closeText, {
-                    transform: [
-                        {
-                            scale: startValue,
-                        },
-                    ],
-                }]} >
+                <Animated.View style={[styles.closeText, { transform: [{ scale: startValue }] }]} >
                     <MaterialCommunityIcons
                         color={Colors.BLUE_4}
                         size={30}
